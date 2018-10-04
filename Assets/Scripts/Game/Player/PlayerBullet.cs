@@ -41,6 +41,7 @@ public class PlayerBullet : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Enemy") {
+            collision.gameObject.SendMessage("Damage", damage);
             rb.isKinematic = true;
             box.enabled = false;
             animator.SetBool("isDead", true);
