@@ -15,7 +15,8 @@ public class ExplosionManager : MonoBehaviour {
     public void AddExplosions(Vector2 positon, int numberOfExplosions, bool randomization) {
         if(!randomization) {
             int i = Random.Range(0, explosions.Length);
-            Instantiate(explosions[i], positon, Quaternion.identity);
+            GameObject explosionObj = Instantiate(explosions[i], positon, Quaternion.identity).gameObject;
+            explosionObj.transform.parent = transform;
         } else {
             this.position = positon;
             StartCoroutine("SpawnExplosions", numberOfExplosions);
