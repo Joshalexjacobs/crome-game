@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114124319469309918}
   - component: {fileID: 50121460481721316}
   m_Layer: 8
-  m_Name: Bullet
+  m_Name: TracerBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.04
   deathTime: 5
-  trailPlayer: 0
+  trailPlayer: 1
   direction: {x: 0, y: 0, z: 0}
   bulletTrail: {fileID: 1795420255793666, guid: b7b91bad2fb064dd48c854581025e759,
     type: 2}

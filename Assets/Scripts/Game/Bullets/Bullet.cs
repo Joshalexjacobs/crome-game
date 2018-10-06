@@ -7,28 +7,29 @@ public class Bullet : MonoBehaviour {
     public float speed = 1.0f;
     public float deathTime = 10f;
     public bool trailPlayer = false;
+    public Vector3 direction;
     public GameObject bulletTrail;
 
     private Rigidbody2D rb;
     private Transform player;
     private bool isDead = false;
 
-    // Use this for initialization
+    public void Init(Vector3 direction) {
+        this.direction = direction;
+    }
+
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-
-        GameObject playerGameObj = null;
-
-        if (trailPlayer) {
-            playerGameObj = GameObject.Find("Player");
-        }
+        GameObject playerGameObj = GameObject.Find("Player");
 
         if (playerGameObj && playerGameObj.transform) {
             player = playerGameObj.transform;
         }
 
-        if (player) {
+        if (player && trailPlayer) {
             rb.AddForce((player.position - transform.position).normalized * speed);
+        } else {
+            rb.AddForce(direction * speed);
         }
 
         if (bulletTrail) {

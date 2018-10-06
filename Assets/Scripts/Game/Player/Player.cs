@@ -144,7 +144,7 @@ public class Player : MonoBehaviour {
     }
 
     IEnumerator Shoot() {
-        PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(Random.Range(-0.001f, 0.001f), 0.035f, 0f), Quaternion.identity);
+        PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(Random.Range(-0.001f, 0.003f), 0.035f, 0f), Quaternion.identity);
         playerBulletObj.Init(damage);
 
         yield return new WaitForSeconds(0.1f);
