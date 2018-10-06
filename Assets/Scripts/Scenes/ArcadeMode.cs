@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ArcadeMode : MonoBehaviour {
 
-    public GameObject cyclopsSpawnIn;
-    public GameObject cyclopsSpawnInMirrored;
+    public GameObject cyclopsFlyDownLeft;
+    public GameObject cyclopsFlyDownRight;
 
     public GameObject cyclopsLeft;
     public GameObject cyclopsRight;
@@ -30,19 +30,12 @@ public class ArcadeMode : MonoBehaviour {
 
         for (int i = 0; i < 3; i++)
         {
-            Instantiate(cyclopsSpawnIn, new Vector2(1.002f, 1.482f), Quaternion.identity).SendMessage("FlyDown");
+            Instantiate(cyclopsFlyDownLeft, new Vector2(0f + i * -0.1f, 0f), Quaternion.identity).GetComponentInChildren<Cyclops>().SendMessage("FlyDown");
             yield return new WaitForSeconds(0.25f);
         }
 
         for (int i = 0; i < 3; i++)
         {
-            Instantiate(cyclopsSpawnInMirrored, new Vector2(1.002f, 1.482f), Quaternion.identity).SendMessage("FlyDown");
-            yield return new WaitForSeconds(0.25f);
-        }
-
-        yield return new WaitForSeconds(0.5f);
-
-        for (int i = 0; i < 3; i++) {
             Cyclops cyclopsLeftObj = Instantiate(cyclopsLeft, new Vector2(0.91f, 1.65f + i * 0.2f), Quaternion.identity).GetComponent<Cyclops>();
             Cyclops cyclopsRightObj = Instantiate(cyclopsRight, new Vector2(-0.91f, 1.65f + i * 0.2f), Quaternion.identity).GetComponent<Cyclops>();
 
@@ -50,6 +43,12 @@ public class ArcadeMode : MonoBehaviour {
             cyclopsRightObj.stopPoint = 0.5f - i * 0.1f;
 
             yield return new WaitForSeconds(0.2f);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            Instantiate(cyclopsFlyDownRight, new Vector2(0f + i * 0.1f, 0f), Quaternion.identity).GetComponentInChildren<Cyclops>().SendMessage("FlyDown");
+            yield return new WaitForSeconds(0.25f);
         }
 
         yield return new WaitForSeconds(10f);

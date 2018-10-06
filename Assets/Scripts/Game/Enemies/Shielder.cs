@@ -72,7 +72,7 @@ public class Shielder : Enemy {
     }
 
     IEnumerator Shoot() {
-        for (int i = 0; i < 4 && !isDead; i++) {
+        for (int i = 0; i < 2 && !isDead; i++) {
             Bullet bulletObj = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Bullet>();
             bulletObj.Init(new Vector2(Random.Range(-0.5f, 0.5f), 1f));
 

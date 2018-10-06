@@ -666,9 +666,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd96c34670caa46369c833f80fed15ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cyclopsSpawnIn: {fileID: 1438199663515034, guid: 5c8efafd894274af998356d3873520b8,
+  cyclopsFlyDownLeft: {fileID: 1700788253962544, guid: 3b547afdd527c4f6cbd6557a1a1cb803,
     type: 2}
-  cyclopsSpawnInMirrored: {fileID: 1163182661877880, guid: 81eec2f6fdba34fda99e412ae1e3f8b7,
+  cyclopsFlyDownRight: {fileID: 1546940972685060, guid: f9d3d15d799364d6597452b282f74a74,
     type: 2}
   cyclopsLeft: {fileID: 1580730402300968, guid: 30facc6e8f99b4508bd6a5df6f986bf6,
     type: 2}
