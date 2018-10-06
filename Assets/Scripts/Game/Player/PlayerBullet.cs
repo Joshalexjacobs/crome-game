@@ -47,6 +47,12 @@ public class PlayerBullet : MonoBehaviour {
             animator.SetBool("isDead", true);
             rb.velocity = new Vector2(0f, 0f);
             StartCoroutine("Death");
+        } else if (collision.tag == "Shield") {
+            rb.isKinematic = true;
+            box.enabled = false;
+            animator.SetBool("isDead", true);
+            rb.velocity = new Vector2(0f, 0f);
+            StartCoroutine("Death");
         }
     }
 

@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour {
 
     public float speed = 1.0f;
     public float deathTime = 10f;
+    public float acceleration = 0f;
     public bool trailPlayer = false;
     public Vector3 direction;
     public GameObject bulletTrail;
@@ -58,5 +59,11 @@ public class Bullet : MonoBehaviour {
         yield return new WaitForSeconds(deathTime);
         isDead = true;
         Destroy(gameObject);
+    }
+
+    public void FixedUpdate() {
+        if(acceleration != 0f) {
+            rb.AddForce(direction * acceleration);
+        }
     }
 }

@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    IEnumerator Death() {
+    public virtual IEnumerator Death() {
         ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
         explosionManager.AddExplosions(gameObject.transform.position);
 
