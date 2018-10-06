@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour {
 
     public float speed = 1.0f;
     public float deathTime = 10f;
+    public bool trailPlayer = false;
     public GameObject bulletTrail;
 
     private Rigidbody2D rb;
@@ -15,7 +16,12 @@ public class Bullet : MonoBehaviour {
     // Use this for initialization
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-        GameObject playerGameObj = GameObject.Find("Player");
+
+        GameObject playerGameObj = null;
+
+        if (trailPlayer) {
+            playerGameObj = GameObject.Find("Player");
+        }
 
         if (playerGameObj && playerGameObj.transform) {
             player = playerGameObj.transform;
