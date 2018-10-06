@@ -5,12 +5,15 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
     public float health = 1f;
+    public bool isDead = false;
 
     private SpriteRenderer sr;
+    private BoxCollider2D box;
 
     // Use this for initialization
     void Start () {
         sr = GetComponent<SpriteRenderer>();
+        box = GetComponent<BoxCollider2D>();
     }
 	
 	// Update is called once per frame
@@ -23,9 +26,16 @@ public class Enemy : MonoBehaviour {
 
         if (health <= 0) {
             GetComponent<BoxCollider2D>().enabled = false;
+            isDead = true;
             StartCoroutine("Death");
         } else {
             StartCoroutine("Flash");
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Player") {
+            collision.gameObject.SendMessage("Damage");
         }
     }
 

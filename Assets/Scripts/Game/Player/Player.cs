@@ -94,6 +94,8 @@ public class Player : MonoBehaviour {
     public float speed = 5f;
     public float damage = 1f;
 
+    public int lives = 3;
+
     /* PUBLIC OBJECTS */
 
     public GameObject playerTrailParticle;
@@ -108,10 +110,11 @@ public class Player : MonoBehaviour {
     private float nextFire = 0.2f;
 
     private Rigidbody2D rb;
+    private BoxCollider2D box;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-
+        box = GetComponent<BoxCollider2D>();
         StartCoroutine("SpawnPlayerTrailParticles");
     }
 
@@ -190,10 +193,27 @@ public class Player : MonoBehaviour {
     IEnumerator SpawnPlayerTrailParticles() {
         while(!isDead) {
             yield return new WaitForSeconds(Random.Range(0.1f, 0.4f));
+            Instantiate(playerTrailParticle, transform.position + new Vector3(Random.Range(-0.01f, 0.01f), Random.Range(-0.005f, 0.005f), 0f), Quaternion.identity);
+        }
+    }
 
-            //if(isMoving) {
-                Instantiate(playerTrailParticle, transform.position + new Vector3(Random.Range(-0.01f, 0.01f), Random.Range(-0.005f, 0.005f), 0f), Quaternion.identity);
-            //}
+    public void Damage() {
+        if (!isDead) {
+            lives--;
+
+            //rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+            box.enabled = false;
+
+            //Physics2D.IgnoreLayerCollision(9, 11, true);
+            //Physics2D.IgnoreLayerCollision(9, 13, true);
+
+            isDead = true;
+
+            ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
+            explosionManager.AddExplosions(gameObject.transform.position);
+
+            Destroy(gameObject);
         }
     }
 }
