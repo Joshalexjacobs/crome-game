@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61410426622457704}
   - component: {fileID: 114268879351929528}
   - component: {fileID: 50967874704036576}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CyclopsSpawnInMirrored
   m_TagString: Enemy
   m_Icon: {fileID: 0}

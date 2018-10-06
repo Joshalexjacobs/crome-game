@@ -37,6 +37,11 @@ public class Cyclops : Enemy {
         }
 	}
 
+    public void FlyDown() {
+        animator = GetComponent<Animator>();
+        animator.SetBool("isSpawning", true);
+    }
+
     private void FixedUpdate() {
         if (gameObject.transform.position.y > stopPoint && !isReady) {
             rb.MovePosition(rb.position + new Vector2(xModifier, fallSpeed) * Time.fixedDeltaTime);

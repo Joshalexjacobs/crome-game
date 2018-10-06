@@ -7,7 +7,7 @@ public class Shielder : Enemy {
     public GameObject bullet;
 
     public Shielder() {
-        health = 10;
+        health = 6;
         isDead = false;
     }
 
@@ -61,18 +61,18 @@ public class Shielder : Enemy {
 
             StartCoroutine("Shoot");
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(3f);
 
             animator.SetBool("isShielded", false);
             shieldBox.enabled = false;
             ogBox.enabled = true;
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(4f);
         }
     }
 
     IEnumerator Shoot() {
-        for (int i = 0; i < 5 && !isDead; i++) {
+        for (int i = 0; i < 4 && !isDead; i++) {
             Bullet bulletObj = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Bullet>();
             bulletObj.Init(new Vector2(Random.Range(-0.5f, 0.5f), 1f));
 

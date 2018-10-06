@@ -193,7 +193,8 @@ public class Player : MonoBehaviour {
     IEnumerator SpawnPlayerTrailParticles() {
         while(!isDead) {
             yield return new WaitForSeconds(Random.Range(0.1f, 0.4f));
-            Instantiate(playerTrailParticle, transform.position + new Vector3(Random.Range(-0.01f, 0.01f), Random.Range(-0.005f, 0.005f), 0f), Quaternion.identity);
+            GameObject particleObj = Instantiate(playerTrailParticle, transform.position + new Vector3(Random.Range(-0.01f, 0.01f), Random.Range(-0.005f, 0.005f), 0f), Quaternion.identity);
+            particleObj.transform.parent = transform;
         }
     }
 

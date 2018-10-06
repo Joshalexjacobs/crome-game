@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Chopper : Enemy {
 
+    public GameObject drone;
+
     public float fallSpeed = 0f;
 
     public Chopper() {
@@ -24,8 +26,20 @@ public class Chopper : Enemy {
             rb.MovePosition(rb.position + new Vector2(0f, fallSpeed) * Time.fixedDeltaTime);
         } else if (!isReady) {
             isReady = true;
+            StartCoroutine("ShootDrones");
         } else {
             transform.Translate(new Vector3(0f, 0.001f * Mathf.Sin(15f * (Time.time / 4)), 0f));
+        }
+    }
+
+    IEnumerator ShootDrones() {
+        while(!isDead) {
+            for (int i = 0; i < 3 && !isDead; i++) {
+                Instantiate(drone, transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(1f);
+            }
+
+            yield return new WaitForSeconds(5f);
         }
     }
 

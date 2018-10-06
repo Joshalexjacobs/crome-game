@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61448639841369800}
   - component: {fileID: 114240975996428976}
   - component: {fileID: 50665673866960942}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CyclopsSpawnIn
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &61448639841369800
 BoxCollider2D:
