@@ -96,6 +96,8 @@ public class Player : MonoBehaviour {
 
     public int lives = 3;
 
+    public Vector2 respawnPoint;
+
     /* PUBLIC OBJECTS */
 
     public GameObject playerTrailParticle;
@@ -111,10 +113,18 @@ public class Player : MonoBehaviour {
 
     private Rigidbody2D rb;
     private BoxCollider2D box;
+    private SpriteRenderer sr;
+    private TrailRenderer tr;
+    private PlayerLivesUI playerLivesUI;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
+        sr = GetComponent<SpriteRenderer>();
+        tr = GetComponent<TrailRenderer>();
+        playerLivesUI = FindObjectOfType<PlayerLivesUI>();
+
+        playerLivesUI.SetLives(lives);
         StartCoroutine("SpawnPlayerTrailParticles");
     }
 
@@ -200,21 +210,50 @@ public class Player : MonoBehaviour {
 
     public void Damage() {
         if (!isDead) {
+            if(playerLivesUI == null) {
+                playerLivesUI = FindObjectOfType<PlayerLivesUI>();
+            }
+
+            playerLivesUI.DecrementLives();
             lives--;
 
-            //rb.constraints = RigidbodyConstraints2D.FreezeAll;
-
             box.enabled = false;
-
-            //Physics2D.IgnoreLayerCollision(9, 11, true);
-            //Physics2D.IgnoreLayerCollision(9, 13, true);
-
             isDead = true;
 
             ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
             explosionManager.AddExplosions(gameObject.transform.position);
 
-            Destroy(gameObject);
+            if (lives > 0) {
+                sr.enabled = false;
+                tr.enabled = false;
+                transform.position = respawnPoint;
+                StartCoroutine("Respawn");
+            } else {
+                Destroy(gameObject);
+            }
         }
+    }
+
+    IEnumerator Respawn() {
+        yield return new WaitForSeconds(0.6f);
+
+        isDead = false;
+        box.enabled = true;
+        Physics2D.IgnoreLayerCollision(11, 8, true);
+        Physics2D.IgnoreLayerCollision(11, 9, true);
+        Physics2D.IgnoreLayerCollision(11, 12, true);
+
+        for (int i = 0; i < 7; i++) {
+            sr.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            sr.enabled = false;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        sr.enabled = true;
+        yield return new WaitForSeconds(0.6f);
+        Physics2D.IgnoreLayerCollision(11, 8, false);
+        Physics2D.IgnoreLayerCollision(11, 9, false);
+        Physics2D.IgnoreLayerCollision(11, 12, false);
     }
 }

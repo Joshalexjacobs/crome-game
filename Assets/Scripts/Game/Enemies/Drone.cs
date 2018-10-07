@@ -33,9 +33,9 @@ public class Drone : Enemy {
         }
 
         while (!isDead && player) {
-            rb.AddForce((player.position - transform.position).normalized * force / 3f);
+            rb.AddForce((player.position - transform.position).normalized * force / 2.5f);
             transform.rotation = Quaternion.LookRotation(Vector3.forward, player.position - transform.position);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.035f);
         }
     }
 
