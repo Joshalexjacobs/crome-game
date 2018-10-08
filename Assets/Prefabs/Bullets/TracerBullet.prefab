@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4321988270148208}
   - component: {fileID: 212578564387549488}
   - component: {fileID: 95580164294037584}
-  - component: {fileID: 61008003297987694}
   - component: {fileID: 114124319469309918}
   - component: {fileID: 50121460481721316}
+  - component: {fileID: 61845912449491928}
   m_Layer: 8
   m_Name: TracerBullet
   m_TagString: Bullet
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1106644147870034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12571916, y: 0.112533376, z: 0}
+  m_LocalPosition: {x: -0.21829808, y: -0.11348523, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -55,7 +55,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 1
+  m_Mass: 0.00089764263
   m_LinearDrag: 0.05
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -64,7 +64,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61008003297987694
+--- !u!61 &61845912449491928
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,7 +76,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.005614899, y: -0.016844686}
+  m_Offset: {x: 0.0045244694, y: -0.014936443}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -87,7 +87,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.043668285, y: 0.03970488}
+  m_Size: {x: 0.029492617, y: 0.03043618}
   m_EdgeRadius: 0
 --- !u!95 &95580164294037584
 Animator:
@@ -118,8 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d5c9722e2b14d8d92875d27b43dcad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.04
+  speed: 0.025
   deathTime: 5
+  acceleration: 0
   trailPlayer: 1
   direction: {x: 0, y: 0, z: 0}
   bulletTrail: {fileID: 1795420255793666, guid: b7b91bad2fb064dd48c854581025e759,

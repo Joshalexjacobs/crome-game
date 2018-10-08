@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4ce4197a1a4807ac4c99b33b9c2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 35
   health: 20
   isDead: 0
   drone: {fileID: 1043410833539986, guid: 21cae788171eb480aa4940c8a73aa93c, type: 2}

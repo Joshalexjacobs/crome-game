@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc17b77a279ee42f7aa3149ae7f3f0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 15
   health: 10
   isDead: 0
   bullet: {fileID: 1106644147870034, guid: 555dc8784c5de4634b231e4560ae4acb, type: 2}

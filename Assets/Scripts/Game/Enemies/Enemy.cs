@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+    public int xp = 1;
+    public int score = 10;
     public float health = 1f;
     public bool isDead = false;
 
@@ -27,6 +29,17 @@ public class Enemy : MonoBehaviour {
         if (health <= 0) {
             GetComponent<BoxCollider2D>().enabled = false;
             isDead = true;
+
+            if(score > 0) {
+                ScoreKeeper scoreKeeper = FindObjectOfType<ScoreKeeper>();
+                scoreKeeper.AddToScore(score);
+            }
+
+            if(xp > 0) {
+                Player player = FindObjectOfType<Player>();
+                player.GainExperience(xp);
+            }
+
             StartCoroutine("Death");
         } else {
             StartCoroutine("Flash");

@@ -17,7 +17,15 @@ public class ArcadeMode : MonoBehaviour {
 
     public GameObject chopper;
 
+    public GameObject fighter;
+    public GameObject vulture;
+
     void Start () {
+        // changing the resolution...
+        // Screen.SetResolution(480, 432, false); // set the resolution
+        // set canvas scale factor to appropriate number (160 x 144 = 1, 320 x 288 = 2, 480 x 432 = 3 etc...)
+        // make sure pixel perfect camera is set to 160 x 144 and upscale render texture is selected
+
         StartCoroutine("TestWave");
 	}
 	
@@ -73,17 +81,26 @@ public class ArcadeMode : MonoBehaviour {
         Instantiate(medusaLeft, new Vector2(-1f, 0.15f), Quaternion.identity);
         Instantiate(medusaRight, new Vector2(1f, 0.15f), Quaternion.identity);
 
-        yield return new WaitForSeconds(2f);
-
-        Instantiate(chopper, new Vector2(0f, 1f), Quaternion.identity);
-
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
 
         Instantiate(chopper, new Vector2(0.5f, 1f), Quaternion.identity);
 
         yield return new WaitForSeconds(2f);
 
-        Instantiate(chopper, new Vector2(-0.6f, 1f), Quaternion.identity);
+        Instantiate(chopper, new Vector2(-0.5f, 1f), Quaternion.identity);
+
+        yield return new WaitForSeconds(5f);
+
+        Instantiate(fighter, new Vector2(-0.7f, 1f), Quaternion.identity);
+        Instantiate(fighter, new Vector2(0.7f, 1f), Quaternion.identity);
+
+        yield return new WaitForSeconds(3f);
+
+        Instantiate(vulture, new Vector2(0f, 1f), Quaternion.identity);
+
+        yield return new WaitForSeconds(15f);
+
+        StartCoroutine("TestWave");
     }
 
 }
