@@ -46,6 +46,12 @@ public class Drone : Enemy {
             GetComponent<BoxCollider2D>().enabled = false;
             isDead = true;
             StartCoroutine("Death");
+        } else if (collision.gameObject.tag == "Enemy") {
+            collision.gameObject.SendMessage("Damage", 1f);
+
+            GetComponent<BoxCollider2D>().enabled = false;
+            isDead = true;
+            StartCoroutine("Death");
         }
     }
 }

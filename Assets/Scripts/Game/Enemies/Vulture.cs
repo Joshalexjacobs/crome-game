@@ -26,7 +26,6 @@ public class Vulture : Enemy {
         }
     }
 
-
     private void FixedUpdate(){
         if (transform.position.y > 0.5f && !isReady) {
             rb.MovePosition(rb.position + new Vector2(0f, fallSpeed) * Time.fixedDeltaTime);
