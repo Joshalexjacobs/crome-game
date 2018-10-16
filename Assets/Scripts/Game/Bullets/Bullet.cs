@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour {
     public float deathTime = 10f;
     public float acceleration = 0f;
     public bool trailPlayer = false;
+    public bool isHeatSeeking = false;
     public Vector3 direction;
     public GameObject bulletTrail;
 
@@ -29,12 +30,16 @@ public class Bullet : MonoBehaviour {
 
         if (player && trailPlayer) {
             rb.AddForce((player.position - transform.position).normalized * speed);
-        } else {
+        } else if(!isHeatSeeking){
             rb.AddForce(direction * speed);
         }
 
         if (bulletTrail) {
             StartCoroutine("SpawnBulletTrail");
+        }
+
+        if(isHeatSeeking) {
+            StartCoroutine("Seek");
         }
 
         StartCoroutine("Die");
@@ -48,6 +53,24 @@ public class Bullet : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    public virtual void Damage(float damage) {
+        ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
+        explosionManager.AddExplosions(gameObject.transform.position);
+        Destroy(gameObject);
+    }
+
+    IEnumerator Seek() {
+        rb.AddForce(direction * speed);
+        yield return new WaitForSeconds(1f);
+        rb.velocity = Vector2.zero;
+
+        while (!isDead && player) {
+            rb.MovePosition(Vector3.MoveTowards(transform.position, player.position, speed));
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, player.position - transform.position);
+            yield return new WaitForSeconds(0.035f);
+        }
+    }
+
     IEnumerator SpawnBulletTrail() {
         while (!isDead) {
             yield return new WaitForSeconds(0.1f);
@@ -58,6 +81,12 @@ public class Bullet : MonoBehaviour {
     IEnumerator Die() {
         yield return new WaitForSeconds(deathTime);
         isDead = true;
+
+        if(isHeatSeeking) {
+            ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
+            explosionManager.AddExplosions(gameObject.transform.position);
+        }
+
         Destroy(gameObject);
     }
 
@@ -65,5 +94,15 @@ public class Bullet : MonoBehaviour {
         if(acceleration != 0f) {
             rb.AddForce(direction * acceleration);
         }
+
+        //if(isHeatSeeking) {
+        //    if(player == null) {
+        //        player = FindObjectOfType<Player>().transform;
+        //    }
+
+        //    Debug.Log("test test ");
+
+        //    rb.MovePosition((player.position - transform.position).normalized * (speed / 3f) * Time.fixedDeltaTime);
+        //}
     }
 }

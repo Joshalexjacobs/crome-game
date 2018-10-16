@@ -49,10 +49,19 @@ public class Enemy : MonoBehaviour {
     public virtual void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Player") {
             collision.gameObject.SendMessage("Damage");
+            StartCoroutine("HandlePlayerCollision");
         }
     }
 
-    IEnumerator Flash() {
+    public virtual IEnumerator HandlePlayerCollision() {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+        yield return new WaitForSeconds(0.2f);
+        rb.isKinematic = false;
+    }
+
+    public virtual IEnumerator Flash() {
         sr = GetComponent<SpriteRenderer>();
 
         for (int i = 0; i < 2; i++) {

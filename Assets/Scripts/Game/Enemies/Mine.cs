@@ -24,6 +24,8 @@ public class Mine : Enemy {
         if (collision.gameObject.tag == "Player") {
             collision.gameObject.SendMessage("Damage");
             StartCoroutine("Death");
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true;
         }
     }
 

@@ -54,8 +54,7 @@ public class Cyclops : Enemy {
 
         if (transform.position.x <= -0.7f) {
             direction = 1.0f;
-        }
-        else if (transform.position.x >= 0.7f) { 
+        } else if (transform.position.x >= 0.7f) { 
             direction = -1.0f;
         }
     }

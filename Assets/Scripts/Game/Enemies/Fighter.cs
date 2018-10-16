@@ -49,6 +49,15 @@ public class Fighter : Enemy {
         }
     }
 
+    public override IEnumerator HandlePlayerCollision() {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+        yield return new WaitForSeconds(0.2f);
+        rb.isKinematic = false;
+        rb.AddForce(Vector2.down * speed);
+    }
+
     public override IEnumerator Death() {
         ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
         explosionManager.AddExplosions(gameObject.transform.position, 3, true, -0.02f, 0.02f);
