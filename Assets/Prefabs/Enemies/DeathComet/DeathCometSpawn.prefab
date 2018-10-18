@@ -207,6 +207,8 @@ MonoBehaviour:
   isSpawnObject: 1
   deathCometActual: {fileID: 1031199114490652, guid: 2be08daba55574a68ada46f2fc19f81c,
     type: 2}
+  numberOfSkulls: 8
+  skull: {fileID: 1788061547457058, guid: 3d98095ef6a5f8e45b5fee54d8a8b276, type: 2}
 --- !u!212 &212263238439882108
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -8,6 +8,9 @@ public class DeathComet : Enemy {
     public bool isSpawnObject = false;
     public GameObject deathCometActual;
 
+    public int numberOfSkulls = 8;
+    public GameObject skull;
+
     public DeathComet() {
         health = 50;
         isDead = false;
@@ -23,6 +26,7 @@ public class DeathComet : Enemy {
             StartCoroutine("Spawn");
         } else {
             StartCoroutine("SpawnFire");
+            SpawnSkulls();
         }
 	}
 	
@@ -62,6 +66,17 @@ public class DeathComet : Enemy {
             }
 
             yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void SpawnSkulls() {
+        float angle = 0.1f * (float)numberOfSkulls;
+
+        for (int i = 0; i < numberOfSkulls; i++) {
+            Skull skullObj = Instantiate(skull, transform.position, Quaternion.identity).GetComponent<Skull>();
+            skullObj.SetOriginAngle(i * angle, transform.position);
+            //skullObj.SendMessage("SetOriginAngle", i * angle);
+            //skullObj.SendMessage("SetCenter", transform.position);
         }
     }
 
