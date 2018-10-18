@@ -55,10 +55,12 @@ public class Enemy : MonoBehaviour {
 
     public virtual IEnumerator HandlePlayerCollision() {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true;
-        yield return new WaitForSeconds(0.2f);
-        rb.isKinematic = false;
+        if(rb) {
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true;
+            yield return new WaitForSeconds(0.2f);
+            rb.isKinematic = false;
+        }
     }
 
     public virtual IEnumerator Flash() {
