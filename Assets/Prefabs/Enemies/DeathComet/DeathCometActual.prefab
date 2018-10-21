@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61069969612292948}
   - component: {fileID: 114277133895502828}
   - component: {fileID: 95907123066150896}
-  - component: {fileID: 96947127848192072}
+  - component: {fileID: 96048280354047532}
   m_Layer: 8
   m_Name: DeathCometActual
   m_TagString: Enemy
@@ -87,7 +87,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!96 &96947127848192072
+--- !u!96 &96048280354047532
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 1
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xp: 1
   score: 10
-  health: 10
+  health: 30
   isDead: 0
   fire: {fileID: 1993556766261540, guid: cb9f2809e2f374d019a6b8bf07d804c8, type: 2}
   isSpawnObject: 0
@@ -209,6 +209,7 @@ MonoBehaviour:
   bullet: {fileID: 1106644147870034, guid: 555dc8784c5de4634b231e4560ae4acb, type: 2}
   numberOfSkulls: 8
   skull: {fileID: 1788061547457058, guid: 3d98095ef6a5f8e45b5fee54d8a8b276, type: 2}
+  phase: 3
 --- !u!212 &212221044806088702
 SpriteRenderer:
   m_ObjectHideFlags: 1

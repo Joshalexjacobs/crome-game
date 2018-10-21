@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour {
     public float acceleration = 0f;
     public bool trailPlayer = false;
     public bool isHeatSeeking = false;
+    public bool sineWave = false;
+    public bool delayShot = false;
     public Vector3 direction;
     public GameObject bulletTrail;
 
@@ -42,7 +44,24 @@ public class Bullet : MonoBehaviour {
             StartCoroutine("Seek");
         }
 
+        if (delayShot) {
+            StartCoroutine("DelayShot");
+        }
+
         StartCoroutine("Die");
+    }
+
+    IEnumerator DelayShot() {
+        yield return new WaitForSeconds(1f);
+
+        GameObject playerGameObj = GameObject.Find("Player");
+
+        if (playerGameObj && playerGameObj.transform) {
+            player = playerGameObj.transform;
+        }
+
+        rb.velocity = Vector3.zero;
+        rb.AddForce((player.position - transform.position).normalized * speed);
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -95,14 +114,8 @@ public class Bullet : MonoBehaviour {
             rb.AddForce(direction * acceleration);
         }
 
-        //if(isHeatSeeking) {
-        //    if(player == null) {
-        //        player = FindObjectOfType<Player>().transform;
-        //    }
-
-        //    Debug.Log("test test ");
-
-        //    rb.MovePosition((player.position - transform.position).normalized * (speed / 3f) * Time.fixedDeltaTime);
-        //}
+        if(sineWave) {
+            transform.Translate(0.002f * Mathf.Sin(12 * (transform.position.y)), 0, 0);
+        }
     }
 }

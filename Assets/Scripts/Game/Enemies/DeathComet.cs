@@ -13,13 +13,15 @@ public class DeathComet : Enemy {
     public int numberOfSkulls = 8;
     public GameObject skull;
 
+    public int phase = 1;
+
     public DeathComet() {
         health = 50;
         isDead = false;
     }
 
     private bool isReady = false;
-    private GameObject[] skulls;
+    private Skull[] skulls;
 
     private SpriteRenderer sr;
     private Animator animator;
@@ -27,6 +29,7 @@ public class DeathComet : Enemy {
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
+        health = health * phase;
 
         if (isSpawnObject) {
             StartCoroutine("Spawn");
@@ -78,16 +81,45 @@ public class DeathComet : Enemy {
     }
 
     private void SpawnSkulls() {
-        skulls = new GameObject[numberOfSkulls];
+        skulls = new Skull[numberOfSkulls];
         float angle = 0.1f * (float)numberOfSkulls;
 
         for (int i = 0; i < numberOfSkulls; i++) {
             Skull skullObj = Instantiate(skull, transform.position, Quaternion.identity).GetComponent<Skull>();
-            skulls[i] = skullObj.gameObject;
+            skullObj.phase = phase;
+
+            if(phase == 2) {
+                skullObj.respawnTime = 20f;
+                skullObj.health = 6;
+            } else if (phase == 3) {
+                skullObj.respawnTime = 15f;
+                skullObj.health = 7;
+            }
+
+            skulls[i] = skullObj;
             skullObj.SetOriginAngle(i * angle, transform.position);
         }
 
         StartCoroutine("ShotRoutine");
+    }
+
+    private string GetNextAttack() {
+        int nextAttack = Random.Range(0, phase);
+        string results = "";
+
+        switch(nextAttack) {
+            case 0:
+                results = "CircleShot";
+                break;
+            case 1:
+                results = "SineShot";
+                break;
+            case 2:
+                results = "DelayedShot";
+                break;
+        }
+
+        return results;
     }
 
     IEnumerator ShotRoutine() {
@@ -98,25 +130,13 @@ public class DeathComet : Enemy {
 
             yield return new WaitForSeconds(3f);
 
-            StartCoroutine("CircleShot");
+            StartCoroutine(GetNextAttack()); // generic death comet attack
 
-            yield return new WaitForSeconds(3f);
-        }
-    }
+            yield return new WaitForSeconds(4f);
 
-    IEnumerator SkullAttack() {
-        yield return new WaitForSeconds(1f);
-
-        List<GameObject> activeSkulls = new List<GameObject>();
-
-        foreach(GameObject obj in skulls) {
-            if(obj) {
-                activeSkulls.Add(obj);
+            if(phase > 1 && !isDead) {
+                HandleDeathCometWarp();
             }
-        }
-
-        if(activeSkulls.Count > 0) {
-            activeSkulls[Random.Range(0, activeSkulls.Count)].SendMessage("InitBasicAttack", 4);
         }
     }
 
@@ -130,7 +150,7 @@ public class DeathComet : Enemy {
 
         float degreesBetweenShots = fullCircle / (float)numberOfShots;
 
-        for(int j = 0; j < 3 && !isDead; j++) {
+        for (int j = 0; j < 3 && !isDead; j++) {
             for (int i = 0; i < numberOfShots && !isDead; i++) {
                 Vector3 dir = Quaternion.AngleAxis(degreesBetweenShots * i, Vector3.forward) * Vector3.right;
 
@@ -145,11 +165,145 @@ public class DeathComet : Enemy {
         animator.SetBool("isShooting", false);
     }
 
-    public void DestroyAllActiveSkulls() {
-        foreach (GameObject obj in skulls) {
-            if (obj) {
-                obj.GetComponent<Skull>().Damage(50f);
+    IEnumerator SineShot() {
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("isShooting", true);
+
+        int numberOfShots = 6;
+        float fullCircle = 360f;
+
+        float degreesBetweenShots = fullCircle / (float)numberOfShots;
+
+        for (int j = 0; j < 3 && !isDead; j++) {
+            for (int i = 0; i < numberOfShots && !isDead; i++) {
+                Vector3 dir = Quaternion.AngleAxis(degreesBetweenShots * i, Vector3.forward) * Vector3.right;
+
+                Bullet bulletObj = Instantiate(bullet, transform.position + dir / 7, Quaternion.identity).GetComponent<Bullet>();
+                bulletObj.trailPlayer = true;
+                bulletObj.sineWave = true;
+                bulletObj.speed = 0.015f;
+                bulletObj.acceleration = 0.00005f;
+                yield return new WaitForSeconds(0.025f);
             }
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        animator.SetBool("isShooting", false);
+    }
+
+    IEnumerator DelayedShot() {
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("isShooting", true);
+
+        int numberOfShots = 4;
+        float fullCircle = 360f;
+
+        float degreesBetweenShots = fullCircle / (float)numberOfShots;
+
+        for (int j = 0; j < 3 && !isDead; j++) {
+            for (int i = 0; i < numberOfShots && !isDead; i++) {
+                Vector3 dir = Quaternion.AngleAxis(degreesBetweenShots * i, Vector3.forward) * new Vector3(0.25f, 0f, 0f);
+
+                Bullet bulletObj = Instantiate(bullet, transform.position + dir / 2, Quaternion.identity).GetComponent<Bullet>();
+                bulletObj.delayShot = true;
+                bulletObj.Init(dir);
+                bulletObj.speed = 0.0225f;
+                bulletObj.acceleration = 0.00005f;
+            }
+
+            yield return new WaitForSeconds(0.75f);
+        }
+
+        animator.SetBool("isShooting", false);
+    }
+
+    IEnumerator SkullAttack() {
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < phase; i++) {
+            List<Skull> activeSkulls = GetListOfActiveNonShootingSkulls();
+
+            if (activeSkulls.Count > 0) {
+                int skullToGrab = Random.Range(0, activeSkulls.Count);
+                activeSkulls[skullToGrab].InitBasicAttack(3);
+            }
+        }
+    }
+
+    private List<Skull> GetListOfActiveNonShootingSkulls() {
+        List<Skull> activeSkulls = new List<Skull>();
+
+        foreach (Skull obj in GetListOfActiveSkulls()) {
+            if(!obj.GetIsAttacking() && obj.GetIsReady()) {
+                activeSkulls.Add(obj);
+            }
+        }
+
+        return activeSkulls;
+    }
+
+    private List<Skull> GetListOfActiveSkulls() {
+        List<Skull> activeSkulls = new List<Skull>();
+
+        foreach (Skull obj in skulls) {
+            if (obj && !obj.isDead) {
+                activeSkulls.Add(obj);
+            }
+        }
+
+        return activeSkulls;
+    }
+
+    private List<Skull> GetListOfAllSkulls() {
+        List<Skull> activeSkulls = new List<Skull>();
+
+        foreach (Skull obj in skulls) {
+            if (obj) {
+                activeSkulls.Add(obj);
+            }
+        }
+
+        return activeSkulls;
+    }
+
+    private void HandleDeathCometWarp() {
+        List<Skull> activeSkulls = GetListOfAllSkulls();
+        Vector3 newPosition;
+        if (transform.position.x < 0.3f && transform.position.x > -0.3f) {
+            if (Random.Range(-1, 1) == -1) {
+                newPosition = new Vector3(-0.4f, 0.2f, 0f);
+            } else {
+                newPosition = new Vector3(0.4f, 0.2f, 0f);
+            }
+        } else {
+            newPosition = new Vector3(0f, 0.3f, 0f);
+        }
+
+        transform.position = newPosition;
+
+        foreach (Skull obj in activeSkulls) {
+            if(obj) {
+                obj.SetCenter(newPosition);
+            }
+        }
+    }
+
+    public void DestroyAllActiveSkulls() {
+        Skull[] allSkulls = GameObject.FindObjectsOfType<Skull>();
+
+        foreach (Skull skullObj in allSkulls) {
+            if (skullObj) {
+                if (!skullObj.isDead) {
+                    skullObj.respawnable = false;
+                    skullObj.Damage(100f);
+                } else {
+                    Destroy(skullObj.gameObject);
+                }
+            }
+            
         }
     }
 

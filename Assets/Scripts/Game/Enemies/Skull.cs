@@ -7,8 +7,12 @@ public class Skull : Enemy {
     public float rotateSpeed = 0.5f;
     public float distance = 0.5f;
     public int fluctuationRange = 5;
+    public int phase = 0;
+    public int maxHealth = 10;
+    public float respawnTime = 10f;
     public GameObject fire;
     public GameObject bullet;
+    public bool respawnable = true;
 
     public Skull() {
         health = 25;
@@ -16,25 +20,33 @@ public class Skull : Enemy {
     }
 
     private bool isReady = false;
+    private bool isAttacking = false;
     private float angle = 0f;
     private Vector3 center = Vector3.zero;
 
     private BoxCollider2D box;
     private Animator animator;
+    private SpriteRenderer sr;
 
     // Use this for initialization
     void Start () {
-        box = GetComponent<BoxCollider2D>();
-        animator = GetComponent<Animator>();
+        if(!isDead) {
+            box = GetComponent<BoxCollider2D>();
+            animator = GetComponent<Animator>();
+            sr = GetComponent<SpriteRenderer>();
+        }
+
+        isDead = false;
+        health = maxHealth;
+        sr.enabled = true;
+
         box.enabled = false;
 
         StartCoroutine("Expand");
     }
 
 	void FixedUpdate () {
-		if(isReady) {
-            Spin();
-        }
+        Spin();
 	}
 
     public void SetOriginAngle(float angle, Vector3 center) {
@@ -42,6 +54,10 @@ public class Skull : Enemy {
         this.center = center;
         isReady = true;
         StartCoroutine("FluctuateDistance");
+    }
+
+    public void SetCenter(Vector3 center) {
+        this.center = center;
     }
 
     private void Spin() {
@@ -91,11 +107,22 @@ public class Skull : Enemy {
         }
     }
 
+    public bool GetIsAttacking() {
+        return isAttacking;
+    }
+
+    public bool GetIsReady() {
+        return isReady;
+    }
+
     public void InitBasicAttack(int shots) {
-        StartCoroutine("BasicAttack", shots);
+        if(!isAttacking) {
+            StartCoroutine("BasicAttack", shots);
+        }
     }
 
     IEnumerator BasicAttack(int shots) {
+        isAttacking = true;
         animator.SetBool("isShooting", true);
 
         for(int i = 0; i < shots; i++) {
@@ -104,6 +131,7 @@ public class Skull : Enemy {
         }
 
         animator.SetBool("isShooting", false);
+        isAttacking = false;
     }
 
     public override IEnumerator Death() {
@@ -115,6 +143,15 @@ public class Skull : Enemy {
 
         GetComponent<SpriteRenderer>().enabled = false;
 
-        Destroy(gameObject);
+        if (phase > 1 && respawnable) {
+            StartCoroutine("Respawn");
+        } else if (!respawnable) {
+            Destroy(gameObject);
+        }
+    }
+
+    IEnumerator Respawn() {
+        yield return new WaitForSeconds(respawnTime);
+        Start();
     }
 }
