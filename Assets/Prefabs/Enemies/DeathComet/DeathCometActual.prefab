@@ -201,14 +201,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xp: 1
   score: 10
-  health: 20
+  health: 10
   isDead: 0
   fire: {fileID: 1993556766261540, guid: cb9f2809e2f374d019a6b8bf07d804c8, type: 2}
   isSpawnObject: 0
   deathCometActual: {fileID: 0}
+  bullet: {fileID: 1106644147870034, guid: 555dc8784c5de4634b231e4560ae4acb, type: 2}
   numberOfSkulls: 8
   skull: {fileID: 1788061547457058, guid: 3d98095ef6a5f8e45b5fee54d8a8b276, type: 2}
-  skulls: []
 --- !u!212 &212221044806088702
 SpriteRenderer:
   m_ObjectHideFlags: 1

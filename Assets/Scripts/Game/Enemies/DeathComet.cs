@@ -13,20 +13,22 @@ public class DeathComet : Enemy {
     public int numberOfSkulls = 8;
     public GameObject skull;
 
-    public GameObject[] skulls;
-
     public DeathComet() {
         health = 50;
         isDead = false;
     }
 
     private bool isReady = false;
+    private GameObject[] skulls;
 
     private SpriteRenderer sr;
+    private Animator animator;
 
 	// Use this for initialization
 	void Start () {
-        if(isSpawnObject) {
+        animator = GetComponent<Animator>();
+
+        if (isSpawnObject) {
             StartCoroutine("Spawn");
         } else {
             StartCoroutine("SpawnFire");
@@ -36,8 +38,10 @@ public class DeathComet : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
-        if(!isDead) { // doesnt work because of the movement animation
+        if (!isDead) {
             transform.Translate(new Vector3(0f, 0.001f * Mathf.Sin(10f * (Time.time / 4)), 0f));
+        } else if(isDead) {
+            transform.Translate(new Vector3(0f, -0.0005f, 0f));
         }
     }
 
@@ -90,13 +94,13 @@ public class DeathComet : Enemy {
         yield return new WaitForSeconds(4f);
 
         while(!isDead) {
-            yield return new WaitForSeconds(3f);
-
             StartCoroutine("SkullAttack");
 
             yield return new WaitForSeconds(3f);
 
             StartCoroutine("CircleShot");
+
+            yield return new WaitForSeconds(3f);
         }
     }
 
@@ -119,26 +123,48 @@ public class DeathComet : Enemy {
     IEnumerator CircleShot() {
         yield return new WaitForSeconds(1f);
 
+        animator.SetBool("isShooting", true);
+
         int numberOfShots = 15;
         float fullCircle = 360f;
 
         float degreesBetweenShots = fullCircle / (float)numberOfShots;
 
-        for(int i = 0; i < numberOfShots; i++) {
-            Instantiate(bullet, transform.position, Quaternion.identity);
-            // set bullet to have correct vector
-            
+        for(int j = 0; j < 3 && !isDead; j++) {
+            for (int i = 0; i < numberOfShots && !isDead; i++) {
+                Vector3 dir = Quaternion.AngleAxis(degreesBetweenShots * i, Vector3.forward) * Vector3.right;
+
+                Bullet bulletObj = Instantiate(bullet, transform.position + dir / 7, Quaternion.identity).GetComponent<Bullet>();
+                bulletObj.Init(dir);
+                bulletObj.speed = 0.01f;
+                bulletObj.acceleration = 0.00025f;
+                yield return new WaitForSeconds(0.025f);
+            }
+        }
+
+        animator.SetBool("isShooting", false);
+    }
+
+    public void DestroyAllActiveSkulls() {
+        foreach (GameObject obj in skulls) {
+            if (obj) {
+                obj.GetComponent<Skull>().Damage(50f);
+            }
         }
     }
 
     public override IEnumerator Death() {
+        DestroyAllActiveSkulls();
         ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
-        explosionManager.AddExplosions(gameObject.transform.position, 15, true, -0.1f, 0.1f);
-        explosionManager.AddExplosions(gameObject.transform.position, 10, true, -0.1f, 0.1f);
+        explosionManager.AddExplosions(gameObject.transform.position, 25, true, -0.1f, 0.1f);
+        explosionManager.AddExplosions(gameObject.transform.position, 40, true, -0.15f, 0.15f);
 
         yield return new WaitForSeconds(0.75f);
 
-        GetComponent<SpriteRenderer>().enabled = false;
+        for (int i = 4; i > 0; i--) {
+            sr.material.color = new Color(1f, 1f, 1f, 0.25f * i);
+            yield return new WaitForSeconds(0.25f);
+        }
 
         Destroy(gameObject);
     }

@@ -99,7 +99,7 @@ public class Skull : Enemy {
         animator.SetBool("isShooting", true);
 
         for(int i = 0; i < shots; i++) {
-            Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Bullet>().SendMessage("Init", new Vector3(Random.Range(-0.25f, 0.25f), -1f, 0f));
+            Instantiate(bullet, transform.position, Quaternion.identity).SendMessage("Init", new Vector3(Random.Range(-0.25f, 0.25f), -1f, 0f));
             yield return new WaitForSeconds(0.3f);
         }
 

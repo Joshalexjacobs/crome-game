@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ArcadeMode : MonoBehaviour {
 
@@ -37,8 +38,10 @@ public class ArcadeMode : MonoBehaviour {
 	}
 	
 	void Update () {
-		
-	}
+        if (Input.GetKey("escape")) {
+            SceneManager.LoadScene("title");
+        }
+    }
 
     IEnumerator TestWave() {
         yield return new WaitForSeconds(0.5f);
