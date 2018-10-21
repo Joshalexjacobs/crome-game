@@ -8,6 +8,7 @@ public class Skull : Enemy {
     public float distance = 0.5f;
     public int fluctuationRange = 5;
     public GameObject fire;
+    public GameObject bullet;
 
     public Skull() {
         health = 25;
@@ -19,10 +20,12 @@ public class Skull : Enemy {
     private Vector3 center = Vector3.zero;
 
     private BoxCollider2D box;
+    private Animator animator;
 
     // Use this for initialization
     void Start () {
         box = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
         box.enabled = false;
 
         StartCoroutine("Expand");
@@ -86,6 +89,21 @@ public class Skull : Enemy {
                 yield return new WaitForSeconds(0.15f);
             }
         }
+    }
+
+    public void InitBasicAttack(int shots) {
+        StartCoroutine("BasicAttack", shots);
+    }
+
+    IEnumerator BasicAttack(int shots) {
+        animator.SetBool("isShooting", true);
+
+        for(int i = 0; i < shots; i++) {
+            Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Bullet>().SendMessage("Init", new Vector3(Random.Range(-0.25f, 0.25f), -1f, 0f));
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        animator.SetBool("isShooting", false);
     }
 
     public override IEnumerator Death() {

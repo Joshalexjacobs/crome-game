@@ -8,8 +8,12 @@ public class DeathComet : Enemy {
     public bool isSpawnObject = false;
     public GameObject deathCometActual;
 
+    public GameObject bullet;
+
     public int numberOfSkulls = 8;
     public GameObject skull;
+
+    public GameObject[] skulls;
 
     public DeathComet() {
         health = 50;
@@ -70,13 +74,60 @@ public class DeathComet : Enemy {
     }
 
     private void SpawnSkulls() {
+        skulls = new GameObject[numberOfSkulls];
         float angle = 0.1f * (float)numberOfSkulls;
 
         for (int i = 0; i < numberOfSkulls; i++) {
             Skull skullObj = Instantiate(skull, transform.position, Quaternion.identity).GetComponent<Skull>();
+            skulls[i] = skullObj.gameObject;
             skullObj.SetOriginAngle(i * angle, transform.position);
-            //skullObj.SendMessage("SetOriginAngle", i * angle);
-            //skullObj.SendMessage("SetCenter", transform.position);
+        }
+
+        StartCoroutine("ShotRoutine");
+    }
+
+    IEnumerator ShotRoutine() {
+        yield return new WaitForSeconds(4f);
+
+        while(!isDead) {
+            yield return new WaitForSeconds(3f);
+
+            StartCoroutine("SkullAttack");
+
+            yield return new WaitForSeconds(3f);
+
+            StartCoroutine("CircleShot");
+        }
+    }
+
+    IEnumerator SkullAttack() {
+        yield return new WaitForSeconds(1f);
+
+        List<GameObject> activeSkulls = new List<GameObject>();
+
+        foreach(GameObject obj in skulls) {
+            if(obj) {
+                activeSkulls.Add(obj);
+            }
+        }
+
+        if(activeSkulls.Count > 0) {
+            activeSkulls[Random.Range(0, activeSkulls.Count)].SendMessage("InitBasicAttack", 4);
+        }
+    }
+
+    IEnumerator CircleShot() {
+        yield return new WaitForSeconds(1f);
+
+        int numberOfShots = 15;
+        float fullCircle = 360f;
+
+        float degreesBetweenShots = fullCircle / (float)numberOfShots;
+
+        for(int i = 0; i < numberOfShots; i++) {
+            Instantiate(bullet, transform.position, Quaternion.identity);
+            // set bullet to have correct vector
+            
         }
     }
 

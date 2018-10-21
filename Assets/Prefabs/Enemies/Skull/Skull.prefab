@@ -99,12 +99,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xp: 1
   score: 10
-  health: 5
+  health: 10
   isDead: 0
   rotateSpeed: 0.5
   distance: 0.3
   fluctuationRange: 20
   fire: {fileID: 1993556766261540, guid: cb9f2809e2f374d019a6b8bf07d804c8, type: 2}
+  bullet: {fileID: 1106644147870034, guid: 555dc8784c5de4634b231e4560ae4acb, type: 2}
 --- !u!212 &212602024890139814
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -120,7 +121,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 7e570221bbe714d5c9cfb7ac697face9, type: 2}
+  - {fileID: 2100000, guid: ddee4ca2deb4b4a498e0253050d36f05, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
