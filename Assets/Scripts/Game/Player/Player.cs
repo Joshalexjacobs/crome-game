@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
     private bool isMoving = false;
 
     private float myFireTime = 0.0f;
-    private float nextFire = 0.2f;
+    public float nextFire = 0.2f;
 
     private Rigidbody2D rb;
     private BoxCollider2D box;
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour {
         PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(Random.Range(-0.001f, 0.003f), 0.035f, 0f), Quaternion.identity);
         playerBulletObj.Init(damage);
 
-        audio[0].pitch = Random.Range(0.70f, 0.80f);
+        audio[0].pitch = Random.Range(0.975f, 1.025f);
         audio[0].Play();
 
         yield return new WaitForSeconds(0.1f);
