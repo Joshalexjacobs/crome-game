@@ -59,7 +59,8 @@ public class PlayerBullet : MonoBehaviour {
     }
 
     IEnumerator Death() {
-        audio[0].pitch = Random.Range(2.65f, 3.00f);
+        //audio[0].pitch = Random.Range(2.65f, 3.00f);
+        audio[0].pitch = Random.Range(0.65f, 1.00f);
         audio[0].Play();
         yield return new WaitForSeconds(0.167f);
         GetComponent<SpriteRenderer>().enabled = false;
