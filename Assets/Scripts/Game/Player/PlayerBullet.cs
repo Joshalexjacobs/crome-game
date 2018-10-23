@@ -10,6 +10,7 @@ public class PlayerBullet : MonoBehaviour {
     private BoxCollider2D box;
     private Rigidbody2D rb;
     private Animator animator;
+    private AudioSource[] audio;
     private float damage = 1f;
 
 	// Use this for initialization
@@ -17,6 +18,7 @@ public class PlayerBullet : MonoBehaviour {
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audio = GetComponents<AudioSource>();
         StartCoroutine("PlayerBulletDeath");
     }
 
@@ -57,7 +59,11 @@ public class PlayerBullet : MonoBehaviour {
     }
 
     IEnumerator Death() {
+        audio[0].pitch = Random.Range(2.65f, 3.00f);
+        audio[0].Play();
         yield return new WaitForSeconds(0.167f);
+        GetComponent<SpriteRenderer>().enabled = false;
+        yield return new WaitForSeconds(0.3f);
         Destroy(gameObject);
     }
 }

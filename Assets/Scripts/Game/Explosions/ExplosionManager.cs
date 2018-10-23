@@ -10,8 +10,18 @@ public class ExplosionManager : MonoBehaviour {
         AddExplosions(position, 1, false, 0f, 0f);
     }
 
+    private AudioSource[] audio;
+
+    private void Start() {
+        audio = GetComponents<AudioSource>();
+    }
+
     public void AddExplosions(Vector2 position, int numberOfExplosions, bool randomization, float min, float max) {
-        if(!randomization) {
+        int track = Random.Range(0, audio.Length);
+        audio[track].pitch = Random.Range(0.80f, 1.20f);
+        audio[track].Play();
+
+        if (!randomization) {
             int i = Random.Range(0, explosions.Length);
             GameObject explosionObj = Instantiate(explosions[i], position, Quaternion.identity).gameObject;
             explosionObj.transform.parent = transform;

@@ -88,7 +88,10 @@ public class DeathComet : Enemy {
             Skull skullObj = Instantiate(skull, transform.position, Quaternion.identity).GetComponent<Skull>();
             skullObj.phase = phase;
 
-            if(phase == 2) {
+            if(phase == 1) {
+                skullObj.respawnTime = 25f;
+                skullObj.health = 5;
+            } else if(phase == 2) {
                 skullObj.respawnTime = 20f;
                 skullObj.health = 6;
             } else if (phase == 3) {
@@ -311,12 +314,19 @@ public class DeathComet : Enemy {
         DestroyAllActiveSkulls();
         ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
         explosionManager.AddExplosions(gameObject.transform.position, 25, true, -0.1f, 0.1f);
-        explosionManager.AddExplosions(gameObject.transform.position, 40, true, -0.15f, 0.15f);
-
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.15f);
+        explosionManager.AddExplosions(gameObject.transform.position, 10, true, -0.15f, 0.15f);
+        yield return new WaitForSeconds(0.15f);
+        explosionManager.AddExplosions(gameObject.transform.position, 10, true, -0.15f, 0.15f);
+        yield return new WaitForSeconds(0.15f);
+        explosionManager.AddExplosions(gameObject.transform.position, 10, true, -0.15f, 0.15f);
+        yield return new WaitForSeconds(0.15f);
+        explosionManager.AddExplosions(gameObject.transform.position, 10, true, -0.15f, 0.15f);
+        yield return new WaitForSeconds(0.15f);
 
         for (int i = 4; i > 0; i--) {
             sr.material.color = new Color(1f, 1f, 1f, 0.25f * i);
+            explosionManager.AddExplosions(gameObject.transform.position, 2, true, -0.15f, 0.15f);
             yield return new WaitForSeconds(0.25f);
         }
 

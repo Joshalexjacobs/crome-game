@@ -34,6 +34,7 @@ public class Player : MonoBehaviour {
     private BoxCollider2D box;
     private SpriteRenderer sr;
     private TrailRenderer tr;
+    private AudioSource[] audio;
     private PlayerLivesUI playerLivesUI;
 
     void Start() {
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour {
         box = GetComponent<BoxCollider2D>();
         sr = GetComponent<SpriteRenderer>();
         tr = GetComponent<TrailRenderer>();
+        audio = GetComponents<AudioSource>();
         playerLivesUI = FindObjectOfType<PlayerLivesUI>();
 
         playerLivesUI.SetLives(lives);
@@ -75,6 +77,9 @@ public class Player : MonoBehaviour {
     IEnumerator Shoot() {
         PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(Random.Range(-0.001f, 0.003f), 0.035f, 0f), Quaternion.identity);
         playerBulletObj.Init(damage);
+
+        audio[0].pitch = Random.Range(0.70f, 0.80f);
+        audio[0].Play();
 
         yield return new WaitForSeconds(0.1f);
     }
@@ -135,6 +140,7 @@ public class Player : MonoBehaviour {
                 playerLivesUI = FindObjectOfType<PlayerLivesUI>();
             }
 
+            audio[1].Play();
             playerLivesUI.DecrementLives();
             lives--;
 

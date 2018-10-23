@@ -137,13 +137,13 @@ public class Skull : Enemy {
     public override IEnumerator Death() {
         ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
         explosionManager.AddExplosions(gameObject.transform.position, 8, true, -0.09f, 0.09f);
+        yield return new WaitForSeconds(0.15f);
         explosionManager.AddExplosions(gameObject.transform.position, 8, true, -0.07f, 0.07f);
-
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.20f);
 
         GetComponent<SpriteRenderer>().enabled = false;
 
-        if (phase > 1 && respawnable) {
+        if (respawnable) {
             StartCoroutine("Respawn");
         } else if (!respawnable) {
             Destroy(gameObject);
