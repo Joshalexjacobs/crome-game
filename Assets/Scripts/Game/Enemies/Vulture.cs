@@ -17,9 +17,11 @@ public class Vulture : Enemy {
     private bool isReady = false;
     private Transform player;
     private Rigidbody2D rb;
+    private AudioSource audio;
 
-	void Start () {
+    void Start () {
         rb = GetComponent<Rigidbody2D>();
+        audio = GetComponent<AudioSource>();
 
         if (player == null) {
             player = GameObject.Find("Player").gameObject.transform;
@@ -47,7 +49,13 @@ public class Vulture : Enemy {
                 Instantiate(bullet, transform.position + new Vector3(0f, -0.05f, 0f), Quaternion.identity).GetComponent<Bullet>().SendMessage("Init", new Vector3(-0.5f, -1f, 0f));
                 Instantiate(bullet, transform.position + new Vector3(0f, -0.05f, 0f), Quaternion.identity).GetComponent<Bullet>().SendMessage("Init", new Vector3(0.5f, -0.25f, 0f));
                 Instantiate(bullet, transform.position + new Vector3(0f, -0.05f, 0f), Quaternion.identity).GetComponent<Bullet>().SendMessage("Init", new Vector3(-0.5f, -0.25f, 0f));
-                yield return new WaitForSeconds(0.4f);
+
+                yield return new WaitForSeconds(0.07f);
+                audio.Play();
+                yield return new WaitForSeconds(0.03f);
+                audio.Play();
+
+                yield return new WaitForSeconds(0.3f);
             }
 
             yield return new WaitForSeconds(5f);

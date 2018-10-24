@@ -25,6 +25,8 @@ public class ArcadeMode : MonoBehaviour {
 
     public GameObject antEater;
 
+    public GameObject deathComet;
+
     // similar to supr crome, make a wave system but maybe categorize them based on enemy/enemy type
     // and then have a combo class that combines certain enemies
 
@@ -132,6 +134,10 @@ public class ArcadeMode : MonoBehaviour {
 
         Instantiate(antEater, new Vector2(Random.Range(-0.7f, 0.7f), Random.Range(1.0f, 1.6f)), Quaternion.identity);
         Instantiate(antEater, new Vector2(Random.Range(-0.7f, 0.7f), Random.Range(1.0f, 1.6f)), Quaternion.identity);
+
+        yield return new WaitForSeconds(10f);
+
+        Instantiate(deathComet, new Vector2(0f, 0.3f), Quaternion.identity);
 
         //StartCoroutine("TestWave");
     }

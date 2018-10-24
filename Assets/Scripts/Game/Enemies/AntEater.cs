@@ -17,11 +17,13 @@ public class AntEater : Enemy {
 
     private Rigidbody2D rb;
     private Animator animator;
+    private AudioSource[] audio;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audio = GetComponents<AudioSource>();
     }
 
     private void FixedUpdate() {
@@ -29,6 +31,7 @@ public class AntEater : Enemy {
             rb.MovePosition(rb.position + new Vector2(0f, fallSpeed) * Time.fixedDeltaTime);
         } else if (!isReady) {
             isReady = true;
+            audio[0].Play();
             animator.SetBool("isCloaked", false);
             StartCoroutine("Shoot");
         } else {
@@ -48,7 +51,9 @@ public class AntEater : Enemy {
             bullets[1].SendMessage("Init", new Vector3(0.5f, -1f, 0f));
             bullets[2].SendMessage("Init", Vector3.down);
 
-            yield return new WaitForSeconds(3f);
+            audio[1].Play();
+
+            yield return new WaitForSeconds(2.3f);
         }
     }
 }

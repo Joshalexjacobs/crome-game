@@ -23,10 +23,12 @@ public class Cyclops : Enemy {
 
     private Rigidbody2D rb;
     private Animator animator;
+    private AudioSource audio;
 
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
         animator.SetBool("isSpawning", flyDown);
 
         if (flyDown) {
@@ -68,6 +70,8 @@ public class Cyclops : Enemy {
             }
 
             if (isReady && player) {
+                audio.pitch = Random.Range(0.9f, 1.1f);
+                audio.Play();
                 Instantiate(bullet, gameObject.transform.position + new Vector3 (0f, -0.035f, 0f), Quaternion.identity);
             }
         }

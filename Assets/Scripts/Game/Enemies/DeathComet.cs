@@ -25,10 +25,12 @@ public class DeathComet : Enemy {
 
     private SpriteRenderer sr;
     private Animator animator;
+    private AudioSource[] audio;
 
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
+        audio = GetComponents<AudioSource>();
         health = health * phase;
 
         if (isSpawnObject) {
@@ -161,6 +163,9 @@ public class DeathComet : Enemy {
                 bulletObj.Init(dir);
                 bulletObj.speed = 0.01f;
                 bulletObj.acceleration = 0.00025f;
+
+                audio[1].Play();
+
                 yield return new WaitForSeconds(0.025f);
             }
         }
@@ -187,6 +192,9 @@ public class DeathComet : Enemy {
                 bulletObj.sineWave = true;
                 bulletObj.speed = 0.015f;
                 bulletObj.acceleration = 0.00005f;
+
+                audio[2].Play();
+
                 yield return new WaitForSeconds(0.025f);
             }
 
@@ -217,6 +225,7 @@ public class DeathComet : Enemy {
                 bulletObj.acceleration = 0.00005f;
             }
 
+            audio[3].Play();
             yield return new WaitForSeconds(0.75f);
         }
 
@@ -232,6 +241,7 @@ public class DeathComet : Enemy {
             if (activeSkulls.Count > 0) {
                 int skullToGrab = Random.Range(0, activeSkulls.Count);
                 activeSkulls[skullToGrab].InitBasicAttack(3);
+                yield return new WaitForSeconds(0.2f);
             }
         }
     }

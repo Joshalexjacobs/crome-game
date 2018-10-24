@@ -266,7 +266,7 @@ Transform:
   - {fileID: 479847068}
   - {fileID: 68743305}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &239879995
 GameObject:
@@ -390,7 +390,7 @@ MonoBehaviour:
     type: 2}
   playerBullet: {fileID: 114940980774400656, guid: a126d7fcfc37d40da8585846fd68810d,
     type: 2}
-  nextFire: 0.2
+  nextFire: 0.12
 --- !u!96 &239880000
 TrailRenderer:
   serializedVersion: 2
@@ -881,6 +881,7 @@ MonoBehaviour:
   vulture: {fileID: 1081168029286092, guid: 38698f18795e049dd93edd1ecd1f44d9, type: 2}
   mine: {fileID: 1323012003902138, guid: 0063bf4a3ab4347daa815dd24c824cdb, type: 2}
   antEater: {fileID: 1135264553892994, guid: 59ef70c8bfe68486abd42ace5c4d6c0e, type: 2}
+  deathComet: {fileID: 1463454216194564, guid: e75d3dcfac36b43e083d092ea4cbce57, type: 2}
 --- !u!1001 &467995903
 Prefab:
   m_ObjectHideFlags: 0
@@ -918,14 +919,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4107185639478242, guid: e75d3dcfac36b43e083d092ea4cbce57, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114902008277551548, guid: e75d3dcfac36b43e083d092ea4cbce57,
-        type: 2}
-      propertyPath: skull
-      value: 
-      objectReference: {fileID: 1788061547457058, guid: 3d98095ef6a5f8e45b5fee54d8a8b276,
-        type: 2}
     - target: {fileID: 1463454216194564, guid: e75d3dcfac36b43e083d092ea4cbce57, type: 2}
       propertyPath: m_IsActive
       value: 1
@@ -1047,7 +1042,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &605150417
 GameObject:
@@ -1231,7 +1226,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &742339219
 MonoBehaviour:
@@ -1923,7 +1918,7 @@ RectTransform:
   - {fileID: 1286104966}
   - {fileID: 1786754589}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

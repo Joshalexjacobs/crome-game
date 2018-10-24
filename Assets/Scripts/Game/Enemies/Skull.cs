@@ -27,6 +27,7 @@ public class Skull : Enemy {
     private BoxCollider2D box;
     private Animator animator;
     private SpriteRenderer sr;
+    private AudioSource[] audio;
 
     // Use this for initialization
     void Start () {
@@ -34,6 +35,7 @@ public class Skull : Enemy {
             box = GetComponent<BoxCollider2D>();
             animator = GetComponent<Animator>();
             sr = GetComponent<SpriteRenderer>();
+            audio = GetComponents<AudioSource>();
         }
 
         isDead = false;
@@ -68,6 +70,8 @@ public class Skull : Enemy {
 
     IEnumerator Expand() {
         transform.localScale = new Vector3(0f, 0f, 0f);
+
+        audio[0].Play();
 
         for (int i = 0; i <= 10; i++) {
             transform.localScale = new Vector3(i * 0.1f, i * 0.1f, i * 0.1f);
@@ -127,6 +131,7 @@ public class Skull : Enemy {
 
         for(int i = 0; i < shots; i++) {
             Instantiate(bullet, transform.position, Quaternion.identity).SendMessage("Init", new Vector3(Random.Range(-0.25f, 0.25f), -1f, 0f));
+            audio[1].Play();
             yield return new WaitForSeconds(0.3f);
         }
 

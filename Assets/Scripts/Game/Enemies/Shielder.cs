@@ -15,9 +15,11 @@ public class Shielder : Enemy {
     private BoxCollider2D shieldBox;
 
     private Animator animator;
+    private AudioSource audio;
 
     void Start () {
         BoxCollider2D[] boxes = GetComponentsInChildren<BoxCollider2D>();
+        audio = GetComponent<AudioSource>();
         ogBox = boxes[0];
         shieldBox = boxes[1];
 
@@ -75,6 +77,9 @@ public class Shielder : Enemy {
         for (int i = 0; i < 2 && !isDead; i++) {
             Bullet bulletObj = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Bullet>();
             bulletObj.Init(new Vector2(Random.Range(-0.5f, 0.5f), 1f));
+
+            audio.pitch = Random.Range(0.9f, 1.1f);
+            audio.Play();
 
             yield return new WaitForSeconds(0.1f);
         }

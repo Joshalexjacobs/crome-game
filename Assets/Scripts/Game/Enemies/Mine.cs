@@ -12,13 +12,30 @@ public class Mine : Enemy {
     }
 
     private Rigidbody2D rb;
+    private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        audio = GetComponent<AudioSource>();
 
         rb.AddForce(Vector2.down * speed);
+
+        StartCoroutine("Beep");
 	}
+
+    private void Update() {
+        if(transform.position.y < -0.85f) {
+            Destroy(gameObject);
+        }
+    }
+
+    IEnumerator Beep() {
+        while(!isDead) {
+            yield return new WaitForSeconds(0.6f);
+            audio.Play();
+        }
+    }
 
     public override void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Player") {

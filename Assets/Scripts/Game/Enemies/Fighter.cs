@@ -17,12 +17,14 @@ public class Fighter : Enemy {
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
+    private AudioSource audio;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-	}
+        audio = GetComponent<AudioSource>();
+    }
 
     private void FixedUpdate() {
         if (transform.position.y > 0.5f && !isReady) {
@@ -42,6 +44,7 @@ public class Fighter : Enemy {
         while(!isDead) {
             for (int i = 0; i < 3 && !isDead; i++) {
                 Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Bullet>().SendMessage("Init", Vector3.down);
+                audio.Play();
                 yield return new WaitForSeconds(0.3f);
             }
 

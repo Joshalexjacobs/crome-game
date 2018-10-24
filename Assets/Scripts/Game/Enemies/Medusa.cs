@@ -17,10 +17,12 @@ public class Medusa : Enemy {
 
     private Rigidbody2D rb;
     private Animator animator;
+    private AudioSource audio;
 
-	void Start () {
+    void Start () {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
         StartCoroutine("Shoot");
 	}
 
@@ -50,6 +52,10 @@ public class Medusa : Enemy {
                 for (int i = 0; i < 5; i++) {
                     Bullet bulletObj = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Bullet>();
                     bulletObj.Init(new Vector3(Random.Range(-0.5f, 0.5f), -1f, 0f));
+
+                    audio.pitch = Random.Range(0.9f, 1.1f);
+                    audio.Play();
+
                     yield return new WaitForSeconds(0.2f);
                 }
 
