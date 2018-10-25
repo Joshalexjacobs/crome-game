@@ -388,6 +388,7 @@ MonoBehaviour:
     type: 2}
   playerBullet: {fileID: 114940980774400656, guid: a126d7fcfc37d40da8585846fd68810d,
     type: 2}
+  nextFire: 0.2
 --- !u!96 &239880000
 TrailRenderer:
   serializedVersion: 2
@@ -687,6 +688,7 @@ MonoBehaviour:
   vulture: {fileID: 1081168029286092, guid: 38698f18795e049dd93edd1ecd1f44d9, type: 2}
   mine: {fileID: 1323012003902138, guid: 0063bf4a3ab4347daa815dd24c824cdb, type: 2}
   antEater: {fileID: 1135264553892994, guid: 59ef70c8bfe68486abd42ace5c4d6c0e, type: 2}
+  deathComet: {fileID: 0}
 --- !u!114 &339331827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,7 +1151,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4168175540871546, guid: 09231d43f05c005478281051a295f02e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.008
+      value: -0.006
       objectReference: {fileID: 0}
     - target: {fileID: 4168175540871546, guid: 09231d43f05c005478281051a295f02e, type: 2}
       propertyPath: m_LocalPosition.y
