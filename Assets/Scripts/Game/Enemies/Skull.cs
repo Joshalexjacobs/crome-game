@@ -24,25 +24,25 @@ public class Skull : Enemy {
     private float angle = 0f;
     private Vector3 center = Vector3.zero;
 
-    private BoxCollider2D box;
+    private BoxCollider2D baseBox;
     private Animator animator;
-    private SpriteRenderer sr;
+    private SpriteRenderer baseSr;
     private AudioSource[] audio;
 
     // Use this for initialization
     void Start () {
         if(!isDead) {
-            box = GetComponent<BoxCollider2D>();
+            baseBox = GetComponent<BoxCollider2D>();
             animator = GetComponent<Animator>();
-            sr = GetComponent<SpriteRenderer>();
+            baseSr = GetComponent<SpriteRenderer>();
             audio = GetComponents<AudioSource>();
         }
 
         isDead = false;
         health = maxHealth;
-        sr.enabled = true;
+        baseSr.enabled = true;
 
-        box.enabled = false;
+        baseBox.enabled = false;
 
         StartCoroutine("Expand");
     }
@@ -78,7 +78,7 @@ public class Skull : Enemy {
             yield return new WaitForSeconds(0.1f);
         }
 
-        box.enabled = true;
+        baseBox.enabled = true;
 
         StartCoroutine("SpawnFire");
     }

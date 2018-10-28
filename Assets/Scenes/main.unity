@@ -895,16 +895,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTesting: 1
-  testWave: 3
-  antEater: {fileID: 0}
-  chopper: {fileID: 0}
-  cyclopsFlyDown: {fileID: 0}
+  testWave: 18
+  antEater: {fileID: 1135264553892994, guid: 59ef70c8bfe68486abd42ace5c4d6c0e, type: 2}
+  chopper: {fileID: 1453181077399582, guid: c00b00b3c6e2f47778c7c650bb3f5632, type: 2}
+  cyclopsFlyDownLeft: {fileID: 1700788253962544, guid: 3b547afdd527c4f6cbd6557a1a1cb803,
+    type: 2}
+  cyclopsFlyDownRight: {fileID: 1546940972685060, guid: f9d3d15d799364d6597452b282f74a74,
+    type: 2}
   cyclopsLeft: {fileID: 1580730402300968, guid: 30facc6e8f99b4508bd6a5df6f986bf6,
     type: 2}
   cyclopsRight: {fileID: 1041727858324780, guid: e09e5b512006a49deaeb8015de23eff5,
     type: 2}
-  fighter: {fileID: 0}
-  medusa: {fileID: 0}
+  fighter: {fileID: 1343502324816630, guid: d6ca74b9de7be45e0bc6243ade28f331, type: 2}
+  medusaLeft: {fileID: 1831594611915500, guid: 421365c9ed4e6470b8f2858b2e87bf66, type: 2}
+  medusaRight: {fileID: 1831594611915500, guid: 35ead4e71dbd7461f855ecc7dfff01a8,
+    type: 2}
   mine: {fileID: 0}
   shielder: {fileID: 0}
   vulture: {fileID: 0}
@@ -951,6 +956,11 @@ Prefab:
     - target: {fileID: 1463454216194564, guid: e75d3dcfac36b43e083d092ea4cbce57, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114902008277551548, guid: e75d3dcfac36b43e083d092ea4cbce57,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e75d3dcfac36b43e083d092ea4cbce57, type: 2}

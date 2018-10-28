@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TitleElement : MonoBehaviour {
 
+    public bool isFlashing = false;
+    public float flashRate = 0.4f;
+
     private SpriteRenderer sr;
 
 	// Use this for initialization
@@ -24,20 +27,35 @@ public class TitleElement : MonoBehaviour {
             sr.color = new Color(1f, 1f, 1f, 0.25f * i);
             yield return new WaitForSeconds(0.1f);
         }
+
+        if(isFlashing) {
+            StartCoroutine("StartFlashing");
+        }
     }
 
-    public void StartFadeOut() {
-        StartCoroutine("FadeSROut");
+    public void StartFadeOut(float waitTime = 0.1f) {
+        StartCoroutine("FadeSROut", waitTime);
     }
 
-    IEnumerator FadeSROut() {
+    IEnumerator FadeSROut(float waitTime) {
+        isFlashing = false;
+
         if (sr == null) {
             sr = GetComponent<SpriteRenderer>();
         }
 
         for (int i = 4; i >= 0; i--) {
             sr.color = new Color(1f, 1f, 1f, 0.25f * i);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(waitTime);
+        }
+    }
+
+    IEnumerator StartFlashing() {
+        while(isFlashing) {
+            sr.color = new Color(1f, 1f, 1f, 0f);
+            yield return new WaitForSeconds(0.4f);
+            sr.color = new Color(1f, 1f, 1f, 1f);
+            yield return new WaitForSeconds(0.4f);
         }
     }
 }

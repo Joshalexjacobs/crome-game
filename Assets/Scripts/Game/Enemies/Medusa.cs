@@ -42,9 +42,9 @@ public class Medusa : Enemy {
 
     IEnumerator Shoot() {
         while(!isDead) {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(0.2f);
 
-            if(isReady) {
+            if (isReady) {
                 animator.SetBool("isShooting", true);
 
                 yield return new WaitForSeconds(0.5f);
@@ -60,6 +60,8 @@ public class Medusa : Enemy {
                 }
 
                 animator.SetBool("isShooting", false);
+
+                yield return new WaitForSeconds(2.5f);
             }
         }
     }

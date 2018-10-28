@@ -23,7 +23,7 @@ public class DeathComet : Enemy {
     private bool isReady = false;
     private Skull[] skulls;
 
-    private SpriteRenderer sr;
+    private SpriteRenderer baseSr;
     private Animator animator;
     private AudioSource[] audio;
 
@@ -51,14 +51,14 @@ public class DeathComet : Enemy {
     }
 
     public override IEnumerator Flash() {
-        sr = GetComponent<SpriteRenderer>();
+        baseSr = GetComponent<SpriteRenderer>();
 
         for (int i = 0; i < 2; i++) {
-            sr.material.SetFloat("_FlashAmount", 1);
+            baseSr.material.SetFloat("_FlashAmount", 1);
             //sr.enabled = false;
             yield return new WaitForSeconds(0.035f);
             //sr.enabled = true;
-            sr.material.SetFloat("_FlashAmount", 0);
+            baseSr.material.SetFloat("_FlashAmount", 0);
             yield return new WaitForSeconds(0.035f);
         }
     }
@@ -335,7 +335,7 @@ public class DeathComet : Enemy {
         yield return new WaitForSeconds(0.15f);
 
         for (int i = 4; i > 0; i--) {
-            sr.material.color = new Color(1f, 1f, 1f, 0.25f * i);
+            baseSr.material.color = new Color(1f, 1f, 1f, 0.25f * i);
             explosionManager.AddExplosions(gameObject.transform.position, 2, true, -0.15f, 0.15f);
             yield return new WaitForSeconds(0.25f);
         }

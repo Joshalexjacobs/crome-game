@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4223943569915710}
+  - component: {fileID: 114697924899041604}
   m_Layer: 0
   m_Name: CyclopsFlyDownRight
   m_TagString: Untagged
@@ -158,6 +159,18 @@ MonoBehaviour:
   xModifier: 0.1
   flyDown: 1
   bullet: {fileID: 0}
+--- !u!114 &114697924899041604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1546940972685060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d334d92150a724286b98ab8271d0f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathTime: 4
 --- !u!212 &212033953152911596
 SpriteRenderer:
   m_ObjectHideFlags: 1
