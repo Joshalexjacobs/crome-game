@@ -74,8 +74,10 @@ public class Vulture : Enemy {
     public override IEnumerator Death() {
         ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
         explosionManager.AddExplosions(gameObject.transform.position, 16, true, -0.07f, 0.07f);
+        yield return new WaitForSeconds(0.25f);
+        explosionManager.AddExplosions(gameObject.transform.position, 8, true, -0.07f, 0.07f);
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.5f);
 
         GetComponent<SpriteRenderer>().enabled = false;
 

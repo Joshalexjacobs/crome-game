@@ -895,7 +895,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTesting: 1
-  testWave: 18
+  testWave: 16
+  testWave2: 8
   antEater: {fileID: 1135264553892994, guid: 59ef70c8bfe68486abd42ace5c4d6c0e, type: 2}
   chopper: {fileID: 1453181077399582, guid: c00b00b3c6e2f47778c7c650bb3f5632, type: 2}
   cyclopsFlyDownLeft: {fileID: 1700788253962544, guid: 3b547afdd527c4f6cbd6557a1a1cb803,
@@ -910,10 +911,11 @@ MonoBehaviour:
   medusaLeft: {fileID: 1831594611915500, guid: 421365c9ed4e6470b8f2858b2e87bf66, type: 2}
   medusaRight: {fileID: 1831594611915500, guid: 35ead4e71dbd7461f855ecc7dfff01a8,
     type: 2}
-  mine: {fileID: 0}
-  shielder: {fileID: 0}
-  vulture: {fileID: 0}
-  deathCometSpawn: {fileID: 0}
+  mine: {fileID: 1323012003902138, guid: 0063bf4a3ab4347daa815dd24c824cdb, type: 2}
+  shielder: {fileID: 1707515588954136, guid: 4c5898a1b22c84c10b18c6d6149570bc, type: 2}
+  vulture: {fileID: 1081168029286092, guid: 38698f18795e049dd93edd1ecd1f44d9, type: 2}
+  deathCometSpawn: {fileID: 1463454216194564, guid: e75d3dcfac36b43e083d092ea4cbce57,
+    type: 2}
 --- !u!1001 &467995903
 Prefab:
   m_ObjectHideFlags: 0

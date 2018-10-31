@@ -8,6 +8,7 @@ public class WaveManager : MonoBehaviour {
 
     public bool isTesting = false;
     public int testWave;
+    public int testWave2;
 
     // enemies
 
@@ -67,6 +68,23 @@ public class WaveManager : MonoBehaviour {
     IEnumerator TestWave() {
         yield return new WaitForSeconds(3f);
         StartCoroutine("Wave" + testWave.ToString());
+
+        if(testWave2 > 0) {
+            yield return new WaitForSeconds(3f);
+            StartCoroutine("Wave" + testWave2.ToString());
+        }
+    }
+
+    IEnumerator DeathComet() {
+        GameObject[] waveObjs = new GameObject[1];
+
+        waveObjs[0] = Instantiate(deathCometSpawn, new Vector2(0f, 0.3f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
     }
 
     IEnumerator Wave1() {
@@ -260,7 +278,9 @@ public class WaveManager : MonoBehaviour {
         waveObjs[1] = Instantiate(fighter, new Vector2(xRange, 2f), Quaternion.identity);
         waveObjs[2] = Instantiate(fighter, new Vector2(-xRange, 2f), Quaternion.identity);
 
-        yield return new WaitForSeconds(5f);
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
 
         this.HandleEndOfWave();
     }
@@ -278,21 +298,23 @@ public class WaveManager : MonoBehaviour {
         waveObjs[3] = Instantiate(fighter, new Vector2(xRange, 3f), Quaternion.identity);
         waveObjs[4] = Instantiate(fighter, new Vector2(-xRange, 3f), Quaternion.identity);
 
-        yield return new WaitForSeconds(5f);
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
 
         this.HandleEndOfWave();
     }
 
     IEnumerator Wave12() {
-        GameObject[] waveObjs = new GameObject[2];
+        GameObject[] waveObjs = new GameObject[4];
 
-        Instantiate(fighter, new Vector2(0.3f, 2f), Quaternion.identity);
-        Instantiate(fighter, new Vector2(-0.3f, 2f), Quaternion.identity);
+        waveObjs[0] = Instantiate(fighter, new Vector2(0.3f, 2f), Quaternion.identity);
+        waveObjs[1] = Instantiate(fighter, new Vector2(-0.3f, 2f), Quaternion.identity);
 
         yield return new WaitForSeconds(1.2f);
 
-        waveObjs[0] = Instantiate(antEater, new Vector2(-0.5f, 1.6f), Quaternion.identity);
-        waveObjs[1] = Instantiate(antEater, new Vector2(0.5f, 1.6f), Quaternion.identity);
+        waveObjs[2] = Instantiate(antEater, new Vector2(-0.5f, 1.6f), Quaternion.identity);
+        waveObjs[3] = Instantiate(antEater, new Vector2(0.5f, 1.6f), Quaternion.identity);
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);
@@ -302,19 +324,19 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator Wave13() {
-        GameObject[] waveObjs = new GameObject[3];
+        GameObject[] waveObjs = new GameObject[5];
 
-        Instantiate(fighter, new Vector2(0.3f, 2f), Quaternion.identity);
-        Instantiate(fighter, new Vector2(-0.3f, 2f), Quaternion.identity);
+        waveObjs[1] = Instantiate(fighter, new Vector2(0.3f, 2f), Quaternion.identity);
+        waveObjs[2] = Instantiate(fighter, new Vector2(-0.3f, 2f), Quaternion.identity);
 
         yield return new WaitForSeconds(1.2f);
 
-        waveObjs[0] = Instantiate(antEater, new Vector2(-0.5f, 1.6f), Quaternion.identity);
-        waveObjs[1] = Instantiate(antEater, new Vector2(0.5f, 1.6f), Quaternion.identity);
+        waveObjs[3] = Instantiate(antEater, new Vector2(-0.5f, 1.6f), Quaternion.identity);
+        waveObjs[4] = Instantiate(antEater, new Vector2(0.5f, 1.6f), Quaternion.identity);
 
         yield return new WaitForSeconds(0.6f);
 
-        waveObjs[2] = Instantiate(antEater, new Vector2(0f, 1.6f), Quaternion.identity);
+        waveObjs[5] = Instantiate(antEater, new Vector2(0f, 1.6f), Quaternion.identity);
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);
@@ -360,24 +382,24 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator Wave16() {
-        GameObject[] waveObjs = new GameObject[6];
+        GameObject[] waveObjs = new GameObject[8];
 
-        Instantiate(fighter, new Vector2(Random.Range(0.2f, 0.7f), 1.2f), Quaternion.identity);
-        Instantiate(fighter, new Vector2(Random.Range(-0.2f, -0.7f), 1.2f), Quaternion.identity);
+        waveObjs[0] = Instantiate(fighter, new Vector2(Random.Range(0.2f, 0.7f), 1.2f), Quaternion.identity);
+        waveObjs[1] = Instantiate(fighter, new Vector2(Random.Range(-0.2f, -0.7f), 1.2f), Quaternion.identity);
 
         yield return new WaitForSeconds(2f);
 
-        waveObjs[0] = Instantiate(cyclopsLeft, new Vector2(0.1f, 1.5f), Quaternion.identity);
-        waveObjs[1] = Instantiate(cyclopsRight, new Vector2(-0.1f, 1.6f), Quaternion.identity);
-        waveObjs[2] = Instantiate(cyclopsLeft, new Vector2(0.1f, 1.7f), Quaternion.identity);
-        waveObjs[3] = Instantiate(cyclopsRight, new Vector2(-0.1f, 1.8f), Quaternion.identity);
-        waveObjs[4] = Instantiate(cyclopsLeft, new Vector2(0.1f, 1.9f), Quaternion.identity);
-        waveObjs[5] = Instantiate(cyclopsRight, new Vector2(-0.1f, 2f), Quaternion.identity);
+        waveObjs[2] = Instantiate(cyclopsLeft, new Vector2(0.1f, 1.5f), Quaternion.identity);
+        waveObjs[3] = Instantiate(cyclopsRight, new Vector2(-0.1f, 1.6f), Quaternion.identity);
+        waveObjs[4] = Instantiate(cyclopsLeft, new Vector2(0.1f, 1.7f), Quaternion.identity);
+        waveObjs[5] = Instantiate(cyclopsRight, new Vector2(-0.1f, 1.8f), Quaternion.identity);
+        waveObjs[6] = Instantiate(cyclopsLeft, new Vector2(0.1f, 1.9f), Quaternion.identity);
+        waveObjs[7] = Instantiate(cyclopsRight, new Vector2(-0.1f, 2f), Quaternion.identity);
 
         float diff = Random.Range(0.07f, 0.09f);
         float baseStop = Random.Range(0.3f, 0.45f);
 
-        for (int i = 0; i < waveObjs.Length; i++) {
+        for (int i = 2; i < waveObjs.Length; i++) {
             waveObjs[i].GetComponent<Cyclops>().stopPoint = baseStop - (diff * (float)i);
         }
 
@@ -446,7 +468,212 @@ public class WaveManager : MonoBehaviour {
         this.HandleEndOfWave();
     }
 
+    IEnumerator Wave19() {
+        int numberOfMines = Random.Range(7, 28);
 
+        for(int i = 0; i < numberOfMines; i++) {
+            Instantiate(mine, new Vector2(Random.Range(-0.7f, 0.7f), Random.Range(1.0f, 1.6f)), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(0.15f, 0.8f));
+        }
+
+        yield return new WaitForSeconds(5f);
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave20() {
+        int numberOfMines = Random.Range(7, 28);
+
+        for (int i = 0; i < 12; i++) {
+            Instantiate(mine, new Vector2(-0.7f + (0.125f * (float)i), Random.Range(1.0f, 1.3f)), Quaternion.identity);
+            yield return new WaitForSeconds(0.025f);
+        }
+
+        yield return new WaitForSeconds(5f);
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave21() {
+        int numberOfMines = Random.Range(7, 28);
+
+        for(int j = 0; j < 3; j++) {
+            for (int i = 0; i < 10; i++) {
+                Instantiate(mine, new Vector2(-0.7f + (0.15f * (float)i), Random.Range(1.0f, 1.4f)), Quaternion.identity);
+                yield return new WaitForSeconds(0.025f);
+            }
+
+            yield return new WaitForSeconds(Random.Range(1f, 2.5f));
+        }
+
+        yield return new WaitForSeconds(5f);
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave22() {
+        GameObject[] waveObjs = new GameObject[3];
+
+        waveObjs[0] = Instantiate(shielder, new Vector2(0f, 0.25f), Quaternion.identity);
+        yield return new WaitForSeconds(0.75f);
+        waveObjs[1] = Instantiate(shielder, new Vector2(-0.5f, 0.15f), Quaternion.identity);
+        waveObjs[2] = Instantiate(shielder, new Vector2(0.5f, 0.15f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave23() {
+        GameObject[] waveObjs = new GameObject[4];
+
+        waveObjs[0] = Instantiate(shielder, new Vector2(-0.3f, 0.15f), Quaternion.identity);
+        waveObjs[1] = Instantiate(shielder, new Vector2(0.3f, 0.15f), Quaternion.identity);
+
+        waveObjs[2] = Instantiate(chopper, new Vector2(0.3f, 0.85f), Quaternion.identity);
+        waveObjs[3] = Instantiate(chopper, new Vector2(-0.3f, 0.85f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave24() {
+        GameObject[] waveObjs = new GameObject[3];
+
+        waveObjs[0] = Instantiate(shielder, new Vector2(0f, 0.25f), Quaternion.identity);
+        waveObjs[1] = Instantiate(shielder, new Vector2(-0.25f, 0.2f), Quaternion.identity);
+        waveObjs[2] = Instantiate(shielder, new Vector2(0.25f, 0.2f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave25() {
+        GameObject[] waveObjs = new GameObject[3];
+
+        waveObjs[0] = Instantiate(shielder, new Vector2(0f, 0.1f), Quaternion.identity);
+        waveObjs[1] = Instantiate(shielder, new Vector2(-0.45f, 0.1f), Quaternion.identity);
+        waveObjs[2] = Instantiate(shielder, new Vector2(0.45f, 0.1f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave26() {
+        GameObject[] waveObjs = new GameObject[10];
+
+        waveObjs[0] = Instantiate(shielder, new Vector2(0f, 0f), Quaternion.identity);
+        waveObjs[1] = Instantiate(shielder, new Vector2(-0.6f, 0f), Quaternion.identity);
+        waveObjs[2] = Instantiate(shielder, new Vector2(0.6f, 0f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave27() {
+        GameObject[] waveObjs = new GameObject[10];
+
+        waveObjs[0] = Instantiate(shielder, new Vector2(-0.6f, 0.25f), Quaternion.identity);
+        waveObjs[1] = Instantiate(shielder, new Vector2(0.6f, 0.25f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    //vultures: 
+    // 1st: 1 vulture random
+    // 2nd: 1 vulture mid
+    // 3rd: 2 vutlures random (staggered)
+    // 4th: 2 vultures same time, seperate sides
+    // 5th: 3 vutulures, 2 sides, 1 mid (staggered)
+
+    IEnumerator Wave28() {
+        GameObject[] waveObjs = new GameObject[1];
+
+        waveObjs[0] = Instantiate(vulture, new Vector2(Random.Range(-0.65f, 0.65f), 1f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave29() {
+        GameObject[] waveObjs = new GameObject[1];
+
+        waveObjs[0] = Instantiate(vulture, new Vector2(0f, 1f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave30() {
+        GameObject[] waveObjs = new GameObject[2];
+
+        waveObjs[0] = Instantiate(vulture, new Vector2(Random.Range(-0.65f, -0.15f), 1f), Quaternion.identity);
+        yield return new WaitForSeconds(1.5f);
+        waveObjs[1] = Instantiate(vulture, new Vector2(Random.Range(0.15f, 0.65f), 1f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave31() {
+        GameObject[] waveObjs = new GameObject[2];
+
+        waveObjs[0] = Instantiate(vulture, new Vector2(-0.6f, 1f), Quaternion.identity);
+        waveObjs[1] = Instantiate(vulture, new Vector2(0.6f, 1f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
+
+    IEnumerator Wave32() {
+        GameObject[] waveObjs = new GameObject[3];
+
+        waveObjs[0] = Instantiate(vulture, new Vector2(-0.6f, 1f), Quaternion.identity);
+
+        yield return new WaitForSeconds(2.5f);
+
+        waveObjs[1] = Instantiate(vulture, new Vector2(0.6f, 1f), Quaternion.identity);
+
+        yield return new WaitForSeconds(2.5f);
+
+        waveObjs[2] = Instantiate(vulture, new Vector2(0f, 1f), Quaternion.identity);
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        this.HandleEndOfWave();
+    }
 
 
 
