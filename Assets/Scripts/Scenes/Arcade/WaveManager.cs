@@ -10,6 +10,9 @@ public class WaveManager : MonoBehaviour {
     public int testWave;
     public int testWave2;
 
+    public int layersCompleted = 0;
+    public int maxLevels;
+
     // enemies
 
     public GameObject antEater;
@@ -33,12 +36,16 @@ public class WaveManager : MonoBehaviour {
 
     private float waveLoopTime = 0.25f;
 
+    private Stack<int> levelsStack;
+
     // Use this for initialization
     void Start () {
 		if(isTesting) {
             StartCoroutine("TestWave");
         }
-	}
+
+        levelsStack = new Stack<int>();
+    }
 
     private bool LoopWhileAlive(params GameObject[] args) {
         foreach (GameObject arg in args) {
@@ -60,9 +67,20 @@ public class WaveManager : MonoBehaviour {
         return false;
     }
 
+    public void StartNewWave(int phase) {
+        StartCoroutine("NewWave", phase);
+    }
+
+    IEnumerator NewWave(int phase) {
+        for(int i = 0; i < phase; i++) {
+            int nextWave = Random.Range(1, maxLevels);
+            StartCoroutine("Wave" + nextWave.ToString());
+            yield return new WaitForSeconds(3f);
+        }
+    }
+
     private void HandleEndOfWave() {
-        //isDone = true;
-        //layersCompleted++;
+        layersCompleted++;
     }
 
     IEnumerator TestWave() {
@@ -75,10 +93,16 @@ public class WaveManager : MonoBehaviour {
         }
     }
 
-    IEnumerator DeathComet() {
+    public void StartDeathCometWave(int phase) {
+        StartCoroutine("DeathComet", phase);
+    }
+
+    IEnumerator DeathComet(int phase) {
         GameObject[] waveObjs = new GameObject[1];
 
+        // this wont work
         waveObjs[0] = Instantiate(deathCometSpawn, new Vector2(0f, 0.3f), Quaternion.identity);
+        waveObjs[0].GetComponent<DeathComet>().phase = phase;
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);

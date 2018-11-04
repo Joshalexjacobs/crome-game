@@ -65,7 +65,7 @@ public class DeathComet : Enemy {
 
     IEnumerator Spawn() {
         yield return new WaitForSeconds(5f);
-        Instantiate(deathCometActual, transform.position, Quaternion.identity);
+        Instantiate(deathCometActual, transform.position, Quaternion.identity).GetComponent<DeathComet>().phase = phase; ;
         Destroy(gameObject);
     }
 

@@ -860,29 +860,13 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 339331819}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd96c34670caa46369c833f80fed15ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cyclopsFlyDownLeft: {fileID: 1700788253962544, guid: 3b547afdd527c4f6cbd6557a1a1cb803,
-    type: 2}
-  cyclopsFlyDownRight: {fileID: 1546940972685060, guid: f9d3d15d799364d6597452b282f74a74,
-    type: 2}
-  cyclopsLeft: {fileID: 1580730402300968, guid: 30facc6e8f99b4508bd6a5df6f986bf6,
-    type: 2}
-  cyclopsRight: {fileID: 1041727858324780, guid: e09e5b512006a49deaeb8015de23eff5,
-    type: 2}
-  medusaLeft: {fileID: 1831594611915500, guid: 421365c9ed4e6470b8f2858b2e87bf66, type: 2}
-  medusaRight: {fileID: 1831594611915500, guid: 35ead4e71dbd7461f855ecc7dfff01a8,
-    type: 2}
-  shielder: {fileID: 1707515588954136, guid: 4c5898a1b22c84c10b18c6d6149570bc, type: 2}
-  chopper: {fileID: 1453181077399582, guid: c00b00b3c6e2f47778c7c650bb3f5632, type: 2}
-  fighter: {fileID: 1343502324816630, guid: d6ca74b9de7be45e0bc6243ade28f331, type: 2}
-  vulture: {fileID: 1081168029286092, guid: 38698f18795e049dd93edd1ecd1f44d9, type: 2}
-  mine: {fileID: 1323012003902138, guid: 0063bf4a3ab4347daa815dd24c824cdb, type: 2}
-  antEater: {fileID: 1135264553892994, guid: 59ef70c8bfe68486abd42ace5c4d6c0e, type: 2}
-  deathComet: {fileID: 1463454216194564, guid: e75d3dcfac36b43e083d092ea4cbce57, type: 2}
+  phase: 4
+  waveManager: {fileID: 339331827}
 --- !u!114 &339331827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,9 +878,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a350bacea0a50d44e949ee880671d482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTesting: 1
+  isTesting: 0
   testWave: 16
   testWave2: 8
+  layersCompleted: 0
+  maxLevels: 33
   antEater: {fileID: 1135264553892994, guid: 59ef70c8bfe68486abd42ace5c4d6c0e, type: 2}
   chopper: {fileID: 1453181077399582, guid: c00b00b3c6e2f47778c7c650bb3f5632, type: 2}
   cyclopsFlyDownLeft: {fileID: 1700788253962544, guid: 3b547afdd527c4f6cbd6557a1a1cb803,

@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ArcadeMode : MonoBehaviour {
 
+    public int phase = 1;
+    public WaveManager waveManager;
+
+    private float waveLoopTime = 0.25f;
+
     void Start () {
         // changing the resolution...
         // Screen.SetResolution(480, 432, false); // set the resolution
@@ -15,8 +20,33 @@ public class ArcadeMode : MonoBehaviour {
 	}
 	
     IEnumerator Arcade() {
+        yield return new WaitForSeconds(2f);
 
-        yield return new WaitForSeconds(0.8f);
+        while(true) {
+            for (int i = 0; i < 10; i++) {
+                waveManager.StartNewWave(phase);
+
+                while (waveManager.layersCompleted < phase) {
+                    yield return new WaitForSeconds(waveLoopTime);
+                }
+
+                ResetWaveManager();
+            }
+
+            waveManager.StartDeathCometWave(phase);
+
+            while (waveManager.layersCompleted < phase) {
+                yield return new WaitForSeconds(waveLoopTime);
+            }
+
+            ResetWaveManager();
+
+            phase++;
+        }
+    }
+
+    private void ResetWaveManager() {
+        waveManager.layersCompleted = 0;
     }
 
 	void Update () {
