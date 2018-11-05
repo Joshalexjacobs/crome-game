@@ -319,6 +319,8 @@ MonoBehaviour:
     type: 2}
   playerBullet: {fileID: 114940980774400656, guid: a126d7fcfc37d40da8585846fd68810d,
     type: 2}
+  experienceBar: {fileID: 0}
+  levelUpText: {fileID: 0}
   nextFire: 0.2
 --- !u!96 &239880000
 TrailRenderer:
@@ -620,7 +622,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1301,7 +1303,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'v0.1
+  m_Text: 'v0.3
 
 '
 --- !u!222 &1286104968
@@ -1369,7 +1371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
+  m_ScaleFactor: 3
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
@@ -1385,7 +1387,7 @@ Canvas:
   m_GameObject: {fileID: 1677887619}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 339331822}
   m_PlaneDistance: 100
   m_PixelPerfect: 0

@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224e166bb421a4d85a09298a68da075b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 1
+  xp: 0
   score: 5
   health: 3
   isDead: 0

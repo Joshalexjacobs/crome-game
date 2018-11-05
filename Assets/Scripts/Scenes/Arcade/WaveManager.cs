@@ -11,6 +11,7 @@ public class WaveManager : MonoBehaviour {
     public int testWave2;
 
     public int layersCompleted = 0;
+    public bool deathCometDead = false;
     public int maxLevels;
 
     // enemies
@@ -74,8 +75,9 @@ public class WaveManager : MonoBehaviour {
     IEnumerator NewWave(int phase) {
         for(int i = 0; i < phase; i++) {
             int nextWave = Random.Range(1, maxLevels);
+            Debug.Log("Starting... " + nextWave);
             StartCoroutine("Wave" + nextWave.ToString());
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(5f);
         }
     }
 
@@ -100,7 +102,6 @@ public class WaveManager : MonoBehaviour {
     IEnumerator DeathComet(int phase) {
         GameObject[] waveObjs = new GameObject[1];
 
-        // this wont work
         waveObjs[0] = Instantiate(deathCometSpawn, new Vector2(0f, 0.3f), Quaternion.identity);
         waveObjs[0].GetComponent<DeathComet>().phase = phase;
 
@@ -108,7 +109,15 @@ public class WaveManager : MonoBehaviour {
             yield return new WaitForSeconds(waveLoopTime);
         }
 
-        this.HandleEndOfWave();
+        yield return new WaitForSeconds(0.1f);
+
+        waveObjs[0] = GameObject.FindObjectOfType<DeathComet>().gameObject;
+
+        while (LoopWhileAliveArray(waveObjs)) {
+            yield return new WaitForSeconds(waveLoopTime);
+        }
+
+        deathCometDead = true;
     }
 
     IEnumerator Wave1() {
@@ -245,8 +254,8 @@ public class WaveManager : MonoBehaviour {
         GameObject[] waveObjs = new GameObject[3];
 
         waveObjs[0] = Instantiate(chopper, new Vector2(0f, 0.85f), Quaternion.identity);
-        waveObjs[1] = Instantiate(antEater, new Vector2(-0.4f, 1.6f), Quaternion.identity);
-        waveObjs[2] = Instantiate(antEater, new Vector2(0.4f, 1.6f), Quaternion.identity);
+        waveObjs[1] = Instantiate(antEater, new Vector2(-0.3f, 1.6f), Quaternion.identity);
+        waveObjs[2] = Instantiate(antEater, new Vector2(0.3f, 1.6f), Quaternion.identity);
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);
@@ -258,8 +267,8 @@ public class WaveManager : MonoBehaviour {
     IEnumerator Wave8() {
         GameObject[] waveObjs = new GameObject[4];
 
-        waveObjs[0] = Instantiate(chopper, new Vector2(-0.5f, 0.85f), Quaternion.identity);
-        waveObjs[1] = Instantiate(chopper, new Vector2(0.5f, 0.85f), Quaternion.identity);
+        waveObjs[0] = Instantiate(chopper, new Vector2(-0.3f, 0.85f), Quaternion.identity);
+        waveObjs[1] = Instantiate(chopper, new Vector2(0.3f, 0.85f), Quaternion.identity);
 
         yield return new WaitForSeconds(1f);
 
@@ -350,17 +359,17 @@ public class WaveManager : MonoBehaviour {
     IEnumerator Wave13() {
         GameObject[] waveObjs = new GameObject[5];
 
-        waveObjs[1] = Instantiate(fighter, new Vector2(0.3f, 2f), Quaternion.identity);
-        waveObjs[2] = Instantiate(fighter, new Vector2(-0.3f, 2f), Quaternion.identity);
+        waveObjs[0] = Instantiate(fighter, new Vector2(0.3f, 2f), Quaternion.identity);
+        waveObjs[1] = Instantiate(fighter, new Vector2(-0.3f, 2f), Quaternion.identity);
 
         yield return new WaitForSeconds(1.2f);
 
-        waveObjs[3] = Instantiate(antEater, new Vector2(-0.5f, 1.6f), Quaternion.identity);
-        waveObjs[4] = Instantiate(antEater, new Vector2(0.5f, 1.6f), Quaternion.identity);
+        waveObjs[2] = Instantiate(antEater, new Vector2(-0.5f, 1.6f), Quaternion.identity);
+        waveObjs[3] = Instantiate(antEater, new Vector2(0.5f, 1.6f), Quaternion.identity);
 
         yield return new WaitForSeconds(0.6f);
 
-        waveObjs[5] = Instantiate(antEater, new Vector2(0f, 1.6f), Quaternion.identity);
+        waveObjs[4] = Instantiate(antEater, new Vector2(0f, 1.6f), Quaternion.identity);
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);
@@ -370,11 +379,10 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator Wave14() {
-        GameObject[] waveObjs = new GameObject[3];
+        GameObject[] waveObjs = new GameObject[2];
 
-        waveObjs[0] = Instantiate(chopper, new Vector2(0f, 0.85f), Quaternion.identity);
-        waveObjs[1] = Instantiate(fighter, new Vector2(0.2f, 1.2f), Quaternion.identity);
-        waveObjs[2] = Instantiate(fighter, new Vector2(-0.2f, 1.2f), Quaternion.identity);
+        waveObjs[0] = Instantiate(fighter, new Vector2(0.2f, 1.2f), Quaternion.identity);
+        waveObjs[1] = Instantiate(fighter, new Vector2(-0.2f, 1.2f), Quaternion.identity);
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);
@@ -384,19 +392,10 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator Wave15() {
-        GameObject[] waveObjs = new GameObject[5];
+        GameObject[] waveObjs = new GameObject[2];
 
-        waveObjs[0] = Instantiate(chopper, new Vector2(0f, 0.85f), Quaternion.identity);
-
-        yield return new WaitForSeconds(0.6f);
-
-        waveObjs[1] = Instantiate(chopper, new Vector2(0.5f, 0.85f), Quaternion.identity);
-        waveObjs[2] = Instantiate(chopper, new Vector2(-0.5f, 0.85f), Quaternion.identity);
-
-        yield return new WaitForSeconds(1f);
-
-        waveObjs[3] = Instantiate(fighter, new Vector2(0.3f, 1.2f), Quaternion.identity);
-        waveObjs[4] = Instantiate(fighter, new Vector2(-0.3f, 1.2f), Quaternion.identity);
+        waveObjs[0] = Instantiate(fighter, new Vector2(0.3f, 1.2f), Quaternion.identity);
+        waveObjs[1] = Instantiate(fighter, new Vector2(-0.3f, 1.2f), Quaternion.identity);
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);
@@ -551,13 +550,10 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator Wave23() {
-        GameObject[] waveObjs = new GameObject[4];
+        GameObject[] waveObjs = new GameObject[2];
 
         waveObjs[0] = Instantiate(shielder, new Vector2(-0.3f, 0.15f), Quaternion.identity);
         waveObjs[1] = Instantiate(shielder, new Vector2(0.3f, 0.15f), Quaternion.identity);
-
-        waveObjs[2] = Instantiate(chopper, new Vector2(0.3f, 0.85f), Quaternion.identity);
-        waveObjs[3] = Instantiate(chopper, new Vector2(-0.3f, 0.85f), Quaternion.identity);
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);
@@ -595,7 +591,7 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator Wave26() {
-        GameObject[] waveObjs = new GameObject[10];
+        GameObject[] waveObjs = new GameObject[3];
 
         waveObjs[0] = Instantiate(shielder, new Vector2(0f, 0f), Quaternion.identity);
         waveObjs[1] = Instantiate(shielder, new Vector2(-0.6f, 0f), Quaternion.identity);
@@ -609,7 +605,7 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator Wave27() {
-        GameObject[] waveObjs = new GameObject[10];
+        GameObject[] waveObjs = new GameObject[2];
 
         waveObjs[0] = Instantiate(shielder, new Vector2(-0.6f, 0.25f), Quaternion.identity);
         waveObjs[1] = Instantiate(shielder, new Vector2(0.6f, 0.25f), Quaternion.identity);

@@ -122,6 +122,9 @@ public class DeathComet : Enemy {
             case 2:
                 results = "DelayedShot";
                 break;
+            default:
+                results = "CircleShot";
+                break;
         }
 
         return results;

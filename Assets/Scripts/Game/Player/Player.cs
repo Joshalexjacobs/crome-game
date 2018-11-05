@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 
     public GameObject playerTrailParticle;
     public PlayerBullet playerBullet;
+    public ExperienceBar experienceBar;
+    public LevelUpText levelUpText;
 
     /* PRIVATE VARS */
 
@@ -118,12 +120,36 @@ public class Player : MonoBehaviour {
     /* OTHER */
 
     public void GainExperience(int xp) {
-        experience += xp;
-        HandleLevelUp();
+        if (currentLevel <= 8) {
+            experience += xp;
+
+            if (experience >= 10) {
+                experience = experience - 10;
+                HandleLevelUp();
+            }
+
+            experienceBar.UpdateExperience(experience);
+        }
     }
 
     private void HandleLevelUp() {
-        
+        currentLevel++;
+        levelUpText.StartBlinking();
+
+        switch(currentLevel) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                nextFire -= 0.01f;
+                break;
+            default:
+                break;
+        }
     }
 
     IEnumerator SpawnPlayerTrailParticles() {

@@ -264,7 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xp: 1
   score: 20
-  health: 6
+  health: 4
   isDead: 0
   bullet: {fileID: 1106644147870034, guid: eb9c91567b2a645038a221583a7d4537, type: 2}
 --- !u!212 &212658398667857436
