@@ -319,9 +319,10 @@ MonoBehaviour:
     type: 2}
   playerBullet: {fileID: 114940980774400656, guid: a126d7fcfc37d40da8585846fd68810d,
     type: 2}
+  sideBulletLeft: {fileID: 0}
+  sideBulletRight: {fileID: 0}
   experienceBar: {fileID: 0}
   levelUpText: {fileID: 0}
-  nextFire: 0.2
 --- !u!96 &239880000
 TrailRenderer:
   serializedVersion: 2
@@ -1371,7 +1372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 3
+  m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
