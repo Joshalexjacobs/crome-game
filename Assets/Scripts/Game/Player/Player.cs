@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 
     public GameObject playerTrailParticle;
     public PlayerBullet playerBullet;
+    public PlayerBullet sideBulletLeft;
+    public PlayerBullet sideBulletRight;
     public ExperienceBar experienceBar;
     public LevelUpText levelUpText;
 
@@ -30,7 +32,14 @@ public class Player : MonoBehaviour {
     private bool isMoving = false;
 
     private float myFireTime = 0.0f;
-    public float nextFire = 0.2f;
+    private float mySideFireTime = 0.0f;
+    private float nextFire = 0.2f;
+    private float nextSideFire = 1f;
+
+    private bool canFireDouble = false;
+
+    private bool canSideFire = false;
+    private int sideFireBullets = 2;
 
     private Rigidbody2D rb;
     private BoxCollider2D box;
@@ -65,6 +74,7 @@ public class Player : MonoBehaviour {
 
     private void UpdateMisc() {
         myFireTime = myFireTime + Time.deltaTime;
+        mySideFireTime = mySideFireTime + Time.deltaTime;
     }
 
     private void HandleShooting(bool isShooting) {
@@ -72,16 +82,66 @@ public class Player : MonoBehaviour {
             //camera.SendMessage("BeginShortVerticalShake", 0.0025f);
 
             StartCoroutine("Shoot");
+            if(canSideFire && mySideFireTime > nextSideFire) {
+                StartCoroutine("ShootSideBullet");
+                mySideFireTime = 0.0f;
+            }
+            
             myFireTime = 0.0f;
         }
     }
 
     IEnumerator Shoot() {
-        PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(Random.Range(-0.001f, 0.003f), 0.035f, 0f), Quaternion.identity);
-        playerBulletObj.Init(damage);
+        if(canFireDouble) {
+            PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(0.025f, 0.035f, 0f), Quaternion.identity);
+            playerBulletObj.Init(damage);
+
+            playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(-0.012f, 0.035f, 0f), Quaternion.identity);
+            playerBulletObj.Init(damage);
+        } else {
+            PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(Random.Range(-0.001f, 0.003f), 0.035f, 0f), Quaternion.identity);
+            playerBulletObj.Init(damage);
+        }
 
         audio[0].pitch = Random.Range(0.975f, 1.025f);
         audio[0].Play();
+
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    IEnumerator ShootSideBullet() {
+        PlayerBullet playerBulletObj = Instantiate(sideBulletLeft, transform.position + new Vector3(-0.003f, -0.001f, 0f), Quaternion.Euler(0f, 0f, 25f));
+        playerBulletObj.speed = 1f;
+        playerBulletObj.Init(damage);
+
+        playerBulletObj = Instantiate(sideBulletRight, transform.position + new Vector3(0.003f, -0.001f, 0f), Quaternion.Euler(0f, 0f, -25f));
+        playerBulletObj.speed = 1f;
+        playerBulletObj.Init(damage);
+
+        if (sideFireBullets >= 4) {
+            playerBulletObj = Instantiate(sideBulletLeft, transform.position + new Vector3(-0.003f, -0.001f, 0f), Quaternion.Euler(0f, 0f, 5f));
+            playerBulletObj.sideFloat = -0.2f;
+            playerBulletObj.speed = 1f;
+            playerBulletObj.Init(damage);
+
+            playerBulletObj = Instantiate(sideBulletRight, transform.position + new Vector3(0.003f, -0.001f, 0f), Quaternion.Euler(0f, 0f, -5f));
+            playerBulletObj.sideFloat = 0.2f;
+            playerBulletObj.speed = 1f;
+            playerBulletObj.Init(damage);
+        }
+
+        if (sideFireBullets >= 6) {
+            playerBulletObj = Instantiate(sideBulletLeft, transform.position + new Vector3(-0.003f, -0.001f, 0f), Quaternion.Euler(0f, 0f, 40f));
+            playerBulletObj.sideFloat = -1.7f;
+            playerBulletObj.speed = 1f;
+            playerBulletObj.Init(damage);
+
+            playerBulletObj = Instantiate(sideBulletRight, transform.position + new Vector3(0.003f, -0.001f, 0f), Quaternion.Euler(0f, 0f, -40f));
+            playerBulletObj.sideFloat = 1.7f;
+            playerBulletObj.speed = 1f;
+            playerBulletObj.Init(damage);
+            
+        }
 
         yield return new WaitForSeconds(0.1f);
     }
@@ -120,7 +180,7 @@ public class Player : MonoBehaviour {
     /* OTHER */
 
     public void GainExperience(int xp) {
-        if (currentLevel <= 8) {
+        if (currentLevel <= 14) {
             experience += xp;
 
             if (experience >= 10) {
@@ -134,7 +194,7 @@ public class Player : MonoBehaviour {
 
     private void HandleLevelUp() {
         currentLevel++;
-        levelUpText.StartBlinking();
+        levelUpText.StartBlinking(currentLevel);
 
         switch(currentLevel) {
             case 1:
@@ -145,7 +205,19 @@ public class Player : MonoBehaviour {
             case 6:
             case 7:
             case 8:
-                nextFire -= 0.01f;
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                nextFire -= 0.005f;
+                break;
+            case 14:
+                nextFire -= 0.015f;
+                break;
+            case 15:
+                canFireDouble = true;
+                experienceBar.WipeExperience();
                 break;
             default:
                 break;

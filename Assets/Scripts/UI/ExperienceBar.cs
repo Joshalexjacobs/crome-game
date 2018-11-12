@@ -15,4 +15,8 @@ public class ExperienceBar : MonoBehaviour {
     public void UpdateExperience(int experience) {
         image.fillAmount = 0.1f * (float)experience;
     }
+
+    public void WipeExperience() {
+        image.fillAmount = 0f;
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour {
@@ -37,6 +38,7 @@ public class WaveManager : MonoBehaviour {
 
     private float waveLoopTime = 0.25f;
 
+    private int currentLevel = 1;
     private Stack<int> levelsStack;
 
     // Use this for initialization
@@ -72,13 +74,78 @@ public class WaveManager : MonoBehaviour {
         StartCoroutine("NewWave", phase);
     }
 
+    private string GetNextLevel() {
+        string level = "";
+
+        currentLevel++;
+
+        if (levelsStack.Count == 0) {
+            ResetLevelsStack();
+        }
+
+        level = levelsStack.Pop().ToString();
+
+        return level;
+    }
+
+    private void ResetLevelsStack() {
+        Debug.Log("Resetting Stack...");
+        levelsStack.Clear();
+
+        List<int> myValues = new List<int>();
+
+        for (int i = 1; i <= maxLevels; i++) {
+            myValues.Add(i);
+        }
+
+        IEnumerable<int> randomValues = myValues.Shuffle().Take(maxLevels);
+
+        foreach (int item in randomValues) {
+            levelsStack.Push(item);
+        }
+    }
+
     IEnumerator NewWave(int phase) {
         for(int i = 0; i < phase; i++) {
-            int nextWave = Random.Range(1, maxLevels);
+            //int nextWave = Random.Range(1, maxLevels);
+            string nextWave = GetNextLevel();
             Debug.Log("Starting... " + nextWave);
             StartCoroutine("Wave" + nextWave.ToString());
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(GetPhaseWaitTime(phase));
         }
+    }
+    
+    private float GetPhaseWaitTime(int phase) {
+        float waitTime = 1f;
+
+        switch(phase) {
+            case 1:
+                waitTime = 5f;
+                break;
+            case 2:
+                waitTime = 4.5f;
+                break;
+            case 3:
+                waitTime = 3f;
+                break;
+            case 4:
+                waitTime = 2f;
+                break;
+            case 5:
+                waitTime = 2.5f;
+                break;
+            case 6:
+                waitTime = 2f;
+                break;
+            case 7:
+                waitTime = 1.5f;
+                break;
+            default:
+                waitTime = 1f;
+                break;
+        }
+
+        return waitTime;
     }
 
     private void HandleEndOfWave() {
@@ -357,7 +424,7 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator Wave13() {
-        GameObject[] waveObjs = new GameObject[5];
+        GameObject[] waveObjs = new GameObject[4];
 
         waveObjs[0] = Instantiate(fighter, new Vector2(0.3f, 2f), Quaternion.identity);
         waveObjs[1] = Instantiate(fighter, new Vector2(-0.3f, 2f), Quaternion.identity);
@@ -366,10 +433,6 @@ public class WaveManager : MonoBehaviour {
 
         waveObjs[2] = Instantiate(antEater, new Vector2(-0.5f, 1.6f), Quaternion.identity);
         waveObjs[3] = Instantiate(antEater, new Vector2(0.5f, 1.6f), Quaternion.identity);
-
-        yield return new WaitForSeconds(0.6f);
-
-        waveObjs[4] = Instantiate(antEater, new Vector2(0f, 1.6f), Quaternion.identity);
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);

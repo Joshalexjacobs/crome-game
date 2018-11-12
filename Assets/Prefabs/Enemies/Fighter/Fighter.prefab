@@ -300,7 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xp: 1
   score: 15
-  health: 10
+  health: 8
   isDead: 0
   bullet: {fileID: 1106644147870034, guid: 555dc8784c5de4634b231e4560ae4acb, type: 2}
   fallSpeed: -0.9

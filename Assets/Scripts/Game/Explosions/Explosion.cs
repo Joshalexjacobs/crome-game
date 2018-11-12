@@ -7,12 +7,15 @@ public class Explosion : MonoBehaviour {
     public Color[] colors;
 
     private SpriteRenderer sr;
+    private GameObject camera;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         sr = GetComponent<SpriteRenderer>();
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
 
         sr.color = colors[Random.Range(0, colors.Length)];
+        camera.SendMessage ("BeginMedVerticalShake", 0.0045f);
 
         StartCoroutine("Death");
 	}

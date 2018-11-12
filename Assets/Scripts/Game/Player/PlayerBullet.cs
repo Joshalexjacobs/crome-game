@@ -6,6 +6,8 @@ public class PlayerBullet : MonoBehaviour {
 
     public float speed = 1f;
     public float deathTime = 1.5f;
+    public bool sideBullet = false;
+    public float sideFloat = 0.3f;
 
     private BoxCollider2D box;
     private Rigidbody2D rb;
@@ -27,7 +29,12 @@ public class PlayerBullet : MonoBehaviour {
             rb = GetComponent<Rigidbody2D>();
         }
 
-        rb.AddForce(new Vector2(0.0f, speed));
+        if(sideBullet) {
+            rb.AddForce(new Vector2(sideFloat, speed));
+        } else {
+            rb.AddForce(new Vector2(0.0f, speed));
+        }
+        
         this.damage = dmg;
     }
 

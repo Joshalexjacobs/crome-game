@@ -27,10 +27,13 @@ public class DeathComet : Enemy {
     private Animator animator;
     private AudioSource[] audio;
 
-	// Use this for initialization
-	void Start () {
+    private WaveText waveText;
+
+    // Use this for initialization
+    void Start () {
         animator = GetComponent<Animator>();
         audio = GetComponents<AudioSource>();
+        waveText = GameObject.FindObjectOfType<WaveText>();
         health = health * phase;
 
         if (isSpawnObject) {
@@ -92,14 +95,15 @@ public class DeathComet : Enemy {
 
             if(phase == 1) {
                 skullObj.respawnTime = 25f;
-                skullObj.health = 5;
             } else if(phase == 2) {
                 skullObj.respawnTime = 20f;
-                skullObj.health = 6;
             } else if (phase == 3) {
                 skullObj.respawnTime = 15f;
-                skullObj.health = 7;
+            } else {
+                skullObj.respawnTime = 12f;
             }
+
+            skullObj.health = 5 + phase; // maybe do: + (2 * phase)
 
             skulls[i] = skullObj;
             skullObj.SetOriginAngle(i * angle, transform.position);
@@ -136,11 +140,11 @@ public class DeathComet : Enemy {
         while(!isDead) {
             StartCoroutine("SkullAttack");
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
 
             StartCoroutine(GetNextAttack()); // generic death comet attack
 
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(3.5f);
 
             if(phase > 1 && !isDead) {
                 HandleDeathCometWarp();
@@ -324,6 +328,7 @@ public class DeathComet : Enemy {
     }
 
     public override IEnumerator Death() {
+        waveText.StartBlinking(phase);
         DestroyAllActiveSkulls();
         ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
         explosionManager.AddExplosions(gameObject.transform.position, 25, true, -0.1f, 0.1f);

@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xp: 2
   score: 35
-  health: 20
+  health: 15
   isDead: 0
   drone: {fileID: 1043410833539986, guid: 21cae788171eb480aa4940c8a73aa93c, type: 2}
   fallSpeed: -0.175

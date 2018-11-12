@@ -101,11 +101,6 @@ public class Bullet : MonoBehaviour {
         yield return new WaitForSeconds(deathTime);
         isDead = true;
 
-        if(isHeatSeeking) {
-            ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
-            explosionManager.AddExplosions(gameObject.transform.position);
-        }
-
         Destroy(gameObject);
     }
 
