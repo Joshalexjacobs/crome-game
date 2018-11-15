@@ -106,12 +106,17 @@ public class WaveManager : MonoBehaviour {
     }
 
     IEnumerator NewWave(int phase) {
-        for(int i = 0; i < phase; i++) {
+        int actualPhase = phase;
+        if(phase > 8) {
+            actualPhase = 8;
+        }
+
+        for(int i = 0; i < actualPhase; i++) {
             //int nextWave = Random.Range(1, maxLevels);
             string nextWave = GetNextLevel();
             Debug.Log("Starting... " + nextWave);
             StartCoroutine("Wave" + nextWave.ToString());
-            yield return new WaitForSeconds(GetPhaseWaitTime(phase));
+            yield return new WaitForSeconds(GetPhaseWaitTime(actualPhase));
         }
     }
     
@@ -129,15 +134,21 @@ public class WaveManager : MonoBehaviour {
                 waitTime = 3f;
                 break;
             case 4:
-                waitTime = 2f;
+                waitTime = 3.5f;
                 break;
             case 5:
-                waitTime = 2.5f;
+                waitTime = 3f;
                 break;
             case 6:
-                waitTime = 2f;
+                waitTime = 2.5f;
                 break;
             case 7:
+                waitTime = 2.5f;
+                break;
+            case 8:
+                waitTime = 2f;
+                break;
+            case 9:
                 waitTime = 1.5f;
                 break;
             default:

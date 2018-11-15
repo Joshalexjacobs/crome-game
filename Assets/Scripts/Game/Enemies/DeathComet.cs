@@ -242,7 +242,12 @@ public class DeathComet : Enemy {
     IEnumerator SkullAttack() {
         yield return new WaitForSeconds(1f);
 
-        for (int i = 0; i < phase; i++) {
+        int actualPhase = phase;
+        if(phase > 8) {
+            actualPhase = 8;
+        }
+
+        for (int i = 0; i < actualPhase; i++) {
             List<Skull> activeSkulls = GetListOfActiveNonShootingSkulls();
 
             if (activeSkulls.Count > 0) {

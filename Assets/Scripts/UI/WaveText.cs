@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class WaveText : MonoBehaviour {
 
-    private Text text;
+    private TextMesh text;
+    private MeshRenderer mesh;
 
     // Use this for initialization
     void Start() {
-        text = GetComponent<Text>();
-        text.enabled = false;
+        text = GetComponent<TextMesh>();
+        mesh = GetComponent<MeshRenderer>();
+        StartCoroutine("Blink");
     }
 
     public void StartBlinking(int phase) {
@@ -21,15 +23,15 @@ public class WaveText : MonoBehaviour {
 
     IEnumerator Blink() {
         for (int i = 0; i < 5; i++) {
-            text.enabled = true;
+            mesh.enabled = true;
 
             yield return new WaitForSeconds(0.25f);
 
-            text.enabled = false;
+            mesh.enabled = false;
 
             yield return new WaitForSeconds(0.25f);
         }
 
-        text.enabled = false;
+        mesh.enabled = false;
     }
 }

@@ -119,10 +119,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.02
-  deathTime: 3.25
+  deathTime: 3
   acceleration: 0
   trailPlayer: 0
   isHeatSeeking: 1
+  sineWave: 0
+  delayShot: 0
   direction: {x: 0, y: 0, z: 0}
   bulletTrail: {fileID: 1795420255793666, guid: b7b91bad2fb064dd48c854581025e759,
     type: 2}

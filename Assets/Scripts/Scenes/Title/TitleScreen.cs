@@ -9,6 +9,8 @@ public class TitleScreen : MonoBehaviour {
     public TitleElement stumpheadGamesLLC;
     public TitleElement cromeTitle;
     public TitleElement pressStart;
+    public LeaderboardTicker leaderboardTicker;
+    public TitleTextMesh currentTopThree;
 
     private AudioSource[] audio;
     private bool hitStart = true;
@@ -34,6 +36,8 @@ public class TitleScreen : MonoBehaviour {
         stumpheadGamesLLC.StartFadeIn();
         cromeTitle.StartFadeIn();
         pressStart.StartFadeIn();
+        leaderboardTicker.StartFadeIn();
+        currentTopThree.StartFadeIn();
 
         yield return new WaitForSeconds(1f);
 
@@ -56,6 +60,8 @@ public class TitleScreen : MonoBehaviour {
         stumpheadGamesLLC.StartFadeOut(0.75f);
         cromeTitle.StartFadeOut(0.75f);
         pressStart.StartFadeOut(0.75f);
+        leaderboardTicker.StartFadeOut(0.75f);
+        currentTopThree.StartFadeOut(0.75f);
 
         yield return new WaitForSeconds(5.5f);
         SceneManager.LoadScene("main");

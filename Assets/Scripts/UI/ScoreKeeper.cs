@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour {
 
-    private Text text;
+    //private Text text;
+    private TextMesh text;
 
     private int playerScore = 0;
     private int maxStringLength = 6;
 
     void Start () {
-        text = GetComponent<Text>();
+        text = GetComponent<TextMesh>();
     }
 
     private void AppendZerosToScore() {
@@ -25,6 +26,12 @@ public class ScoreKeeper : MonoBehaviour {
         playerScore += x;
         text.text = playerScore.ToString();
         AppendZerosToScore();
-        //PlayerPrefs.SetString("mostRecentScore", text.text);
+    }
+
+    public void PostScore() {
+        if(SteamLeaderboards.IsReady()) {
+            Debug.Log("Updating Score to... " + playerScore);
+            SteamLeaderboards.UpdateScore(playerScore);
+        }
     }
 }

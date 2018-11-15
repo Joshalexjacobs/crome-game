@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class LevelUpText : MonoBehaviour {
 
-    private Text text;
+    private TextMesh text;
+    private MeshRenderer mesh;
 
 	// Use this for initialization
 	void Start () {
-        text = GetComponent<Text>();
-        text.enabled = false;
+        text = GetComponent<TextMesh>();
+        mesh = GetComponent<MeshRenderer>();
+
+        mesh.enabled = false;
 	}
 	
     public void StartBlinking(int level) {
@@ -22,15 +25,15 @@ public class LevelUpText : MonoBehaviour {
     IEnumerator Blink() {
         for (int i = 0; i < 3; i++)
         {
-            text.enabled = true;
+            mesh.enabled = true;
 
             yield return new WaitForSeconds(0.25f);
 
-            text.enabled = false;
+            mesh.enabled = false;
 
             yield return new WaitForSeconds(0.25f);
         }
 
-        text.enabled = false;
+        mesh.enabled = false;
     }
 }

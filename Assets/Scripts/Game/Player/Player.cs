@@ -286,6 +286,7 @@ public class Player : MonoBehaviour {
 
     IEnumerator Restart() {
         sr.enabled = false;
+        GameObject.FindObjectOfType<ScoreKeeper>().PostScore();
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("main");
     }

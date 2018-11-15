@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class PlayerLivesUI : MonoBehaviour {
 
-    private Text text;
+    private TextMesh text;
     private int lives;
 	
 	void Start () {
-        text = GetComponent<Text>();
+        text = GetComponent<TextMesh>();
 	}
 
     public void SetLives(int lives) {
