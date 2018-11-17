@@ -9,6 +9,7 @@ public class DeathComet : Enemy {
     public GameObject deathCometActual;
 
     public GameObject bullet;
+    public GameObject heatSeekingBullet;
 
     public int numberOfSkulls = 8;
     public GameObject skull;
@@ -126,6 +127,9 @@ public class DeathComet : Enemy {
             case 2:
                 results = "DelayedShot";
                 break;
+            case 3:
+                results = "TrackShot";
+                break;
             default:
                 results = "CircleShot";
                 break;
@@ -233,6 +237,27 @@ public class DeathComet : Enemy {
             }
 
             audio[3].Play();
+            yield return new WaitForSeconds(0.75f);
+        }
+
+        animator.SetBool("isShooting", false);
+    }
+
+    IEnumerator TrackShot() {
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("isShooting", true);
+
+        int numberOfShots = 4;
+
+        for (int i = 0; i < numberOfShots; i++) {
+            Bullet bulletObj = Instantiate(heatSeekingBullet, transform.position - new Vector3(0.05f, 0.02f, 0f), Quaternion.identity).GetComponent<Bullet>();
+            bulletObj.speed = 0.02f;
+            bulletObj.Init(new Vector3(-0.5f, -1f, 0f));
+
+            bulletObj = Instantiate(heatSeekingBullet, transform.position - new Vector3(-0.05f, 0.02f, 0f), Quaternion.identity).GetComponent<Bullet>();
+            bulletObj.speed = 0.02f;
+            bulletObj.Init(new Vector3(0.5f, -1f, 0f));
             yield return new WaitForSeconds(0.75f);
         }
 

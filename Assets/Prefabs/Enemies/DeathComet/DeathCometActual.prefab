@@ -595,6 +595,8 @@ MonoBehaviour:
   isSpawnObject: 0
   deathCometActual: {fileID: 0}
   bullet: {fileID: 1106644147870034, guid: 555dc8784c5de4634b231e4560ae4acb, type: 2}
+  heatSeekingBullet: {fileID: 1247553467210312, guid: 0466e77ca01cc4c239c77df5a18846ae,
+    type: 2}
   numberOfSkulls: 8
   skull: {fileID: 1788061547457058, guid: 3d98095ef6a5f8e45b5fee54d8a8b276, type: 2}
   phase: 3
