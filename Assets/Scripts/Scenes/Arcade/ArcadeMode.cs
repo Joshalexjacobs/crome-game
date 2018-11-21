@@ -11,24 +11,22 @@ public class ArcadeMode : MonoBehaviour {
 
     public CanvasScaler canvasScaler;
 
+    private AudioSource[] audio;
     private float waveLoopTime = 0.25f;
 
     void Start () {
-        // changing the resolution...
-        // Screen.SetResolution(480, 432, false); // set the resolution
-        // set canvas scale factor to appropriate number (160 x 144 = 1, 320 x 288 = 2, 480 x 432 = 3 etc...)
-        // make sure pixel perfect camera is set to 160 x 144 and upscale render texture is selected
+        audio = GetComponents<AudioSource>();
 
-        //Resolution resolution = Screen.currentResolution;
-        //canvasScaler.referenceResolution = new Vector2(resolution.width, resolution.height);
+        int lastTrack = PlayerPrefs.GetInt("LastTrack");
 
-        //if(resolution.width == 160) {
-        //    canvasScaler.scaleFactor = 1;
-        //} else if (resolution.width == 320) {
-        //    canvasScaler.scaleFactor = 2;
-        //} else if (resolution.width == 480) {
-        //    canvasScaler.scaleFactor = 3;
-        //}
+        if (lastTrack != null && lastTrack == 0) {
+            audio[1].Play();
+            PlayerPrefs.SetInt("LastTrack", 1);
+        } else {
+            audio[0].Play();
+            PlayerPrefs.SetInt("LastTrack", 0);
+        }
+
 
         StartCoroutine("Arcade");
 	}
