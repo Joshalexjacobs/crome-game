@@ -24,7 +24,7 @@ TagManager:
   - Player
   - Drone
   - HeatSeeking
-  - 
+  - Menu
   - 
   - 
   - 
@@ -54,4 +54,7 @@ TagManager:
     locked: 0
   - name: PlayerBullet
     uniqueID: 3990000513
+    locked: 0
+  - name: Menu
+    uniqueID: 1312935617
     locked: 0

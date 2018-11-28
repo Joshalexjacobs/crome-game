@@ -12,6 +12,8 @@ public class TitleScreen : MonoBehaviour {
     public LeaderboardTicker leaderboardTicker;
     public TitleTextMesh currentTopThree;
 
+    public bool steamBuild = false;
+
     private AudioSource[] audio;
     private bool hitStart = true;
 
@@ -36,8 +38,11 @@ public class TitleScreen : MonoBehaviour {
         stumpheadGamesLLC.StartFadeIn();
         cromeTitle.StartFadeIn();
         pressStart.StartFadeIn();
-        leaderboardTicker.StartFadeIn();
-        currentTopThree.StartFadeIn();
+
+        if(steamBuild) {
+            leaderboardTicker.StartFadeIn();
+            currentTopThree.StartFadeIn();
+        }
 
         yield return new WaitForSeconds(1f);
 
@@ -60,8 +65,11 @@ public class TitleScreen : MonoBehaviour {
         stumpheadGamesLLC.StartFadeOut(0.75f);
         cromeTitle.StartFadeOut(0.75f);
         pressStart.StartFadeOut(0.75f);
-        leaderboardTicker.StartFadeOut(0.75f);
-        currentTopThree.StartFadeOut(0.75f);
+
+        if (steamBuild) {
+            leaderboardTicker.StartFadeOut(0.75f);
+            currentTopThree.StartFadeOut(0.75f);
+        }
 
         yield return new WaitForSeconds(5.5f);
         SceneManager.LoadScene("main");

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class SteamScript : MonoBehaviour {
 
-    public LeaderboardTicker leaderboardTicker;
+    private LeaderboardTicker leaderboardTicker;
 
     // Use this for initialization
     void Start () {
-		if(SteamManager.Initialized) {
+        if (SteamManager.Initialized) {
             SteamLeaderboards.Init();
             StartCoroutine("GetTopThreeScores");
         }
@@ -40,6 +40,12 @@ public class SteamScript : MonoBehaviour {
             index++;
         }
 
-        leaderboardTicker.SetLeaderboardTicker(players);
+        if(leaderboardTicker != null) {
+            leaderboardTicker.SetLeaderboardTicker(players);
+        } else {
+            leaderboardTicker = GameObject.FindObjectOfType<LeaderboardTicker>();
+            leaderboardTicker.SetLeaderboardTicker(players);
+        }
+        
     }
 }
