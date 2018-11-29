@@ -68,9 +68,9 @@ public class ArcadeMode : MonoBehaviour {
         waveManager.deathCometDead = false;
     }
 
-    public void HandleGameOver() {
+    public void HandleGameOver(string score) {
         isGameOver = true;
-        gameOver.StartGameOverFadeIn();
+        gameOver.StartGameOverFadeIn(score);
     }
 
 	void Update () {

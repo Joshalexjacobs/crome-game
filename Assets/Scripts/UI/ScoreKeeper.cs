@@ -28,6 +28,14 @@ public class ScoreKeeper : MonoBehaviour {
         AppendZerosToScore();
     }
 
+    public int GetActualScore() {
+        return playerScore;
+    }
+
+    public string GetTextScore() {
+        return text.text;
+    }
+
     public void PostScore() {
         if(SteamLeaderboards.IsReady()) {
             Debug.Log("Updating Score to... " + playerScore);

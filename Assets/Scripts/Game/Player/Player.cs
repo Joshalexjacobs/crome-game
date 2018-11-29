@@ -286,7 +286,11 @@ public class Player : MonoBehaviour {
     }
 
     private void HandlePlayerOutOfLives() {
-        GameObject.FindObjectOfType<ArcadeMode>().HandleGameOver();
+        ScoreKeeper scoreKeeper = GameObject.FindObjectOfType<ScoreKeeper>();
+        scoreKeeper.PostScore();
+
+        GameObject.FindObjectOfType<ArcadeMode>().HandleGameOver(scoreKeeper.GetTextScore());
+
         sr.enabled = false;
     }
 

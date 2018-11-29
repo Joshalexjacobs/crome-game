@@ -22,7 +22,8 @@ public class GameOverScore : MonoBehaviour {
         textMesh.text = text;
     }
 
-    public void StartFadeIn() {
+    public void StartFadeIn(string score) {
+        textMesh.text = score;
         StartCoroutine("FadeIn");
     }
 

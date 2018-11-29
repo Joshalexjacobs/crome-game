@@ -18,14 +18,9 @@ public class GameOver : MonoBehaviour {
         gameOverCursor = GetComponentInChildren<GameOverCursor>();
     }
 
-    public void StartGameOverFadeIn() {
+    public void StartGameOverFadeIn(string score) {
         gameOverBG.StartFadeIn();
-        gameOverScore.StartFadeIn();
+        gameOverScore.StartFadeIn(score);
         gameOverCursor.StartFadeIn();
     }
-
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
