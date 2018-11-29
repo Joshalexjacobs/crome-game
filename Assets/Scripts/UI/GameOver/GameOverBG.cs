@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOverCursor : MonoBehaviour {
-
-    public Vector2 retryPosition;
-    public Vector2 exitPosition;
+public class GameOverBG : MonoBehaviour {
 
     private SpriteRenderer sr;
-    private bool isActive = false;
 
 	// Use this for initialization
 	void Start () {
         sr = GetComponent<SpriteRenderer>();
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
     }
-
+	
     public void StartFadeIn() {
         StartCoroutine("FadeIn");
     }
@@ -27,8 +23,8 @@ public class GameOverCursor : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
+	// Update is called once per frame
+	void Update () {
 		
 	}
 }

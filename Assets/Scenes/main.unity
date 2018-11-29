@@ -1302,6 +1302,7 @@ MonoBehaviour:
   phase: 1
   waveManager: {fileID: 339331827}
   canvasScaler: {fileID: 1677887621}
+  gameOver: {fileID: 1722224523}
 --- !u!114 &339331827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2298,6 +2299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 897172908}
   - component: {fileID: 897172907}
+  - component: {fileID: 897172909}
   m_Layer: 0
   m_Name: GameOverBG
   m_TagString: Untagged
@@ -2364,6 +2366,17 @@ Transform:
   m_Father: {fileID: 1722224522}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &897172909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 897172906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a120bcb49364a7ea07c938b74f5ae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &975981762
 GameObject:
   m_ObjectHideFlags: 0
@@ -3010,6 +3023,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1722224522}
+  - component: {fileID: 1722224523}
   m_Layer: 0
   m_Name: GameOver
   m_TagString: Untagged
@@ -3033,6 +3047,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1722224523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1722224521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6b908a76bbf5254a8bdd9dc7dbcf419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1738844725
 GameObject:
   m_ObjectHideFlags: 0

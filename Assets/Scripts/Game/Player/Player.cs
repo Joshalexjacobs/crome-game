@@ -254,7 +254,8 @@ public class Player : MonoBehaviour {
                 transform.position = respawnPoint;
                 StartCoroutine("Respawn");
             } else {
-                StartCoroutine("Restart");
+                HandlePlayerOutOfLives();
+                //StartCoroutine("Restart");
             }
         }
     }
@@ -282,6 +283,11 @@ public class Player : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(11, 8, false);
         Physics2D.IgnoreLayerCollision(11, 9, false);
         Physics2D.IgnoreLayerCollision(11, 12, false);
+    }
+
+    private void HandlePlayerOutOfLives() {
+        GameObject.FindObjectOfType<ArcadeMode>().HandleGameOver();
+        sr.enabled = false;
     }
 
     IEnumerator Restart() {

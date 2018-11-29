@@ -12,6 +12,8 @@ public class GameOverScore : MonoBehaviour {
         mr = GetComponent<MeshRenderer>();
         textMesh = GetComponent<TextMesh>();
 
+        textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 0f);
+
         mr.sortingLayerName = "Menu";
         mr.sortingOrder = 15;
     }
@@ -20,8 +22,19 @@ public class GameOverScore : MonoBehaviour {
         textMesh.text = text;
     }
 
-	// Update is called once per frame
-	void Update () {
+    public void StartFadeIn() {
+        StartCoroutine("FadeIn");
+    }
+
+    IEnumerator FadeIn() {
+        for (int i = 0; i < 10; i++) {
+            textMesh.color = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 0.1f * i);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }

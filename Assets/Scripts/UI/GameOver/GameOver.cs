@@ -5,14 +5,23 @@ using UnityEngine;
 public class GameOver : MonoBehaviour {
 
     private GameOverScore gameOverScore;
+    private GameOverBG gameOverBG;
+    private GameOverCursor gameOverCursor;
 
-	// Use this for initialization
-	void Start () {
+    void Start() {
+        GetGameOverObjects();
+    }
+
+    private void GetGameOverObjects() {
         gameOverScore = GetComponentInChildren<GameOverScore>();
+        gameOverBG = GetComponentInChildren<GameOverBG>();
+        gameOverCursor = GetComponentInChildren<GameOverCursor>();
     }
 
     public void StartGameOverFadeIn() {
-
+        gameOverBG.StartFadeIn();
+        gameOverScore.StartFadeIn();
+        gameOverCursor.StartFadeIn();
     }
 
 	// Update is called once per frame

@@ -11,8 +11,12 @@ public class ArcadeMode : MonoBehaviour {
 
     public CanvasScaler canvasScaler;
 
+    public GameOver gameOver;
+
     private AudioSource[] audio;
     private float waveLoopTime = 0.25f;
+
+    private bool isGameOver = false;
 
     void Start () {
         audio = GetComponents<AudioSource>();
@@ -34,8 +38,8 @@ public class ArcadeMode : MonoBehaviour {
     IEnumerator Arcade() {
         yield return new WaitForSeconds(2f);
 
-        while(true) {
-            for (int i = 0; i < 5; i++) {
+        while(!isGameOver) {
+            for (int i = 0; i < 5 && !isGameOver; i++) {
                 waveManager.StartNewWave(phase);
 
                 while (waveManager.layersCompleted < phase) {
@@ -45,9 +49,11 @@ public class ArcadeMode : MonoBehaviour {
                 ResetWaveManager();
             }
 
-            waveManager.StartDeathCometWave(phase);
+            if(!isGameOver) {
+                waveManager.StartDeathCometWave(phase);
+            }
 
-            while (!waveManager.deathCometDead) {
+            while (!waveManager.deathCometDead && !isGameOver) {
                 yield return new WaitForSeconds(waveLoopTime);
             }
 
@@ -60,6 +66,11 @@ public class ArcadeMode : MonoBehaviour {
     private void ResetWaveManager() {
         waveManager.layersCompleted = 0;
         waveManager.deathCometDead = false;
+    }
+
+    public void HandleGameOver() {
+        isGameOver = true;
+        gameOver.StartGameOverFadeIn();
     }
 
 	void Update () {
