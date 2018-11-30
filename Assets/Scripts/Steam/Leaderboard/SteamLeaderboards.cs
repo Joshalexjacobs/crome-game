@@ -10,7 +10,7 @@ public class SteamLeaderboards : MonoBehaviour {
 
     private static SteamLeaderboard_t currentLeaderboard;
     private static bool isReady = false;
-    private static CallResult<LeaderboardScoresDownloaded_t> topThreeResult = new CallResult<LeaderboardScoresDownloaded_t>();
+    private static CallResult<LeaderboardScoresDownloaded_t> leaderboardDownloadResult = new CallResult<LeaderboardScoresDownloaded_t>();
     private static CallResult<LeaderboardFindResult_t> findResult = new CallResult<LeaderboardFindResult_t>();
     private static CallResult<LeaderboardScoreUploaded_t> uploadResult = new CallResult<LeaderboardScoreUploaded_t>();
 
@@ -31,9 +31,9 @@ public class SteamLeaderboards : MonoBehaviour {
     }
 
     public static void GetTopThreeEntriesInLeaderboard() {
-        SteamAPICall_t hSteamAPICall = SteamUserStats.DownloadLeaderboardEntries(currentLeaderboard, LEADERBOARD_DATA_REQUEST, 1, 3);
+        SteamAPICall_t hSteamAPICall = DownloadEntries(1, 3);
 
-        topThreeResult.Set(hSteamAPICall, (pCallback, failure) => {
+        leaderboardDownloadResult.Set(hSteamAPICall, (pCallback, failure) => {
             ArrayList results = new ArrayList();
 
             for(int i = 0; i < pCallback.m_cEntryCount; i++) {
@@ -49,6 +49,64 @@ public class SteamLeaderboards : MonoBehaviour {
 
             GameObject.FindObjectOfType<SteamScript>().SetTopThreePlayers(results);
         });
+    }
+
+    public static void GetPlayerEntry(GameObject gameObject) {
+        CSteamID[] cSteamIDs = new CSteamID [1];
+
+        cSteamIDs[0] = SteamUser.GetSteamID();
+        SteamAPICall_t hSteamAPICall = SteamUserStats.DownloadLeaderboardEntriesForUsers(currentLeaderboard, cSteamIDs, cSteamIDs.Length);
+
+        leaderboardDownloadResult.Set(hSteamAPICall, (pCallback, failure) => {
+            Debug.Log("Getting surrounding entries");
+
+            for (int i = 0; i < pCallback.m_cEntryCount; i++) {
+                LeaderboardEntry_t leaderboardEntry;
+
+                int[] details = new int[1];
+                SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, i, out leaderboardEntry, details, 1);
+
+                Debug.Log(leaderboardEntry.m_nGlobalRank);
+                gameObject.SendMessage("PassBackPlayerEntry", leaderboardEntry.m_nGlobalRank);
+            }
+        });
+    }
+
+    public static void GetSurroundingEntries(int playerEntry, GameObject gameObject) {
+        // logic for downloaded entries
+        int startingEntry = playerEntry - 2;
+        
+        if(startingEntry == -1 ) {
+            startingEntry = playerEntry;
+        } else if (startingEntry == 0) {
+            startingEntry = playerEntry - 1;
+        }
+
+        SteamAPICall_t hSteamAPICall = DownloadEntries(startingEntry, playerEntry + 2);
+
+        leaderboardDownloadResult.Set(hSteamAPICall, (pCallback, failure) => {
+            ArrayList results = new ArrayList();
+
+            Debug.Log("Getting surrounding entries");
+
+            for (int i = 0; i < pCallback.m_cEntryCount; i++) {
+                LeaderboardEntry_t leaderboardEntry;
+
+                int[] details = new int[1];
+                SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, i, out leaderboardEntry, details, 1);
+
+                if (leaderboardEntry.m_steamIDUser.m_SteamID > 0) {
+                    PlayerLeaderboardEntry playerLeaderboardEntry = new PlayerLeaderboardEntry(GetUserName(leaderboardEntry.m_steamIDUser), leaderboardEntry.m_nScore, leaderboardEntry.m_nGlobalRank);
+                    results.Insert(i, playerLeaderboardEntry);
+                }
+            }
+
+            gameObject.SendMessage("PassBackSurroundingEntries", results);
+        });
+    }
+
+    private static SteamAPICall_t DownloadEntries(int startingEntry, int endingEntry) {
+        return SteamUserStats.DownloadLeaderboardEntries(currentLeaderboard, LEADERBOARD_DATA_REQUEST, startingEntry, endingEntry);
     }
 
     private static string GetUserName(CSteamID steamID) {
@@ -75,8 +133,6 @@ public class SteamLeaderboards : MonoBehaviour {
     static private void OnLeaderboardUploadResult(LeaderboardScoreUploaded_t pCallback, bool failure) {
         UnityEngine.Debug.Log("STEAM LEADERBOARDS: failure - " + failure + " Completed - " + pCallback.m_bSuccess + " NewScore: " + pCallback.m_nGlobalRankNew + " Score " + pCallback.m_nScore + " HasChanged - " + pCallback.m_bScoreChanged);
     }
-
-
 
     private static Timer timer1;
     public static void InitTimer() {

@@ -20,7 +20,6 @@ public class GameOverCursor : MonoBehaviour {
     }
 
     public void StartFadeIn() {
-        isActive = true;
         StartCoroutine("FadeIn");
     }
 
@@ -29,6 +28,8 @@ public class GameOverCursor : MonoBehaviour {
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.1f * i);
             yield return new WaitForSeconds(0.1f);
         }
+
+        isActive = true;
     }
 
     // Update is called once per frame

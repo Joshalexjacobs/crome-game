@@ -6,6 +6,7 @@ public class PlayerLeaderboardEntry {
 
     private string playerName;
     private int playerScore;
+    private int position;
 
     public PlayerLeaderboardEntry(string playerName, int playerScore) {
         Debug.Log("this.playerName = " + playerName);
@@ -13,6 +14,16 @@ public class PlayerLeaderboardEntry {
 
         this.playerName = playerName;
         this.playerScore = playerScore;
+    }
+
+    public PlayerLeaderboardEntry(string playerName, int playerScore, int position) {
+        Debug.Log("this.playerName = " + playerName);
+        Debug.Log("this.playerScore = " + playerScore);
+        Debug.Log("this.position = " + position);
+
+        this.playerName = playerName;
+        this.playerScore = playerScore;
+        this.position = position;
     }
 
     public PlayerLeaderboardEntry() {
@@ -33,6 +44,14 @@ public class PlayerLeaderboardEntry {
 
     public int GetPlayerScore() {
         return playerScore;
+    }
+
+    public void SetPosition(int position) {
+        this.position = position;
+    }
+
+    public int GetPosition() {
+        return position;
     }
 
 }
