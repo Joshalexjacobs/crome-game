@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LeaderboardTicker : MonoBehaviour {
 
+    private static int SWITCH_RETRIES = 3;
+
     private TextMesh text;
     private string [] players = new string[3];
 
@@ -29,17 +31,24 @@ public class LeaderboardTicker : MonoBehaviour {
     }
 
     IEnumerator Switch() {
-        while(players[0].Length > 0) {
-            foreach(string playerScore in players) {
-                if(playerScore != null && playerScore.Length > 0) {
-                    text.text = playerScore;
-                    StartCoroutine("FadeTextIn");
-                    yield return new WaitForSeconds(3.5f);
-                    StartCoroutine("FadeTextOut", 0.05f);
-                    yield return new WaitForSeconds(.25f);
+        for (int i = 0; i < SWITCH_RETRIES; i++) {
+            while (players != null && players[0] != null && players[0].Length > 0) {
+                foreach (string playerScore in players) {
+                    if (playerScore != null && playerScore.Length > 0) {
+                        text.text = playerScore;
+                        StartCoroutine("FadeTextIn");
+                        yield return new WaitForSeconds(3.5f);
+                        StartCoroutine("FadeTextOut", 0.05f);
+                        yield return new WaitForSeconds(.25f);
+                    }
                 }
             }
+
+            Debug.LogWarning("Unable to grab array of players, attempt " + i + " of " + SWITCH_RETRIES);
+            yield return new WaitForSeconds(1f);
         }
+
+        Debug.LogError("Out of retries, player list load failed.");
     }
 
     public void StartFadeOut(float waitTime = 0.1f) {

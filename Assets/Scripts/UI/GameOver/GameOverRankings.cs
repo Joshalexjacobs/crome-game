@@ -6,7 +6,8 @@ public class GameOverRankings : MonoBehaviour {
 
     public GameObject ranking;
     private int playerEntry = 0;
-    private static Vector3 RANKING_DIFFERENCE_Y = new Vector3(0f, -0.09f, 0f);
+    private static Vector3 RANKING_VECTOR = new Vector3(0.015f, 0.0f, 1f);
+    private static float RANKING_DIFFERENCE_Y = -0.09f;
 
 	// Use this for initialization
 	void Start () {
@@ -31,12 +32,14 @@ public class GameOverRankings : MonoBehaviour {
 
         int index = 0;
         foreach (PlayerLeaderboardEntry entry in results) {
-            Vector3 difference = RANKING_DIFFERENCE_Y * index;
-            GameOverRank rankingObj = Instantiate(ranking, transform.position + difference + new Vector3(0.015f, 0f, 1f), Quaternion.identity).GetComponent<GameOverRank>();
+            Vector3 difference = new Vector3(RANKING_VECTOR.x, RANKING_DIFFERENCE_Y * index, RANKING_VECTOR.z);
+
+            GameOverRank rankingObj = Instantiate(ranking, transform.position + difference, Quaternion.identity).GetComponent<GameOverRank>();
             rankingObj.transform.parent = gameObject.transform;
 
             string rankingText = entry.GetPosition() + ". " + entry.GetPlayerName() + " - " + entry.GetPlayerScore();
             rankingObj.Init(rankingText, entry.GetPosition() == this.playerEntry ? true : false);
+            index++;
         }
     }
 

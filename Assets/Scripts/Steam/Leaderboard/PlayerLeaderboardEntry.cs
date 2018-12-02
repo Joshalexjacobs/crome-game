@@ -9,17 +9,14 @@ public class PlayerLeaderboardEntry {
     private int position;
 
     public PlayerLeaderboardEntry(string playerName, int playerScore) {
-        Debug.Log("this.playerName = " + playerName);
-        Debug.Log("this.playerScore = " + playerScore);
+        Debug.Log(playerName + " " + playerScore);
 
         this.playerName = playerName;
         this.playerScore = playerScore;
     }
 
     public PlayerLeaderboardEntry(string playerName, int playerScore, int position) {
-        Debug.Log("this.playerName = " + playerName);
-        Debug.Log("this.playerScore = " + playerScore);
-        Debug.Log("this.position = " + position);
+        Debug.Log(position + " " + playerName + " " + playerScore);
 
         this.playerName = playerName;
         this.playerScore = playerScore;

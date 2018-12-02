@@ -110,7 +110,6 @@ public class SteamLeaderboards : MonoBehaviour {
     }
 
     private static string GetUserName(CSteamID steamID) {
-        Debug.Log("GetUserName - " + SteamFriends.GetFriendPersonaName(steamID));
         return SteamFriends.GetFriendPersonaName(steamID);
     }
 
