@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using InControl;
 
 public class TitleScreen : MonoBehaviour {
 
@@ -16,11 +17,13 @@ public class TitleScreen : MonoBehaviour {
 
     private AudioSource[] audio;
     private bool hitStart = true;
+    private InputDevice inputDevice;
+    private CromeController cromeController;
 
     // Use this for initialization
     void Start () {
         audio = GetComponents<AudioSource>();
-
+        cromeController = GetComponent<CromeController>();
         StartCoroutine("FadeInTitleScreen");
 	}
 	
@@ -50,11 +53,18 @@ public class TitleScreen : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKey("escape")) {
+        inputDevice = InputManager.ActiveDevice;
+
+        if (cromeController.CromeIsCanceling()) {
             Application.Quit();
-        } else if (Input.GetButton("Fire1") && !hitStart) {
+        } else if (PressedStart() && !hitStart) {
             StartCoroutine("PlayerHitStart");
         }
+    }
+
+    private bool PressedStart() {
+        return inputDevice.GetControl(InputControlType.Options) || inputDevice.GetControl(InputControlType.Start) || inputDevice.Command.IsPressed
+                          || cromeController.CromeIsFiring();
     }
 
     IEnumerator PlayerHitStart() {

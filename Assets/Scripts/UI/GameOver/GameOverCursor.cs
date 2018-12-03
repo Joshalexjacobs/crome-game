@@ -13,6 +13,8 @@ public class GameOverCursor : MonoBehaviour {
     private bool movementReady = true;
     private string selection = "";
 
+    private CromeController cromeController;
+
     // Use this for initialization
     void Start () {
         sr = GetComponent<SpriteRenderer>();
@@ -29,26 +31,29 @@ public class GameOverCursor : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
         }
 
+        cromeController = GameObject.FindObjectOfType<CromeController>();
         isActive = true;
     }
 
     // Update is called once per frame
     void Update () {
         if (movementReady && isActive) {
-            if (Input.GetAxis("Horizontal") < 0f) { // left
+            if (cromeController.CromeHorizontal() < 0f) { // left
                 movementReady = false;
                 StartCoroutine("ResetMovement");
                 gameObject.transform.position = retryPosition;
                 selection = "retry";
-            } else if (Input.GetAxis("Horizontal") > 0f) { // right
+            } else if (cromeController.CromeHorizontal() > 0f) { // right
                 movementReady = false;
                 StartCoroutine("ResetMovement");
                 gameObject.transform.position = exitPosition;
                 selection = "exit";
             }
 
-            if(Input.GetButton("Fire1")) {
+            if(cromeController.CromeIsFiring()) {
                 HandleSelection();
+            } else if(cromeController.CromeIsCanceling()) {
+                SceneManager.LoadScene("title");
             }
         }
     }

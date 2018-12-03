@@ -73,10 +73,4 @@ public class ArcadeMode : MonoBehaviour {
         gameOver.StartGameOverFadeIn(score);
     }
 
-	void Update () {
-        if (Input.GetKey("escape")) {
-            SceneManager.LoadScene("title");
-        }
-    }
-
 }

@@ -47,6 +47,7 @@ public class Player : MonoBehaviour {
     private TrailRenderer tr;
     private AudioSource[] audio;
     private PlayerLivesUI playerLivesUI;
+    private CromeController cromeController;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour {
         tr = GetComponent<TrailRenderer>();
         audio = GetComponents<AudioSource>();
         playerLivesUI = FindObjectOfType<PlayerLivesUI>();
+        cromeController = GetComponent<CromeController>();
 
         playerLivesUI.SetLives(lives);
         StartCoroutine("SpawnPlayerTrailParticles");
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour {
             UpdateMisc();
 
             /* SHOOTING - SPACE */
-            HandleShooting(Input.GetButton("Fire1") && myFireTime > nextFire);
+            HandleShooting(cromeController.CromeIsFiring() && myFireTime > nextFire);
 
             /* MOVEMENT - WASD/ANALOG */
             HandleMovement();
@@ -148,10 +150,12 @@ public class Player : MonoBehaviour {
 
     private void HandleMovement() {
         /* HORIZONTAL MOVEMENT */
-        float dx = HandleHorizontalMovement(Input.GetAxisRaw("Horizontal") != 0);
+        //float dx = HandleHorizontalMovement(Input.GetAxisRaw("Horizontal") != 0);
+        float dx = HandleHorizontalMovement(cromeController.CromeHorizontal() != 0f);
 
         /* VERTICAL MOVEMENT */
-        float dy = HandleVerticalMovement(Input.GetAxis("Vertical") != 0);
+        //float dy = HandleVerticalMovement(Input.GetAxis("Vertical") != 0);
+        float dy = HandleVerticalMovement(cromeController.CromeVertical() != 0f);
 
         /* UPDATE RB */
         rb.velocity = new Vector2(dx, dy);
@@ -161,7 +165,7 @@ public class Player : MonoBehaviour {
         float dx = rb.velocity.x;
 
         if (isHorizontal) {
-            dx = speed * Input.GetAxis("Horizontal");
+            dx = speed * cromeController.CromeHorizontal();
         }
 
         return dx;
@@ -171,7 +175,7 @@ public class Player : MonoBehaviour {
         float dy = rb.velocity.y;
 
         if (isVertical) {
-            dy = speed * Input.GetAxis("Vertical");
+            dy = speed * cromeController.CromeVertical();
         }
 
         return dy;
@@ -297,6 +301,7 @@ public class Player : MonoBehaviour {
     IEnumerator Restart() {
         sr.enabled = false;
         GameObject.FindObjectOfType<ScoreKeeper>().PostScore();
+        Destroy(cromeController);
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("main");
     }
