@@ -130,6 +130,9 @@ public class DeathComet : Enemy {
             case 3:
                 results = "TrackShot";
                 break;
+            case 4:
+                results = "SweepShot";
+                break;
             default:
                 results = "CircleShot";
                 break;
@@ -259,6 +262,49 @@ public class DeathComet : Enemy {
             bulletObj.speed = 0.02f;
             bulletObj.Init(new Vector3(0.5f, -1f, 0f));
             yield return new WaitForSeconds(0.75f);
+        }
+
+        animator.SetBool("isShooting", false);
+    }
+
+    IEnumerator SweepShot() {
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("isShooting", true);
+
+        int numberOfSweeps = 2;
+        int numberOfShots = 6;
+        float degrees = 120f;
+
+        float degreesBetweenShots = degrees / (float)numberOfShots;
+
+        for (int i = 0; i < numberOfSweeps; i++) {
+            for (int j = 0; j < numberOfShots; j++) {
+                Vector3 dir = Quaternion.AngleAxis(degreesBetweenShots * j, Vector3.forward) * new Vector3(-0.75f, -0.5f, 0f);
+
+                Bullet bulletObj = Instantiate(bullet, transform.position + dir / 9, Quaternion.identity).GetComponent<Bullet>();
+                bulletObj.Init(dir);
+                bulletObj.speed = 0.0115f;
+                bulletObj.acceleration = 0.00025f;
+
+                audio[1].Play();
+
+                yield return new WaitForSeconds(0.025f);
+            }
+
+            for (int j = numberOfShots; j > 0; j--) {
+                Vector3 dir = Quaternion.AngleAxis(degreesBetweenShots * j, Vector3.forward) * new Vector3(-0.75f, -0.5f, 0f);
+
+                Bullet bulletObj = Instantiate(bullet, transform.position + dir / 10, Quaternion.identity).GetComponent<Bullet>();
+                bulletObj.Init(dir);
+                bulletObj.speed = 0.0115f;
+                bulletObj.acceleration = 0.00025f;
+
+                audio[1].Play();
+
+                yield return new WaitForSeconds(0.025f);
+            }
+
         }
 
         animator.SetBool("isShooting", false);

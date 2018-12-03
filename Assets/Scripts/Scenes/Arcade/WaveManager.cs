@@ -8,6 +8,7 @@ public class WaveManager : MonoBehaviour {
     // public vars
 
     public bool isTesting = false;
+    public bool testDeathComet = false;
     public int testWave;
     public int testWave2;
 
@@ -45,6 +46,8 @@ public class WaveManager : MonoBehaviour {
     void Start () {
 		if(isTesting) {
             StartCoroutine("TestWave");
+        } else if (testDeathComet) {
+            StartCoroutine("StartDeathCometWave", 1);
         }
 
         levelsStack = new Stack<int>();
