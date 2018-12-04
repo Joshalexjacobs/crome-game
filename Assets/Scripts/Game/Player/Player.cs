@@ -7,6 +7,8 @@ public class Player : MonoBehaviour {
 
     /* PUBLIC VARS */
 
+    public bool debugMode = false;
+
     public float speed = 5f;
     public float damage = 1f;
 
@@ -242,9 +244,12 @@ public class Player : MonoBehaviour {
                 playerLivesUI = FindObjectOfType<PlayerLivesUI>();
             }
 
-            audio[1].Play();
-            playerLivesUI.DecrementLives();
-            lives--;
+            audio[1].Play();            
+
+            if (!debugMode) {
+                playerLivesUI.DecrementLives();
+                lives--;
+            }
 
             box.enabled = false;
             isDead = true;
@@ -300,7 +305,11 @@ public class Player : MonoBehaviour {
 
     IEnumerator Restart() {
         sr.enabled = false;
-        GameObject.FindObjectOfType<ScoreKeeper>().PostScore();
+
+        if(!debugMode) {
+            GameObject.FindObjectOfType<ScoreKeeper>().PostScore();
+        }
+        
         Destroy(cromeController);
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("main");

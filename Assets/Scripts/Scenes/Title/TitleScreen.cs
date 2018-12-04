@@ -81,6 +81,7 @@ public class TitleScreen : MonoBehaviour {
             currentTopThree.StartFadeOut(0.75f);
         }
 
+        Destroy(cromeController);
         yield return new WaitForSeconds(5.5f);
         SceneManager.LoadScene("main");
         //SceneManager.LoadScene("menu");

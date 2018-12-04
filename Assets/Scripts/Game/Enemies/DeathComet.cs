@@ -114,7 +114,13 @@ public class DeathComet : Enemy {
     }
 
     private string GetNextAttack() {
-        int nextAttack = Random.Range(0, phase);
+        int attackMax = phase;
+
+        if(phase > 8) {
+            attackMax = 8;
+        }
+
+        int nextAttack = Random.Range(0, attackMax);
         string results = "";
 
         switch(nextAttack) {
@@ -132,6 +138,15 @@ public class DeathComet : Enemy {
                 break;
             case 4:
                 results = "SweepShot";
+                break;
+            case 5:
+                results = "RandomAttack";
+                break;
+            case 6:
+                results = "LineAttack";
+                break;
+            case 7:
+                results = "BuckShot";
                 break;
             default:
                 results = "CircleShot";
@@ -261,6 +276,7 @@ public class DeathComet : Enemy {
             bulletObj = Instantiate(heatSeekingBullet, transform.position - new Vector3(-0.05f, 0.02f, 0f), Quaternion.identity).GetComponent<Bullet>();
             bulletObj.speed = 0.02f;
             bulletObj.Init(new Vector3(0.5f, -1f, 0f));
+            audio[4].Play();
             yield return new WaitForSeconds(0.75f);
         }
 
@@ -287,7 +303,7 @@ public class DeathComet : Enemy {
                 bulletObj.speed = 0.0115f;
                 bulletObj.acceleration = 0.00025f;
 
-                audio[1].Play();
+                audio[5].Play();
 
                 yield return new WaitForSeconds(0.025f);
             }
@@ -300,11 +316,98 @@ public class DeathComet : Enemy {
                 bulletObj.speed = 0.0115f;
                 bulletObj.acceleration = 0.00025f;
 
-                audio[1].Play();
+                audio[5].Play();
 
                 yield return new WaitForSeconds(0.025f);
             }
 
+        }
+
+        animator.SetBool("isShooting", false);
+    }
+
+    IEnumerator RandomAttack() {
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("isShooting", true);
+
+        int numberOfLines = 5;
+        float degrees = 120f;
+
+        for(int i = 0; i < numberOfLines; i++) {
+            int numberOfShots = Random.Range(7, 9);
+
+            for (int j = 0; j < numberOfShots; j++) {
+                float degreesBetweenShots = degrees / (float)numberOfShots;
+                Vector3 dir = Quaternion.AngleAxis(degreesBetweenShots + Random.Range(-120f, 120f), Vector3.forward) * Vector3.down;
+
+                Bullet bulletObj = Instantiate(bullet, transform.position + dir / 7, Quaternion.identity).GetComponent<Bullet>();
+                bulletObj.Init(dir);
+                bulletObj.speed = 0.012f;
+                bulletObj.acceleration = 0.00025f;
+
+                audio[6].Play();
+
+                yield return new WaitForSeconds(0.025f);
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        animator.SetBool("isShooting", false);
+    }
+
+    IEnumerator LineAttack() {
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("isShooting", true);
+
+        int numberOfLines = 5;
+
+        for (int i = 0; i < numberOfLines; i++) {
+            int numberOfShots = Random.Range(4, 6);
+            Vector3 dir = Quaternion.AngleAxis(Random.Range(-60f, 60f), Vector3.forward) * Vector3.down;
+
+            for (int j = 0; j < numberOfShots; j++) {
+                Bullet bulletObj = Instantiate(bullet, transform.position + dir / 7, Quaternion.identity).GetComponent<Bullet>();
+                bulletObj.Init(dir);
+                bulletObj.speed = 0.012f;
+                bulletObj.acceleration = 0.00025f;
+
+                audio[7].Play();
+
+                yield return new WaitForSeconds(0.075f);
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        animator.SetBool("isShooting", false);
+    }
+
+    IEnumerator BuckShot() {
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("isShooting", true);
+
+        int numberOfLines = 3;
+
+        for (int i = 0; i < numberOfLines; i++) {
+            int numberOfShots = Random.Range(8, 12);
+
+            Vector3 buckDirection = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, -1f), 0f);
+
+            for (int j = 0; j < numberOfShots; j++) {
+                Vector3 dir = Quaternion.AngleAxis(Random.Range(-15f, 15f), Vector3.forward) * buckDirection;
+                Bullet bulletObj = Instantiate(bullet, transform.position + dir / 7, Quaternion.identity).GetComponent<Bullet>();
+                bulletObj.Init(dir);
+                bulletObj.speed = Random.Range(0.012f, 0.020f);
+                bulletObj.acceleration = -0.000025f;
+
+                audio[8].Play();
+            }
+
+            yield return new WaitForSeconds(0.7f);
         }
 
         animator.SetBool("isShooting", false);

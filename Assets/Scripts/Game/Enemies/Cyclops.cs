@@ -29,9 +29,9 @@ public class Cyclops : Enemy {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audio = GetComponent<AudioSource>();
-        animator.SetBool("isSpawning", flyDown);
 
         if (flyDown) {
+            animator.SetBool("isSpawning", flyDown);
             StartCoroutine("Die");
         } else {
             StartCoroutine("SpawnBullets");

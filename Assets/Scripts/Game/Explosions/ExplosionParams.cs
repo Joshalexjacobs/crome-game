@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosionParams : MonoBehaviour {
+public class ExplosionParams {
 
     public Vector2 position { get; set; }
     public int numberOfExplosions { get; set; }
