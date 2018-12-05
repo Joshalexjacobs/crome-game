@@ -38,6 +38,9 @@ public class Enemy : MonoBehaviour {
             if(xp > 0) {
                 Player player = FindObjectOfType<Player>();
                 player.GainExperience(xp);
+
+                ScoreKeeper scoreKeeper = FindObjectOfType<ScoreKeeper>();
+                scoreKeeper.AddToMultiplier(xp);
             }
 
             StartCoroutine("Death");

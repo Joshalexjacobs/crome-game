@@ -30,6 +30,8 @@ public class DeathComet : Enemy {
 
     private WaveText waveText;
 
+    private BossHealth bossHealth;
+
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
@@ -40,6 +42,8 @@ public class DeathComet : Enemy {
         if (isSpawnObject) {
             StartCoroutine("Spawn");
         } else {
+            bossHealth = GameObject.FindObjectOfType<BossHealth>();
+            bossHealth.StartFadeIn(health);
             StartCoroutine("SpawnFire");
             SpawnSkulls();
         }
@@ -503,6 +507,40 @@ public class DeathComet : Enemy {
                 }
             }
             
+        }
+    }
+
+    public override void Damage(float damage) {
+        health -= damage;
+
+        if (bossHealth != null) {
+            bossHealth.UpdateHealth(health);
+        }
+
+        if (health <= 0) {
+            GetComponent<BoxCollider2D>().enabled = false;
+            isDead = true;
+
+            if (score > 0) {
+                ScoreKeeper scoreKeeper = FindObjectOfType<ScoreKeeper>();
+                scoreKeeper.AddToScore(score);
+            }
+
+            if (xp > 0) {
+                Player player = FindObjectOfType<Player>();
+                player.GainExperience(xp);
+
+                ScoreKeeper scoreKeeper = FindObjectOfType<ScoreKeeper>();
+                scoreKeeper.AddToMultiplier(xp);
+            }
+
+            if (bossHealth != null) {
+                bossHealth.ResetHealthBar();
+            }
+
+            StartCoroutine("Death");
+        } else {
+            StartCoroutine("Flash");
         }
     }
 

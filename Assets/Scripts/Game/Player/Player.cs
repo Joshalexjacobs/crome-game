@@ -254,6 +254,8 @@ public class Player : MonoBehaviour {
             box.enabled = false;
             isDead = true;
 
+            GameObject.FindObjectOfType<ScoreKeeper>().ResetMultiplier();
+
             ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
             explosionManager.AddExplosions(gameObject.transform.position);
 

@@ -110,9 +110,9 @@ public class WaveManager : MonoBehaviour {
 
     IEnumerator NewWave(int phase) {
         int actualPhase = phase;
-        if(phase > 8) {
-            actualPhase = 8;
-        }
+        //if(phase > 8) {
+        //    actualPhase = 8;
+        //}
 
         for(int i = 0; i < actualPhase; i++) {
             //int nextWave = Random.Range(1, maxLevels);
