@@ -452,6 +452,8 @@ MonoBehaviour:
     type: 2}
   playerBullet: {fileID: 114940980774400656, guid: a126d7fcfc37d40da8585846fd68810d,
     type: 2}
+  chargingObject: {fileID: 1420815288880054, guid: ddf193791a43945858806a00b8f95c50,
+    type: 2}
   sideBulletLeft: {fileID: 114940980774400656, guid: e113cb7626f7d334d85c3c0ca6f2f66e,
     type: 2}
   sideBulletRight: {fileID: 114940980774400656, guid: 284f18687579dd8428c11827e1304882,

@@ -23,6 +23,7 @@ public class Player : MonoBehaviour {
 
     public GameObject playerTrailParticle;
     public PlayerBullet playerBullet;
+    public GameObject chargingObject;
     public PlayerBullet sideBulletLeft;
     public PlayerBullet sideBulletRight;
     public ExperienceBar experienceBar;
@@ -32,11 +33,14 @@ public class Player : MonoBehaviour {
 
     private bool isDead = false;
     private bool isMoving = false;
+    private bool isCharging = false;
 
     private float myFireTime = 0.0f;
     private float mySideFireTime = 0.0f;
     private float nextFire = 0.2f;
     private float nextSideFire = 1f;
+    private float chargeTimer = 0f;
+    private float chargeTimerMAX = 1.5f;
 
     private bool canFireDouble = false;
 
@@ -50,6 +54,7 @@ public class Player : MonoBehaviour {
     private AudioSource[] audio;
     private PlayerLivesUI playerLivesUI;
     private CromeController cromeController;
+    private ChargingObject instancedChargingObject;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -83,15 +88,57 @@ public class Player : MonoBehaviour {
 
     private void HandleShooting(bool isShooting) {
         if (isShooting) {
-            //camera.SendMessage("BeginShortVerticalShake", 0.0025f);
+            if(HandleChargeShotFire()) { // if there's a chargeshot ready, fire that instead
+                myFireTime = 0.0f;
+            } else { // else fire regularly
+                StartCoroutine("Shoot");
+                if (canSideFire && mySideFireTime > nextSideFire) {
+                    StartCoroutine("ShootSideBullet");
+                    mySideFireTime = 0.0f;
+                }
 
-            StartCoroutine("Shoot");
-            if(canSideFire && mySideFireTime > nextSideFire) {
-                StartCoroutine("ShootSideBullet");
-                mySideFireTime = 0.0f;
+                myFireTime = 0.0f;
             }
-            
-            myFireTime = 0.0f;
+
+        } else if (chargeTimer >= chargeTimerMAX)  {
+            if(!isCharging) {
+                isCharging = true;
+
+                GameObject chargingGameObect = Instantiate(chargingObject, transform.position + new Vector3(0f, 0.06f, 0f), Quaternion.identity);
+                chargingGameObect.transform.parent = gameObject.transform;
+                instancedChargingObject = chargingGameObect.GetComponent<ChargingObject>();
+            }
+        } else {
+            if(myFireTime > nextFire) {
+                chargeTimer += Time.deltaTime;
+            } else {
+                chargeTimer = 0f;
+            }
+        }
+    }
+
+    private bool HandleChargeShotFire() {
+        if(isCharging) {
+            chargeTimer = 0f;
+            isCharging = false;
+            if(instancedChargingObject != null) {
+                instancedChargingObject.FireChargeShot();
+                instancedChargingObject = null;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void ResetChargeShot() {
+        chargeTimer = 0f;
+        isCharging = false;
+
+        if(instancedChargingObject != null) {
+            Destroy(instancedChargingObject.gameObject);
+            instancedChargingObject = null;
         }
     }
 
@@ -253,6 +300,8 @@ public class Player : MonoBehaviour {
 
             box.enabled = false;
             isDead = true;
+
+            ResetChargeShot();
 
             GameObject.FindObjectOfType<ScoreKeeper>().ResetMultiplier();
 
