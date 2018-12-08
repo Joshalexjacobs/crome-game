@@ -31,13 +31,14 @@ public class ChargingObject : MonoBehaviour {
     private void TransitionToNextStage(int stageNumber) {
         if (!isFiring) {
             animator.SetBool("isStage" + stageNumber.ToString(), true);
+            transform.position = transform.position + new Vector3(0f, 0.025f, 0f);
             stage = stageNumber;
         }
     }
 
-    public void FireChargeShot() {
+    public void FireChargeShot(int playerLevel) {
         ChargeShot chargeShotObj = Instantiate(chargeShot, transform.position, Quaternion.identity).GetComponent<ChargeShot>();
-        chargeShotObj.Init(stage);
+        chargeShotObj.Init(stage, playerLevel);
         Destroy(gameObject);
     }
 

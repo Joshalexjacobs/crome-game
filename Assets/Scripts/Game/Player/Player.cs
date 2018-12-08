@@ -122,7 +122,7 @@ public class Player : MonoBehaviour {
             chargeTimer = 0f;
             isCharging = false;
             if(instancedChargingObject != null) {
-                instancedChargingObject.FireChargeShot();
+                instancedChargingObject.FireChargeShot(currentLevel);
                 instancedChargingObject = null;
             }
 

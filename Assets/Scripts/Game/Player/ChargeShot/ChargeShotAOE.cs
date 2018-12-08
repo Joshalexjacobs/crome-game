@@ -5,9 +5,12 @@ using UnityEngine;
 public class ChargeShotAOE : MonoBehaviour {
 
     private float radius = 0.5f;
-    private float damage = 5f;
+    private float damage = 1f;
+    private GameObject camera;
 
-	void Start () {
+    void Start () {
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+
         HandleSplashDamage();
         StartCoroutine("DeathTimer");
 	}
@@ -18,6 +21,7 @@ public class ChargeShotAOE : MonoBehaviour {
     }
 
     IEnumerator DeathTimer() {
+        camera.SendMessage("BeginMedVerticalShake", 0.0045f);
         yield return new WaitForSeconds(0.292f);
         Destroy(gameObject);
     }
@@ -27,7 +31,7 @@ public class ChargeShotAOE : MonoBehaviour {
 
         foreach (Collider2D collider in colliders) {
             if (collider.gameObject.tag == "Enemy") {
-                collider.gameObject.SendMessage("Damage", damage / 3);
+                collider.gameObject.SendMessage("Damage", damage);
             }
         }
     }

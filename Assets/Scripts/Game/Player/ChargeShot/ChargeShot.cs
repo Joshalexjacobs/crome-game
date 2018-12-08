@@ -10,7 +10,8 @@ public class ChargeShot : MonoBehaviour {
     public ChargeShotAOE chargeShotAOE;
 
     private float damage = 1f;
-    private float radius = 0.5f;
+    private float radius = 0.4f;
+    private float playerLevel = 1f;
 
     private BoxCollider2D box;
     private Rigidbody2D rb;
@@ -26,21 +27,23 @@ public class ChargeShot : MonoBehaviour {
         StartCoroutine("ChargeShotBulletDeath");
     }
 
-    public void Init(int stage) {
+    public void Init(int stage, int playerLevel) {
         if (rb == null) {
             rb = GetComponent<Rigidbody2D>();
         }
 
         rb.AddForce(new Vector2(0.0f, speed));
 
-        if(stage == 1) {
+        this.playerLevel = playerLevel;
+
+        if (stage == 1) {
             this.damage = 5f;
         } else if (stage == 2) {
             this.damage = 10f;
-            this.radius = 0.7f;
+            this.radius = 0.5f;
         } else {
             this.damage = 15f;
-            this.radius = 0.9f;
+            this.radius = 0.6f;
         }
     }
 
@@ -73,6 +76,7 @@ public class ChargeShot : MonoBehaviour {
 
     private void HandleSplashDamage() {
         ChargeShotAOE chargeShotAOEObj = Instantiate(chargeShotAOE, transform.position, Quaternion.identity).GetComponent<ChargeShotAOE>();
+        chargeShotAOEObj.Init(radius, (damage / 5f) + ((float)playerLevel * 0.1f));
         Destroy(gameObject);
     }
 

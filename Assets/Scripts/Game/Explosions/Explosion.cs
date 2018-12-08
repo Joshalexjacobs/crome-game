@@ -15,7 +15,7 @@ public class Explosion : MonoBehaviour {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
 
         sr.color = colors[Random.Range(0, colors.Length)];
-        camera.SendMessage ("BeginMedVerticalShake", 0.0045f);
+        camera.SendMessage ("BeginShortShake", 0.0045f);
 
         StartCoroutine("Death");
 	}
