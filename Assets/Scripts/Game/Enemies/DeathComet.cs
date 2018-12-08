@@ -108,7 +108,7 @@ public class DeathComet : Enemy {
                 skullObj.respawnTime = 12f;
             }
 
-            skullObj.health = 5 + phase; // maybe do: + (2 * phase)
+            skullObj.health = 5 + phase + 1; // maybe do: + (2 * phase)
 
             skulls[i] = skullObj;
             skullObj.SetOriginAngle(i * angle, transform.position);
