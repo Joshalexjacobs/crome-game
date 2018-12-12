@@ -67,7 +67,8 @@ public class TitleScreen : MonoBehaviour {
         if (cromeController.CromeIsCanceling()) {
             Application.Quit();
         } else if (PressedStart() && !hitStart) {
-            StartCoroutine("PlayerHitStart");
+            //StartCoroutine("PlayerHitStart");
+            HandlePlayerStart();
         }
     }
 
@@ -76,7 +77,20 @@ public class TitleScreen : MonoBehaviour {
                           || cromeController.CromeIsFiring();
     }
 
-    IEnumerator PlayerHitStart() {
+    private void HandlePlayerStart() {
+        TitleMenu titleMenu = GameObject.FindObjectOfType<TitleMenu>();
+        titleMenu.FadeInTitleMenu();
+
+        audio[1].Play();
+        hitStart = true;
+        pressStart.StartFadeOut(0.75f);
+    }
+
+    public void StartPlayerSelectedPlay() {
+        StartCoroutine("PlayerSelectedPlay");
+    }
+
+    IEnumerator PlayerSelectedPlay() {
         StartCoroutine("FadeOutTitleTrack"); 
         audio[1].Play();
         hitStart = true;
@@ -91,9 +105,8 @@ public class TitleScreen : MonoBehaviour {
         }
 
         Destroy(cromeController);
-        yield return new WaitForSeconds(5.5f);
+        yield return new WaitForSeconds(4f);
         SceneManager.LoadScene("main");
-        //SceneManager.LoadScene("menu");
     }
 
     IEnumerator FadeOutTitleTrack() {
