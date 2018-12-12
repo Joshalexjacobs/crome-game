@@ -7,6 +7,7 @@ using InControl;
 public class TitleScreen : MonoBehaviour {
 
     public TitleElement stumpheadGamesLogo;
+    public TitleElement credits;
     public TitleElement stumpheadGamesLLC;
     public TitleElement cromeTitle;
     public TitleElement pressStart;
@@ -32,9 +33,17 @@ public class TitleScreen : MonoBehaviour {
 
         stumpheadGamesLogo.StartFadeIn();
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
 
         stumpheadGamesLogo.StartFadeOut();
+
+        yield return new WaitForSeconds(1f);
+
+        credits.StartFadeIn();
+
+        yield return new WaitForSeconds(2f);
+
+        credits.StartFadeOut();
 
         yield return new WaitForSeconds(1f);
 
