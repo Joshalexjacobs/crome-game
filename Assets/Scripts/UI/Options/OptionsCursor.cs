@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleMenuCursor : MonoBehaviour {
-    private static Vector3 MOVEMENT_DIFFERENCE = new Vector3(0f, 0.17f, 0f);
-    private static Vector3 ORIGINAL_POSITION = new Vector3(-0.54f, 0.25f, 0f);
+public class OptionsCursor : MonoBehaviour {
+    private static Vector3 MOVEMENT_DIFFERENCE = new Vector3(0f, 0.15f, 0f);
+    private static Vector3 ORIGINAL_POSITION = new Vector3(-0.125f, 0.5f, 0f);
 
-    public Options options;
+    public OptionsEntity [] optionsEntities;
 
     private SpriteRenderer sr;
     private AudioSource audio;
     private bool isActive = false;
     private bool movementReady = true;
-    private int position = 1;
+    private int position = 0;
+    private int positionMax = 3;
 
     private CromeController cromeController;
 
     // Use this for initialization
     void Start () {
+        positionMax = optionsEntities.Length;
         audio = GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
@@ -48,16 +50,15 @@ public class TitleMenuCursor : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
+    void Update() {
         if (movementReady && isActive) {
             if (cromeController.CromeVertical() < 0f) { // down
                 movementReady = false;
                 StartCoroutine("ResetMovement");
                 position++;
 
-                if(position >= 5) {
-                    position = 1;
+                if (position >= positionMax) {
+                    position = 0;
                     gameObject.transform.position = ORIGINAL_POSITION;
                 } else {
                     gameObject.transform.position -= MOVEMENT_DIFFERENCE;
@@ -69,9 +70,9 @@ public class TitleMenuCursor : MonoBehaviour {
                 StartCoroutine("ResetMovement");
                 position--;
 
-                if (position <= 0) {
-                    position = 4;
-                    gameObject.transform.position = ORIGINAL_POSITION - MOVEMENT_DIFFERENCE * 3;
+                if (position < 0) {
+                    position = positionMax - 1;
+                    gameObject.transform.position = ORIGINAL_POSITION - MOVEMENT_DIFFERENCE * (positionMax - 1);
                 } else {
                     gameObject.transform.position += MOVEMENT_DIFFERENCE;
                 }
@@ -86,34 +87,28 @@ public class TitleMenuCursor : MonoBehaviour {
             //    SceneManager.LoadScene("title");
             //}
         }
-	}
+    }
 
     private void HandleSelection() {
         //isActive = false;
 
-        switch(position) {
-            case 1:
-                isActive = false;
-                Destroy(cromeController);
-                GameObject.FindObjectOfType<TitleMenu>().FadeOutTitleMenu();
-                TitleScreen titleScreen = GameObject.FindObjectOfType<TitleScreen>();
-                titleScreen.StartPlayerSelectedPlay();
-                break;
-            case 2:
-                Debug.Log("Leaderboard");
-                break;
-            case 3:
-                options.SetOptionsActive(true);
-                isActive = false;
-                break;
-            case 4:
-                Application.Quit();
-                break;
-        }
+        optionsEntities[position].HandleEntity();
+
+        //switch (position) {
+        //    case 1:
+        //        optionsEntities[position].HandleEntity();
+        //        break;
+        //}
     }
 
     IEnumerator ResetMovement() {
         yield return new WaitForSeconds(0.2f);
         movementReady = true;
+    }
+
+    public void DestroyCromeController() {
+        if(cromeController != null) {
+            Destroy(cromeController);
+        }
     }
 }
