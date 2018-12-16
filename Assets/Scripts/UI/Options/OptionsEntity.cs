@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OptionsEntity : MonoBehaviour {
 
+    public bool isASlider = false;
+
     private SpriteRenderer sr;
 
 	// Use this for initialization
@@ -14,6 +16,7 @@ public class OptionsEntity : MonoBehaviour {
 
     public void StartFadeIn() {
         StartCoroutine("FadeIn");
+        FadeInChildren();
     }
 
     IEnumerator FadeIn() {
@@ -23,18 +26,37 @@ public class OptionsEntity : MonoBehaviour {
         }
     }
 
+    private void FadeInChildren() {
+        OptionsSlider optionsSlider = GetComponentInChildren<OptionsSlider>();
+        if(optionsSlider != null) {
+            optionsSlider.StartFadeIn();
+        }
+    }
+
     public void StartFadeOut() {
         StartCoroutine("FadeOut");
+        FadeOutChildren();
     }
 
     IEnumerator FadeOut() {
-        for (int i = 4; i >= 0; i--) {
-            sr.color = new Color(1f, 1f, 1f, 0.25f * i);
-            yield return new WaitForSeconds(0.75f);
+        for (int i = 10; i >= 0; i--) {
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.1f * i);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private void FadeOutChildren() {
+        OptionsSlider optionsSlider = GetComponentInChildren<OptionsSlider>();
+        if (optionsSlider != null) {
+            optionsSlider.StartFadeOut();
         }
     }
 
     public virtual void HandleEntity() {
         Debug.Log("HandleOptionsEntity");
+    }
+
+    public virtual OptionsSlider GetSlider() {
+        return null;
     }
 }

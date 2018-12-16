@@ -112,6 +112,10 @@ public class TitleMenuCursor : MonoBehaviour {
         }
     }
 
+    public void SetIsActive(bool isActive) {
+        this.isActive = isActive;
+    }
+
     IEnumerator ResetMovement() {
         yield return new WaitForSeconds(0.2f);
         movementReady = true;

@@ -44,9 +44,9 @@ public class OptionsCursor : MonoBehaviour {
     }
 
     IEnumerator FadeOut() {
-        for (int i = 4; i >= 0; i--) {
-            sr.color = new Color(1f, 1f, 1f, 0.25f * i);
-            yield return new WaitForSeconds(0.75f);
+        for (int i = 10; i >= 0; i--) {
+            sr.color = new Color(1f, 1f, 1f, 0.1f * i);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -78,6 +78,32 @@ public class OptionsCursor : MonoBehaviour {
                 }
 
                 audio.Play();
+            } else if (cromeController.CromeHorizontal() > 0f) { // right
+                movementReady = false;
+                StartCoroutine("ResetMovement");
+
+                if (optionsEntities[position].isASlider) {
+                    OptionsSlider optionsSlider = optionsEntities[position].GetSlider();
+                    if(optionsSlider != null) {
+                        optionsSlider.IncreaseVolume(5);
+                    }
+                }
+            } else if (cromeController.CromeHorizontal() < 0f) { // left
+                movementReady = false;
+                StartCoroutine("ResetMovement");
+
+                if (optionsEntities[position].isASlider) {
+                    OptionsSlider optionsSlider = optionsEntities[position].GetSlider();
+                    if (optionsSlider != null) {
+                        optionsSlider.IncreaseVolume(-5);
+                    }
+                }
+            }
+
+            if(cromeController.CromeIsCanceling()) {
+                Options options = GetComponentInParent<Options>();
+                options.SetOptionsInactive();
+                isActive = false;
             }
 
             if (cromeController.CromeIsFiring()) {

@@ -30,8 +30,24 @@ public class Options : MonoBehaviour {
         }
     }
 
-	// Update is called once per frame
-	void Update () {
+    public void SetOptionsInactive() {
+        this.optionsActive = false;
+        optionsBG.StartFadeOut();
+        optionsCursor.StartFadeOut();
+        FadeOutEntities();
+
+        TitleMenuCursor titleMenuCursor = GameObject.FindObjectOfType<TitleMenuCursor>();
+        titleMenuCursor.SetIsActive(true);
+    }
+
+    private void FadeOutEntities() {
+        foreach (OptionsEntity entity in optionsEntities) {
+            entity.StartFadeOut();
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }
