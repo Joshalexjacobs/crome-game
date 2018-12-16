@@ -64,7 +64,7 @@ public class TitleScreen : MonoBehaviour {
     void Update() {
         inputDevice = InputManager.ActiveDevice;
 
-        if (cromeController.CromeIsCanceling()) {
+        if (cromeController.CromeIsCanceling() && !hitStart) {
             Application.Quit();
         } else if (PressedStart() && !hitStart) {
             //StartCoroutine("PlayerHitStart");
