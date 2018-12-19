@@ -6,7 +6,7 @@ public class GameOverRankings : MonoBehaviour {
 
     public GameObject ranking;
     private int playerEntry = 0;
-    private static Vector3 RANKING_VECTOR = new Vector3(0.015f, 0.0f, 1f);
+    private static Vector3 RANKING_VECTOR = new Vector3(-0.6f, 0.0f, 1f);
     private static float RANKING_DIFFERENCE_Y = -0.09f;
 
 	// Use this for initialization

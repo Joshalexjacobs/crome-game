@@ -26,6 +26,7 @@ public class Options : MonoBehaviour {
 	
     private void FadeInEntities() {
         foreach(OptionsEntity entity in optionsEntities) {
+            Debug.Log(entity);
             entity.StartFadeIn();
         }
     }

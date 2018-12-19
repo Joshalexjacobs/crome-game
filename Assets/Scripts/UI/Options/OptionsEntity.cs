@@ -5,6 +5,7 @@ using UnityEngine;
 public class OptionsEntity : MonoBehaviour {
 
     public bool isASlider = false;
+    public bool isActive = false;
 
     private SpriteRenderer sr;
 
@@ -19,11 +20,13 @@ public class OptionsEntity : MonoBehaviour {
         FadeInChildren();
     }
 
-    IEnumerator FadeIn() {
+    public virtual IEnumerator FadeIn() {
         for (int i = 0; i <= 10; i++) {
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.1f * i);
             yield return new WaitForSeconds(0.1f);
         }
+
+        isActive = true;
     }
 
     private void FadeInChildren() {
@@ -34,6 +37,7 @@ public class OptionsEntity : MonoBehaviour {
     }
 
     public void StartFadeOut() {
+        isActive = false;
         StartCoroutine("FadeOut");
         FadeOutChildren();
     }
