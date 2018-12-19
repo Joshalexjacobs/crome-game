@@ -1074,7 +1074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xp: 3
   score: 10
-  health: 40
+  health: 50
   isDead: 0
   fire: {fileID: 1993556766261540, guid: cb9f2809e2f374d019a6b8bf07d804c8, type: 2}
   isSpawnObject: 0

@@ -145,10 +145,10 @@ public class Player : MonoBehaviour {
     IEnumerator Shoot() {
         if(canFireDouble) {
             PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(0.025f, 0.035f, 0f), Quaternion.identity);
-            playerBulletObj.Init(damage);
+            playerBulletObj.Init(damage * 0.875f);
 
             playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(-0.012f, 0.035f, 0f), Quaternion.identity);
-            playerBulletObj.Init(damage);
+            playerBulletObj.Init(damage * 0.875f);
         } else {
             PlayerBullet playerBulletObj = Instantiate(playerBullet, transform.position + new Vector3(Random.Range(-0.001f, 0.003f), 0.035f, 0f), Quaternion.identity);
             playerBulletObj.Init(damage);
