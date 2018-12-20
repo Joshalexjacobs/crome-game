@@ -67,10 +67,7 @@ public class ChargeShot : MonoBehaviour {
             box.enabled = false;
             rb.velocity = new Vector2(0f, 0f);
 
-            ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
-            explosionManager.AddExplosions(gameObject.transform.position);
-
-            Destroy(gameObject);
+            HandleSplashDamage();
         }
     }
 

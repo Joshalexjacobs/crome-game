@@ -12,9 +12,11 @@ public class ChargingObject : MonoBehaviour {
     private int stage = 1;
     private bool isFiring = false;
     private Animator animator;
+    private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
+        audio = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
 
         StartCoroutine("ChangeStage");
@@ -30,6 +32,8 @@ public class ChargingObject : MonoBehaviour {
 
     private void TransitionToNextStage(int stageNumber) {
         if (!isFiring) {
+            audio.pitch += 0.1f;
+            audio.Play();
             animator.SetBool("isStage" + stageNumber.ToString(), true);
             transform.position = transform.position + new Vector3(0f, 0.025f, 0f);
             stage = stageNumber;

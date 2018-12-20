@@ -23,6 +23,10 @@ public class ChargeShotAOE : MonoBehaviour {
     IEnumerator DeathTimer() {
         camera.SendMessage("BeginMedVerticalShake", 0.0045f);
         yield return new WaitForSeconds(0.292f);
+
+        ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
+        explosionManager.AddExplosions(gameObject.transform.position, 1, true, -0.1f, 0.1f);
+
         Destroy(gameObject);
     }
 
@@ -32,6 +36,8 @@ public class ChargeShotAOE : MonoBehaviour {
         foreach (Collider2D collider in colliders) {
             if (collider.gameObject.tag == "Enemy") {
                 collider.gameObject.SendMessage("Damage", damage);
+            } else if (collider.gameObject.tag == "Shield") {
+                collider.GetComponentInParent<Shielder>().SendMessage("Damage", damage);
             }
         }
     }
