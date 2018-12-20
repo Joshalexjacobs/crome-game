@@ -56,7 +56,7 @@ public class TitleMenuCursor : MonoBehaviour {
                 StartCoroutine("ResetMovement");
                 position++;
 
-                if(position >= 5) {
+                if(position >= 6) {
                     position = 1;
                     gameObject.transform.position = ORIGINAL_POSITION;
                 } else {
@@ -70,7 +70,7 @@ public class TitleMenuCursor : MonoBehaviour {
                 position--;
 
                 if (position <= 0) {
-                    position = 4;
+                    position = 5;
                     gameObject.transform.position = ORIGINAL_POSITION - MOVEMENT_DIFFERENCE * 3;
                 } else {
                     gameObject.transform.position += MOVEMENT_DIFFERENCE;
@@ -103,10 +103,13 @@ public class TitleMenuCursor : MonoBehaviour {
                 Debug.Log("Leaderboard");
                 break;
             case 3:
+                Debug.Log("Tutorial");
+                break;
+            case 4:
                 options.SetOptionsActive(true);
                 isActive = false;
                 break;
-            case 4:
+            case 5:
                 Application.Quit();
                 break;
         }
