@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DeathComet : Enemy {
@@ -20,6 +21,8 @@ public class DeathComet : Enemy {
         health = 50;
         isDead = false;
     }
+
+    private string[] randomizedDeathCometAttacks;
 
     private bool isReady = false;
     private Skull[] skulls;
@@ -48,9 +51,13 @@ public class DeathComet : Enemy {
             SpawnSkulls();
         }
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    public void SetRandomizedDeathCometAttacks(string[] randomizedDeathCometAttacks) {
+        this.randomizedDeathCometAttacks = randomizedDeathCometAttacks;
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (!isDead) {
             transform.Translate(new Vector3(0f, 0.001f * Mathf.Sin(10f * (Time.time / 4)), 0f));
         } else if(isDead) {
@@ -73,7 +80,9 @@ public class DeathComet : Enemy {
 
     IEnumerator Spawn() {
         yield return new WaitForSeconds(5f);
-        Instantiate(deathCometActual, transform.position, Quaternion.identity).GetComponent<DeathComet>().phase = phase; ;
+        DeathComet deathCometActualObj = Instantiate(deathCometActual, transform.position, Quaternion.identity).GetComponent<DeathComet>();
+        deathCometActualObj.phase = phase;
+        deathCometActualObj.SetRandomizedDeathCometAttacks(randomizedDeathCometAttacks);
         Destroy(gameObject);
     }
 
@@ -127,35 +136,37 @@ public class DeathComet : Enemy {
         int nextAttack = Random.Range(0, attackMax);
         string results = "";
 
-        switch(nextAttack) {
-            case 0:
-                results = "CircleShot";
-                break;
-            case 1:
-                results = "SineShot";
-                break;
-            case 2:
-                results = "DelayedShot";
-                break;
-            case 3:
-                results = "TrackShot";
-                break;
-            case 4:
-                results = "SweepShot";
-                break;
-            case 5:
-                results = "RandomAttack";
-                break;
-            case 6:
-                results = "LineAttack";
-                break;
-            case 7:
-                results = "BuckShot";
-                break;
-            default:
-                results = "CircleShot";
-                break;
-        }
+        results = randomizedDeathCometAttacks.ToArray()[nextAttack];
+
+        //switch(nextAttack) {
+        //    case 0:
+        //        results = "CircleShot";
+        //        break;
+        //    case 1:
+        //        results = "SineShot";
+        //        break;
+        //    case 2:
+        //        results = "DelayedShot";
+        //        break;
+        //    case 3:
+        //        results = "TrackShot";
+        //        break;
+        //    case 4:
+        //        results = "SweepShot";
+        //        break;
+        //    case 5:
+        //        results = "RandomAttack";
+        //        break;
+        //    case 6:
+        //        results = "LineAttack";
+        //        break;
+        //    case 7:
+        //        results = "BuckShot";
+        //        break;
+        //    default:
+        //        results = "CircleShot";
+        //        break;
+        //}
 
         return results;
     }

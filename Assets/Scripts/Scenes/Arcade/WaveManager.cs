@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour {
 
+    private const string CIRCLE_SHOT = "CircleShot";
+    private const string SINE_SHOT = "SineShot";
+    private const string DELAYED_SHOT = "DelayedShot";
+    private const string TRACK_SHOT = "TrackShot";
+    private const string SWEEP_SHOT = "SweepShot";
+    private const string RANDOM_ATTACK = "RandomAttack";
+    private const string LINE_ATTACK = "LineAttack";
+    private const string BUCK_SHOT = "BuckShot";
+
     // public vars
 
     public bool isTesting = false;
@@ -42,15 +51,38 @@ public class WaveManager : MonoBehaviour {
     private int currentLevel = 1;
     private Stack<int> levelsStack;
 
+    private List<string> deathCometAttacks = new List<string>();
+
     // Use this for initialization
     void Start () {
-		if(isTesting) {
+        SetDeathCometAttacks();
+        levelsStack = new Stack<int>();
+
+        if (isTesting) {
             StartCoroutine("TestWave");
         } else if (testDeathComet) {
             StartCoroutine("StartDeathCometWave", 8);
-        }
+        }        
+    }
 
-        levelsStack = new Stack<int>();
+    private void SetDeathCometAttacks() {
+        List<string> allDeathCometAttacks = new List<string>();
+
+        // this is dumb lol
+        allDeathCometAttacks.Add(CIRCLE_SHOT);
+        allDeathCometAttacks.Add(SINE_SHOT);
+        allDeathCometAttacks.Add(DELAYED_SHOT);
+        allDeathCometAttacks.Add(TRACK_SHOT);
+        allDeathCometAttacks.Add(SWEEP_SHOT);
+        allDeathCometAttacks.Add(RANDOM_ATTACK);
+        allDeathCometAttacks.Add(LINE_ATTACK);
+        allDeathCometAttacks.Add(BUCK_SHOT);
+
+        IEnumerable<string> randomizedAttacks = allDeathCometAttacks.Shuffle().Take(allDeathCometAttacks.Count);
+
+        foreach (string item in randomizedAttacks) {
+            deathCometAttacks.Add(item);
+        }
     }
 
     private bool LoopWhileAlive(params GameObject[] args) {
@@ -185,6 +217,7 @@ public class WaveManager : MonoBehaviour {
 
         waveObjs[0] = Instantiate(deathCometSpawn, new Vector2(0f, 0.3f), Quaternion.identity);
         waveObjs[0].GetComponent<DeathComet>().phase = phase;
+        waveObjs[0].GetComponent<DeathComet>().SetRandomizedDeathCometAttacks(deathCometAttacks.ToArray());
 
         while (LoopWhileAliveArray(waveObjs)) {
             yield return new WaitForSeconds(waveLoopTime);

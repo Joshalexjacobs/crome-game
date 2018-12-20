@@ -1085,6 +1085,15 @@ MonoBehaviour:
   numberOfSkulls: 8
   skull: {fileID: 1788061547457058, guid: 3d98095ef6a5f8e45b5fee54d8a8b276, type: 2}
   phase: 3
+  deathCometAttacks:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
 --- !u!212 &212221044806088702
 SpriteRenderer:
   m_ObjectHideFlags: 1
