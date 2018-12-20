@@ -1523,6 +1523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c6922fd68114f00a1d98182aa794c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextScreen: {fileID: 0}
 --- !u!1 &647795124
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,6 +2267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   options: {fileID: 486881613}
+  tutorial: {fileID: 1405336147}
 --- !u!82 &1205019900
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2682,6 +2684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c6922fd68114f00a1d98182aa794c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextScreen: {fileID: 631195469}
 --- !u!1 &1405336145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2724,8 +2727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36ae845afdc44f938dece301e5df83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerScreen: {fileID: 1392987104}
-  keyboardScreen: {fileID: 631195469}
+  startingTutorialScreen: {fileID: 1392987104}
 --- !u!1 &1473604365
 GameObject:
   m_ObjectHideFlags: 0

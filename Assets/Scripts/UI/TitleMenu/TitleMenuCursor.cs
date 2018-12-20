@@ -7,6 +7,7 @@ public class TitleMenuCursor : MonoBehaviour {
     private static Vector3 ORIGINAL_POSITION = new Vector3(-0.54f, 0.25f, 0f);
 
     public Options options;
+    public Tutorial tutorial;
 
     private SpriteRenderer sr;
     private AudioSource audio;
@@ -103,9 +104,14 @@ public class TitleMenuCursor : MonoBehaviour {
                 Debug.Log("Leaderboard");
                 break;
             case 3:
-                Debug.Log("Tutorial");
+                if(tutorial.GetIsReady()) {
+                    audio.Play();
+                    isActive = false;
+                    tutorial.HandleTutorialFadeIn();
+                }
                 break;
             case 4:
+                audio.Play();
                 options.SetOptionsActive(true);
                 isActive = false;
                 break;
