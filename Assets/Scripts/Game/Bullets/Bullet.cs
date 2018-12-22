@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour {
         }
 
         if (bulletTrail) {
-            StartCoroutine("SpawnBulletTrail");
+            //StartCoroutine("SpawnBulletTrail");
         }
 
         if(isHeatSeeking) {
@@ -101,6 +101,11 @@ public class Bullet : MonoBehaviour {
         yield return new WaitForSeconds(deathTime);
         isDead = true;
 
+        GetComponentInChildren<ParticleSystem>().Stop();
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
 
