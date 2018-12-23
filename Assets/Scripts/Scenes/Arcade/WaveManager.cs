@@ -61,7 +61,7 @@ public class WaveManager : MonoBehaviour {
         if (isTesting) {
             StartCoroutine("TestWave");
         } else if (testDeathComet) {
-            StartCoroutine("StartDeathCometWave", 8);
+            StartCoroutine("StartDeathCometWave", 1);
         }        
     }
 

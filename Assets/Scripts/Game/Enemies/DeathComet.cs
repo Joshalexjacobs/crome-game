@@ -557,6 +557,7 @@ public class DeathComet : Enemy {
 
     public override IEnumerator Death() {
         waveText.StartBlinking(phase);
+        GameObject.FindObjectOfType<Stars>().MoveAllStarsDown();
         DestroyAllActiveSkulls();
         ExplosionManager explosionManager = GameObject.FindWithTag("ExplosionManager").GetComponent<ExplosionManager>();
         explosionManager.AddExplosions(gameObject.transform.position, 25, true, -0.1f, 0.1f);
