@@ -68,7 +68,7 @@ public class OptionsSlider : MonoBehaviour {
                 PlayerPrefs.SetInt(playerPrefsField, volume);
             }
 
-            audioMixer.SetFloat(playerPrefsField, volume - 100);
+            audioMixer.SetFloat(playerPrefsField, (((float)volume * 0.01f) * 60f) - 60f);
         }
     }
 
