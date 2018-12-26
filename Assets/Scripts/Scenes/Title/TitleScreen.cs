@@ -18,6 +18,7 @@ public class TitleScreen : MonoBehaviour {
 
     private AudioSource[] audio;
     private bool hitStart = true;
+    private bool isReady = false;
     private InputDevice inputDevice;
     private CromeController cromeController;
 
@@ -59,14 +60,16 @@ public class TitleScreen : MonoBehaviour {
         yield return new WaitForSeconds(1f);
 
         hitStart = false;
+        isReady = true;
     }
 
     void Update() {
         inputDevice = InputManager.ActiveDevice;
 
-        if (cromeController.CromeIsCanceling() && !hitStart) {
+        if (cromeController.CromeIsCanceling() && !isReady) {
+            Debug.Log("Quitting");
             Application.Quit();
-        } else if (PressedStart() && !hitStart) {
+        } else if (PressedStart() && !hitStart && isReady) {
             //StartCoroutine("PlayerHitStart");
             HandlePlayerStart();
         }
