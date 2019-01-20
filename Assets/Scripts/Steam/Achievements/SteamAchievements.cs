@@ -44,7 +44,7 @@ public class SteamAchievements : MonoBehaviour {
     private int strapped;
     private int superCharged;
 
-    protected Callback<UserStatsReceived_t> userStatsRecieved;
+    protected Callback<UserStatsReceived_t> userStatsReceived;
     protected Callback<UserStatsStored_t> userStatsStored;
     protected Callback<UserAchievementStored_t> userAchievementStored;
 
@@ -53,9 +53,11 @@ public class SteamAchievements : MonoBehaviour {
             return;
         }
 
+        //SteamUserStats.ResetAllStats(true);
+
         cGameID = new CGameID(SteamUtils.GetAppID());
 
-        userStatsRecieved = Callback<UserStatsReceived_t>.Create(OnUserStatsRecieved);
+        userStatsReceived = Callback<UserStatsReceived_t>.Create(OnUserStatsReceived);
         userStatsStored = Callback<UserStatsStored_t>.Create(OnUserStatsStored);
         userAchievementStored = Callback<UserAchievementStored_t>.Create(OnAchievementStored);
 
@@ -144,6 +146,7 @@ public class SteamAchievements : MonoBehaviour {
                 SteamUserStats.SetStat("superCharged", superCharged);
 
                 bool success = SteamUserStats.StoreStats();
+
                 storeStats = !success;
             }
 
@@ -172,11 +175,13 @@ public class SteamAchievements : MonoBehaviour {
         superCharged = 1;
     }
 
-    //public void OnGameStateChange() {
-    //    if(!statsValid) {
-    //        return;
-    //    }
-    //}
+    public void OnGameStateChange() {
+        if(!statsValid) {
+            return;
+        }
+
+        storeStats = true;
+    }
 
     private void UnlockAchievement(Achievement achievement) {
         achievement.achieved = true;
@@ -184,20 +189,105 @@ public class SteamAchievements : MonoBehaviour {
         storeStats = true;
     }
 
-    private void OnUserStatsRecieved(UserStatsReceived_t pCallback) {
+    private void OnUserStatsReceived(UserStatsReceived_t pCallback) {
+        if(!SteamManager.Initialized) {
+            return;
+        }
 
+        if ((ulong)cGameID == pCallback.m_nGameID) {
+            if (EResult.k_EResultOK == pCallback.m_eResult) {
+                Debug.Log("Received stats and achievements from Steam\n");
+
+                statsValid = true;
+
+                // load achievements
+                foreach (Achievement ach in achievements) {
+                    bool ret = SteamUserStats.GetAchievement(ach.achievementId.ToString(), out ach.achieved);
+                    if (ret) {
+                        ach.name = SteamUserStats.GetAchievementDisplayAttribute(ach.achievementId.ToString(), "name");
+                        ach.description = SteamUserStats.GetAchievementDisplayAttribute(ach.achievementId.ToString(), "desc");
+                    } else {
+                        Debug.LogWarning("SteamUserStats.GetAchievement failed for Achievement " + ach.achievementId + "\nIs it registered in the Steam Partner site?");
+                    }
+                }
+
+                // load stats
+                SteamUserStats.GetStat("deaths", out deaths);
+                SteamUserStats.GetStat("kills", out kills);
+                SteamUserStats.GetStat("furthestWave", out furthestWave);
+                SteamUserStats.GetStat("strapped", out strapped);
+                SteamUserStats.GetStat("superCharged", out superCharged);
+            } else {
+                Debug.Log("RequestStats - failed, " + pCallback.m_eResult);
+            }
+        }
     }
 
     private void OnUserStatsStored(UserStatsStored_t pCallback) {
-
+        // we may get callbacks for other games' stats arriving, ignore them
+        if ((ulong)cGameID == pCallback.m_nGameID) {
+            if (EResult.k_EResultOK == pCallback.m_eResult) {
+                Debug.Log("StoreStats - success");
+            } else if (EResult.k_EResultInvalidParam == pCallback.m_eResult) {
+                // One or more stats we set broke a constraint. They've been reverted,
+                // and we should re-iterate the values now to keep in sync.
+                Debug.Log("StoreStats - some failed to validate");
+                // Fake up a callback here so that we re-load the values.
+                UserStatsReceived_t callback = new UserStatsReceived_t();
+                callback.m_eResult = EResult.k_EResultOK;
+                callback.m_nGameID = (ulong)cGameID;
+                OnUserStatsReceived(callback);
+            } else {
+                Debug.Log("StoreStats - failed, " + pCallback.m_eResult);
+            }
+        }
     }
 
     private void OnAchievementStored(UserAchievementStored_t pCallback) {
-
+        // We may get callbacks for other games' stats arriving, ignore them
+        if ((ulong)cGameID == pCallback.m_nGameID) {
+            if (0 == pCallback.m_nMaxProgress) {
+                Debug.Log("Achievement '" + pCallback.m_rgchAchievementName + "' unlocked!");
+            } else {
+                Debug.Log("Achievement '" + pCallback.m_rgchAchievementName + "' progress callback, (" + pCallback.m_nCurProgress + "," + pCallback.m_nMaxProgress + ")");
+            }
+        }
     }
 
-    public void Render() {
+    public void OnGUI() {
+        if (!SteamManager.Initialized) {
+            GUILayout.Label("Steamworks not Initialized");
+            return;
+        }
 
+        GUILayout.BeginArea(new Rect(0, 0, 160, 144));
+
+        GUILayout.Label("deaths: " + deaths);
+        GUILayout.Space(1);
+        GUILayout.Label("kills: " + kills);
+        GUILayout.Space(1);
+        GUILayout.Label("furthestWave: " + furthestWave);
+        GUILayout.Space(1);
+        GUILayout.Label("strapped: " + strapped);
+        GUILayout.Space(1);
+        GUILayout.Label("superCharged: " + superCharged);
+
+        //GUILayout.BeginArea(new Rect(Screen.width - 300, 0, 300, 800));
+        //foreach (Achievement ach in achievements) {
+        //    GUILayout.Label(ach.achievementId.ToString());
+        //    GUILayout.Label(ach.name + " - " + ach.description);
+        //    GUILayout.Label("Achieved: " + ach.achieved);
+        //    GUILayout.Space(20);
+        //}
+
+        // FOR TESTING PURPOSES ONLY!
+        //if (GUILayout.Button("RESET STATS AND ACHIEVEMENTS")) {
+        //    SteamUserStats.ResetAllStats(true);
+        //    SteamUserStats.RequestCurrentStats();
+        //    OnGameStateChange();
+        //}
+
+        GUILayout.EndArea();
     }
 
     private class Achievement {

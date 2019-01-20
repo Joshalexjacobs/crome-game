@@ -243,6 +243,12 @@ public class Player : MonoBehaviour {
 
             experienceBar.UpdateExperience(experience);
         }
+
+        SteamAchievements steamAchievements = GameObject.FindObjectOfType<SteamAchievements>();
+
+        if(steamAchievements != null) {
+            steamAchievements.AddKills(1);
+        }
     }
 
     private void HandleLevelUp() {
@@ -271,6 +277,13 @@ public class Player : MonoBehaviour {
             case 15:
                 canFireDouble = true;
                 experienceBar.WipeExperience();
+
+                SteamAchievements steamAchievements = GameObject.FindObjectOfType<SteamAchievements>();
+
+                if (steamAchievements != null) {
+                    steamAchievements.SetStrapped();
+                }
+
                 break;
             default:
                 break;
@@ -300,6 +313,12 @@ public class Player : MonoBehaviour {
 
             box.enabled = false;
             isDead = true;
+
+            SteamAchievements steamAchievements = GameObject.FindObjectOfType<SteamAchievements>();
+
+            if(steamAchievements != null) {
+                steamAchievements.AddDeaths(1);
+            }
 
             ResetChargeShot();
 
@@ -350,6 +369,12 @@ public class Player : MonoBehaviour {
         scoreKeeper.PostScore();
 
         GameObject.FindObjectOfType<ArcadeMode>().HandleGameOver(scoreKeeper.GetTextScore());
+        SteamAchievements steamAchievements = GameObject.FindObjectOfType<SteamAchievements>();
+
+        if(steamAchievements != null) {
+            Debug.Log("OUT OF PLAYER LIVES, GAME STATE CHANGED");
+            steamAchievements.OnGameStateChange();
+        }
 
         sr.enabled = false;
     }

@@ -60,6 +60,11 @@ public class ArcadeMode : MonoBehaviour {
             ResetWaveManager();
 
             phase++;
+
+            SteamAchievements steamAchievements = GameObject.FindObjectOfType<SteamAchievements>();
+            if(steamAchievements != null) {
+                steamAchievements.SetFurthestWave(phase);
+            }
         }
     }
 

@@ -37,7 +37,13 @@ public class GameOverRankings : MonoBehaviour {
             GameOverRank rankingObj = Instantiate(ranking, transform.position + difference, Quaternion.identity).GetComponent<GameOverRank>();
             rankingObj.transform.parent = gameObject.transform;
 
-            string rankingText = entry.GetPosition() + ". " + entry.GetPlayerName() + " - " + entry.GetPlayerScore();
+            string playerName = entry.GetPlayerName();
+
+            if (playerName.Length > 16) {
+                playerName = playerName.Substring(0, 15) + "...";
+            }
+
+            string rankingText = entry.GetPosition() + ". " + playerName + " - " + entry.GetPlayerScore();
             rankingObj.Init(rankingText, entry.GetPosition() == this.playerEntry ? true : false);
             index++;
         }

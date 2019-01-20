@@ -43,6 +43,14 @@ public class ChargingObject : MonoBehaviour {
     public void FireChargeShot(int playerLevel) {
         ChargeShot chargeShotObj = Instantiate(chargeShot, transform.position, Quaternion.identity).GetComponent<ChargeShot>();
         chargeShotObj.Init(stage, playerLevel);
+
+        if(stage == 3) {
+            SteamAchievements steamAchievements = GameObject.FindObjectOfType<SteamAchievements>();
+            if(steamAchievements != null) {
+                steamAchievements.SetSuperCharged();
+            }
+        }
+
         Destroy(gameObject);
     }
 

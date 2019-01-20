@@ -6,6 +6,7 @@ using System.Threading;
 public class SteamLeaderboards : MonoBehaviour {
     private const string LEADERBOARD_NAME = "Global Leaderboard";
     private const ELeaderboardUploadScoreMethod LEADERBOARD_UPLOAD_METHOD = ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest;
+    private const ELeaderboardUploadScoreMethod LEADERBOARD_FORCE_UPDATE_METHOD = ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodForceUpdate;
     private const ELeaderboardDataRequest LEADERBOARD_DATA_REQUEST = ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal;
 
     private static SteamLeaderboard_t currentLeaderboard;
@@ -58,7 +59,7 @@ public class SteamLeaderboards : MonoBehaviour {
         SteamAPICall_t hSteamAPICall = SteamUserStats.DownloadLeaderboardEntriesForUsers(currentLeaderboard, cSteamIDs, cSteamIDs.Length);
 
         leaderboardDownloadResult.Set(hSteamAPICall, (pCallback, failure) => {
-            Debug.Log("Getting surrounding entries");
+            Debug.Log("Getting surrounding entries " + pCallback.m_cEntryCount);
 
             for (int i = 0; i < pCallback.m_cEntryCount; i++) {
                 LeaderboardEntry_t leaderboardEntry;
@@ -119,6 +120,7 @@ public class SteamLeaderboards : MonoBehaviour {
         } else {
             UnityEngine.Debug.Log("uploading score (" + score + ") to steam leaderboard (" + LEADERBOARD_NAME + ")");
             SteamAPICall_t hSteamAPICall = SteamUserStats.UploadLeaderboardScore(currentLeaderboard, LEADERBOARD_UPLOAD_METHOD, score, null, 0);
+            //SteamAPICall_t hSteamAPICall = SteamUserStats.UploadLeaderboardScore(currentLeaderboard, LEADERBOARD_FORCE_UPDATE_METHOD, 0, null, 0);
             uploadResult.Set(hSteamAPICall, OnLeaderboardUploadResult);
         }
     }
