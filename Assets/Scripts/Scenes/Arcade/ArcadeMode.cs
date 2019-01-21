@@ -23,14 +23,24 @@ public class ArcadeMode : MonoBehaviour {
 
         int lastTrack = PlayerPrefs.GetInt("LastTrack");
 
-        if (lastTrack != null && lastTrack == 0) {
-            audio[1].Play();
-            PlayerPrefs.SetInt("LastTrack", 1);
-        } else {
+        if (lastTrack == null) {
             audio[0].Play();
             PlayerPrefs.SetInt("LastTrack", 0);
+        } else {
+            if(lastTrack == 0) {
+                audio[1].Play();
+                PlayerPrefs.SetInt("LastTrack", 1);
+            } else if (lastTrack == 1) {
+                audio[2].Play();
+                PlayerPrefs.SetInt("LastTrack", 2);
+            } else if (lastTrack == 2) {
+                audio[3].Play();
+                PlayerPrefs.SetInt("LastTrack", 3);
+            } else {
+                audio[0].Play();
+                PlayerPrefs.SetInt("LastTrack", 0);
+            }
         }
-
 
         StartCoroutine("Arcade");
 	}

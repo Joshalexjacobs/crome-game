@@ -11,7 +11,7 @@ public class GameOverCursor : MonoBehaviour {
     private SpriteRenderer sr;
     private bool isActive = false;
     private bool movementReady = true;
-    private string selection = "";
+    private string selection = "retry";
 
     private CromeController cromeController;
 

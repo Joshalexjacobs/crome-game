@@ -254,6 +254,7 @@ public class SteamAchievements : MonoBehaviour {
         }
     }
 
+    /*
     public void OnGUI() {
         if (!SteamManager.Initialized) {
             GUILayout.Label("Steamworks not Initialized");
@@ -289,6 +290,7 @@ public class SteamAchievements : MonoBehaviour {
 
         GUILayout.EndArea();
     }
+    */
 
     private class Achievement {
         public AchievementID achievementId;
