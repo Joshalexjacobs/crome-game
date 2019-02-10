@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using InControl;
+using UnityEngine.U2D;
 
 public class TitleScreen : MonoBehaviour {
 
@@ -21,14 +22,30 @@ public class TitleScreen : MonoBehaviour {
     private bool isReady = false;
     private InputDevice inputDevice;
     private CromeController cromeController;
+    private PixelPerfectCamera ppCamera;
 
     // Use this for initialization
     void Start () {
         audio = GetComponents<AudioSource>();
         cromeController = GetComponent<CromeController>();
         StartCoroutine("FadeInTitleScreen");
-	}
+        HandleWideScreen();
+    }
 	
+    private void HandleWideScreen() {
+        ppCamera = GameObject.FindObjectOfType<PixelPerfectCamera>();
+
+        if (PlayerPrefs.GetInt("Widescreen") != null) {
+            if (PlayerPrefs.GetInt("Widescreen") > 0) {
+                ppCamera.cropFrameX = false;
+            } else {
+                ppCamera.cropFrameX = true;
+            }
+        } else {
+            PlayerPrefs.SetInt("WideScreen", 0);
+        }
+    }
+
     IEnumerator FadeInTitleScreen() {
         yield return new WaitForSeconds(1f);
 

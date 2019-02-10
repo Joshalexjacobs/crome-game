@@ -1,20 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
-public class OptionsFullscreen : OptionsEntity {
+public class OptionsWidescreen : OptionsEntity {
 
     private SpriteRenderer otherSr;
-
+    private string widescreen = "Widescreen";
     private bool selectionReady = true;
+    private PixelPerfectCamera ppCamera;
 
     public override void HandleEntity() {
-        if(selectionReady) {
-            Screen.fullScreen = !Screen.fullScreen;
+        if (selectionReady) {
+            ppCamera = GameObject.FindObjectOfType<PixelPerfectCamera>();
 
-            if (!Screen.fullScreen) {
+            ppCamera.cropFrameX = !ppCamera.cropFrameX;
+
+            if (ppCamera.cropFrameX) {
+                PlayerPrefs.SetInt(widescreen, 0);
                 otherSr.color = new Color(otherSr.color.r, otherSr.color.g, otherSr.color.b, 0.4f);
             } else {
+                PlayerPrefs.SetInt(widescreen, 1);
                 otherSr.color = new Color(otherSr.color.r, otherSr.color.g, otherSr.color.b, 1f);
             }
 
@@ -23,14 +29,15 @@ public class OptionsFullscreen : OptionsEntity {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-        if(otherSr == null) {
+    void Update() {
+        if (otherSr == null) {
             otherSr = GetComponent<SpriteRenderer>();
         }
 
-        if(isActive) {
-            if (!Screen.fullScreen) {
+        if (isActive) {
+            ppCamera = GameObject.FindObjectOfType<PixelPerfectCamera>();
+
+            if (ppCamera.cropFrameX) {
                 otherSr.color = new Color(otherSr.color.r, otherSr.color.g, otherSr.color.b, 0.4f);
             } else {
                 otherSr.color = new Color(otherSr.color.r, otherSr.color.g, otherSr.color.b, 1f);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.U2D;
 
 public class ArcadeMode : MonoBehaviour {
 
@@ -17,6 +18,7 @@ public class ArcadeMode : MonoBehaviour {
     private float waveLoopTime = 0.25f;
 
     private bool isGameOver = false;
+    private PixelPerfectCamera ppCamera;
 
     void Start () {
         audio = GetComponents<AudioSource>();
@@ -42,9 +44,24 @@ public class ArcadeMode : MonoBehaviour {
             }
         }
 
+        HandleWideScreen();
         StartCoroutine("Arcade");
-	}
-	
+    }
+
+    private void HandleWideScreen() {
+        ppCamera = GameObject.FindObjectOfType<PixelPerfectCamera>();
+
+        if (PlayerPrefs.GetInt("Widescreen") != null) {
+            if (PlayerPrefs.GetInt("Widescreen") > 0) {
+                ppCamera.cropFrameX = false;
+            } else {
+                ppCamera.cropFrameX = true;
+            }
+        } else {
+            PlayerPrefs.SetInt("WideScreen", 0);
+        }
+    }
+
     IEnumerator Arcade() {
         yield return new WaitForSeconds(2f);
 

@@ -985,7 +985,7 @@ MonoBehaviour:
   m_RefResolutionY: 144
   m_UpscaleRT: 1
   m_PixelSnapping: 1
-  m_CropFrameX: 1
+  m_CropFrameX: 0
   m_CropFrameY: 1
   m_StretchFill: 0
 --- !u!114 &339331825
@@ -1441,6 +1441,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &562851675
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4669853775657870, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669853775657870, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669853775657870, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669853775657870, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669853775657870, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669853775657870, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669853775657870, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669853775657870, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2a919704c1e6ab44fa2be98210077564, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &574317936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,7 +2392,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: a39882fff2da640489ecc949a5f6acf1, type: 3}
+  - {fileID: 2100000, guid: 02ac718a4cd405541bd50f8144f3f454, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

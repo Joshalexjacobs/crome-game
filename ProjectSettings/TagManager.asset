@@ -58,3 +58,6 @@ TagManager:
   - name: Menu
     uniqueID: 1312935617
     locked: 0
+  - name: Widescreen
+    uniqueID: 1026429147
+    locked: 0
