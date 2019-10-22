@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
@@ -17,11 +16,6 @@ public class Enemy : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         box = GetComponent<BoxCollider2D>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public virtual void Damage(float damage) {
         health -= damage;

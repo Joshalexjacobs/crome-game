@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
@@ -34,10 +33,6 @@ public class Bullet : MonoBehaviour {
             rb.AddForce((player.position - transform.position).normalized * speed);
         } else if(!isHeatSeeking){
             rb.AddForce(direction * speed);
-        }
-
-        if (bulletTrail) {
-            //StartCoroutine("SpawnBulletTrail");
         }
 
         if(isHeatSeeking) {

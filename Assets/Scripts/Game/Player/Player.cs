@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -199,11 +198,9 @@ public class Player : MonoBehaviour {
 
     private void HandleMovement() {
         /* HORIZONTAL MOVEMENT */
-        //float dx = HandleHorizontalMovement(Input.GetAxisRaw("Horizontal") != 0);
         float dx = HandleHorizontalMovement(cromeController.CromeHorizontal() != 0f);
 
         /* VERTICAL MOVEMENT */
-        //float dy = HandleVerticalMovement(Input.GetAxis("Vertical") != 0);
         float dy = HandleVerticalMovement(cromeController.CromeVertical() != 0f);
 
         /* UPDATE RB */
@@ -334,7 +331,6 @@ public class Player : MonoBehaviour {
                 StartCoroutine("Respawn");
             } else {
                 HandlePlayerOutOfLives();
-                //StartCoroutine("Restart");
             }
         }
     }

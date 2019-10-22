@@ -23,7 +23,6 @@ public class ChargeShot : MonoBehaviour {
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        //audio = GetComponents<AudioSource>();
         StartCoroutine("ChargeShotBulletDeath");
     }
 

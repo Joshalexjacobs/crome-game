@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletTrail : MonoBehaviour {
@@ -9,7 +8,6 @@ public class BulletTrail : MonoBehaviour {
 
     private SpriteRenderer sr;
 
-    // Use this for initialization
     void Start() {
         if (isShrinking) {
             StartCoroutine("Shrink");

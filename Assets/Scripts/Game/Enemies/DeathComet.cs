@@ -70,9 +70,7 @@ public class DeathComet : Enemy {
 
         for (int i = 0; i < 2; i++) {
             baseSr.material.SetFloat("_FlashAmount", 1);
-            //sr.enabled = false;
             yield return new WaitForSeconds(0.035f);
-            //sr.enabled = true;
             baseSr.material.SetFloat("_FlashAmount", 0);
             yield return new WaitForSeconds(0.035f);
         }
@@ -137,36 +135,6 @@ public class DeathComet : Enemy {
         string results = "";
 
         results = randomizedDeathCometAttacks.ToArray()[nextAttack];
-
-        //switch(nextAttack) {
-        //    case 0:
-        //        results = "CircleShot";
-        //        break;
-        //    case 1:
-        //        results = "SineShot";
-        //        break;
-        //    case 2:
-        //        results = "DelayedShot";
-        //        break;
-        //    case 3:
-        //        results = "TrackShot";
-        //        break;
-        //    case 4:
-        //        results = "SweepShot";
-        //        break;
-        //    case 5:
-        //        results = "RandomAttack";
-        //        break;
-        //    case 6:
-        //        results = "LineAttack";
-        //        break;
-        //    case 7:
-        //        results = "BuckShot";
-        //        break;
-        //    default:
-        //        results = "CircleShot";
-        //        break;
-        //}
 
         return results;
     }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour {
@@ -38,11 +37,6 @@ public class PlayerBullet : MonoBehaviour {
         this.damage = dmg;
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
-
     IEnumerator PlayerBulletDeath() {
         yield return new WaitForSeconds(deathTime);
         Destroy(gameObject);
@@ -66,7 +60,6 @@ public class PlayerBullet : MonoBehaviour {
     }
 
     IEnumerator Death() {
-        //audio[0].pitch = Random.Range(2.65f, 3.00f);
         audio[0].pitch = Random.Range(0.65f, 1.00f);
         audio[0].Play();
         yield return new WaitForSeconds(0.167f);

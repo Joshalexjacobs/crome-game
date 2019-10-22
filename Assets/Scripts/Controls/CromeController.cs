@@ -55,8 +55,4 @@ public class CromeController : MonoBehaviour {
         return cromeActions.moveY.Value;
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

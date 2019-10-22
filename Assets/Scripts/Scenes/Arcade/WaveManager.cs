@@ -805,12 +805,7 @@ public class WaveManager : MonoBehaviour {
         this.HandleEndOfWave();
     }
 
-
-
-
-
-
-
+    /* Template Wave */
 
     IEnumerator Wave() {
         GameObject[] waveObjs = new GameObject[10];

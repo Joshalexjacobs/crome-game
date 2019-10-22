@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Planet : MonoBehaviour {
@@ -8,7 +7,6 @@ public class Planet : MonoBehaviour {
 
     private SpriteRenderer sr;
 
-	// Use this for initialization
 	void Start () {
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = sprites[Random.Range(0, sprites.Length)];

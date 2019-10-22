@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Deflect : MonoBehaviour {
 
@@ -13,8 +11,6 @@ public class Deflect : MonoBehaviour {
             if(chargeShot != null) {
                 GetComponentInParent<Shielder>().Damage(4);
             }
-            //Bullet bulletObj = Instantiate(bullet, collision.transform.position, Quaternion.identity).GetComponent<Bullet>();
-            //bulletObj.Init(new Vector2(Random.Range(-0.5f, 0.5f), -1.0f));
         }
     }
 }

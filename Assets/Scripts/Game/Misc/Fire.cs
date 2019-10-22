@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Fire : MonoBehaviour {
@@ -27,7 +26,6 @@ public class Fire : MonoBehaviour {
         while (!isDead) {
             yield return new WaitForSeconds(0.1f);
             GameObject fireTrailObj = Instantiate(bulletTrail, transform.position - new Vector3(Random.Range(-0.01f, 0.01f), Random.Range(-0.01f, 0.01f), 0f), Quaternion.identity);
-            //fireTrailObj.transform.parent = transform;
         }
     }
 
