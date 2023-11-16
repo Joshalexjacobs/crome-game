@@ -365,12 +365,12 @@ public class Player : MonoBehaviour {
         scoreKeeper.PostScore();
 
         GameObject.FindObjectOfType<ArcadeMode>().HandleGameOver(scoreKeeper.GetTextScore());
-        SteamAchievements steamAchievements = GameObject.FindObjectOfType<SteamAchievements>();
+        // SteamAchievements steamAchievements = GameObject.FindObjectOfType<SteamAchievements>();
 
-        if(steamAchievements != null) {
-            Debug.Log("OUT OF PLAYER LIVES, GAME STATE CHANGED");
-            steamAchievements.OnGameStateChange();
-        }
+//        if(steamAchievements != null) {
+//            Debug.Log("OUT OF PLAYER LIVES, GAME STATE CHANGED");
+//            steamAchievements.OnGameStateChange();
+//        }
 
         sr.enabled = false;
     }

@@ -16,7 +16,7 @@ public class LeaderboardTicker : MonoBehaviour {
 	}
 
     public void StartFadeIn() {
-        StartCoroutine("Switch");
+        //StartCoroutine("Switch");
     }
 
     IEnumerator FadeTextIn() {

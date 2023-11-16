@@ -25,6 +25,6 @@ public class GameOver : MonoBehaviour {
         gameOverScore.StartFadeIn(score);
         gameOverCursor.StartFadeIn();
 
-        gameOverRankings.GetPlayerEntry();
+        // gameOverRankings.GetPlayerEntry();
     }
 }

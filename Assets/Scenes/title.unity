@@ -1963,6 +1963,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1442617466967106, guid: 2fe77e7eae110e14eac0c4c174e80cac, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fe77e7eae110e14eac0c4c174e80cac, type: 2}
   m_IsPrefabAsset: 0
@@ -2050,7 +2054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1094464951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2870,7 +2874,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1607488060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2937,7 +2941,7 @@ Prefab:
     - target: {fileID: 102170611746885716, guid: 2fe77e7eae110e14eac0c4c174e80cac,
         type: 2}
       propertyPath: m_Text
-      value: 'Current Top 3:'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 102170611746885716, guid: 2fe77e7eae110e14eac0c4c174e80cac,
         type: 2}
@@ -2955,6 +2959,10 @@ Prefab:
     - target: {fileID: 1442617466967106, guid: 2fe77e7eae110e14eac0c4c174e80cac, type: 2}
       propertyPath: m_Name
       value: CurrentTopThree
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442617466967106, guid: 2fe77e7eae110e14eac0c4c174e80cac, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114881206211723238, guid: 2fe77e7eae110e14eac0c4c174e80cac, type: 2}
@@ -3512,7 +3520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &2096188058
 SpriteRenderer:
   m_ObjectHideFlags: 0
